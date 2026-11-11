@@ -661,45 +661,65 @@
 
     <!-- SOUS-SECTION : Enregistrement des Étudiants Admis -->
     <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 20px;">
-      <h4>Registre des Étudiants Admis et Dossiers</h4>
-      <p>Enregistrez ici les nouveaux étudiants admis pour conserver leur dossier.</p>
-      
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
-        <input type="text" id="nomEtudiant" placeholder="Nom complet de l'étudiant" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-        <input type="email" id="emailEtudiant" placeholder="Adresse e-mail" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-      </div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
-        <select id="filiereEtudiant" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-          <option value="Double Diplôme Admin & Gestion">Double Diplôme Admin & Gestion</option>
-          <option value="Licence en Sciences de l'Éducation">Licence en Sciences de l'Éducation</option>
-        </select>
-        <input type="text" id="refPaiement" placeholder="Réf. Paiement (MonCash/NatCash)" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-      </div>
-      <button onclick="ajouterEtudiant()" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">Enregistrer l'étudiant admis</button>
-    </div>
-
-    <!-- Liste des dossiers enregistrés -->
-    <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd;">
-      <h4>Liste des Dossiers Enregistrés</h4>
-      <table style="width: 100%; margin-top: 10px; border-collapse: collapse;">
-        <thead>
-          <tr style="background: #f1f1f1; text-align: left;">
-            <th style="padding: 8px; border: 1px solid #ddd;">Nom</th>
-            <th style="padding: 8px; border: 1px solid #ddd;">E-mail</th>
-            <th style="padding: 8px; border: 1px solid #ddd;">Filière</th>
-            <th style="padding: 8px; border: 1px solid #ddd;">Référence</th>
-          </tr>
-        </thead>
-        <tbody id="listeEtudiantsTable">
-          <!-- Les étudiants s'afficheront ici -->
-        </tbody>
-      </table>
-    </div>
+     <!-- SOUS-SECTION : Enregistrement et Gestion Complète des Étudiants Admis -->
+<div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 20px;">
+  <h4 style="color: #004080;">Registre Complet des Étudiants Admis et Dossiers</h4>
+  <p>Enregistrez et gérez l'ensemble du dossier académique et financier de l'étudiant :</p>
+  
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+    <input type="text" id="adminNom" placeholder="Nom complet de l'étudiant" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+    <input type="text" id="adminCode" placeholder="Code / Matricule (ex: HEPP-2026-001)" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
   </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+    <input type="email" id="adminEmail" placeholder="Adresse e-mail" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+    <input type="text" id="adminTel" placeholder="Numéro de téléphone" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+    <input type="text" id="adminNifCin" placeholder="NIF / CIN" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+    <select id="adminFiliere" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+      <option value="Double Diplôme Admin & Gestion">Double Diplôme Admin & Gestion</option>
+      <option value="Licence en Sciences de l'Éducation">Licence en Sciences de l'Éducation</option>
+    </select>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+    <input type="number" id="adminVersement" placeholder="Montant versé ($ ou HTG)" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+    <input type="number" id="adminBalance" placeholder="Balance restante" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+    <input type="text" id="adminCoursDevoirs" placeholder="Cours suivis / Devoirs rendus" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Certificats et Diplômes (Fichiers) :</label>
+    <input type="file" id="adminDocs" multiple style="padding: 6px; border: 1px solid #ccc; border-radius: 4px; width: 100%; background: #f9f9f9;">
+    <small style="color: #666;">Sélectionnez plusieurs fichiers à la fois si nécessaire.</small>
+  </div>
+
+  <button onclick="ajouterEtudiantComplet()" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Enregistrer le dossier complet</button>
 </div>
 
+<!-- Tableau récapitulatif des dossiers -->
+<div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; overflow-x: auto;">
+  <h4>Dossiers Enregistrés dans le Registre</h4>
+  <table style="width: 100%; margin-top: 10px; border-collapse: collapse; font-size: 14px;">
+    <thead>
+      <tr style="background: #f1f1f1; text-align: left;">
+        <th style="padding: 8px; border: 1px solid #ddd;">Matricule / Nom</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Contact (Email / Tél)</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">NIF / CIN</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Finances (Versé / Reste)</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Cours & Devoirs</th>
+      </tr>
+    </thead>
+    <tbody id="listeEtudiantsCompletTable">
+      <!-- Les données enregistrées s'afficheront ici dynamiquement -->
+    </tbody>
+  </table>
+</div> 
+
 <script>
-  const MOT_DE_PASSE_ADMIN = "hepp2026"; 
+  const MOT_DE_PASSE_ADMIN = "hepp2026adm"; 
 
   function verifierAdmin() {
     const saisi = document.getElementById("adminPasswordInput").value;
