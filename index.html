@@ -518,8 +518,7 @@
             <!-- CONTENU DES ONGLETS ÉTUDIANT -->
             <div style="flex: 1; min-width: 280px; background: white; padding: 25px; border-radius: 8px; border: 1px solid #ddd;">
               
-              <!-- ONGLET 1 : BADGE (AVEC PHOTO ET TÉLÉCHARGEMENT PDF) -->
-              <!-- ONGLET 1 : BADGE PROFESSIONNEL PRÊT À IMPRIMER -->
+             <!-- ONGLET 1 : BADGE PROFESSIONNEL PRÊT À IMPRIMER -->
 <div id="onglet-badge" class="etudiant-onglet">
   <h3 style="color: #004080; margin-top: 0; text-align: center;">Mon Badge d'Admission Officiel</h3>
   <p style="color: #666; font-size: 14px; text-align: center; margin-bottom: 25px;">Voici votre badge officiel de la HEPP. Téléchargez-le directement en image ou imprimez-le pour l'utiliser physiquement.</p>
@@ -866,6 +865,28 @@
     <script>
         const MOT_DE_PASSE_ADMIN = "hepp2026adm";
         let etudiantConnecte = null;
+
+        // --- FONCTION D'IMPRESSION CIBLÉE DU BADGE OFFICIEL ---
+function imprimerBadgeSeul() {
+    const contenuBadge = document.getElementById("badgeImprimable").outerHTML;
+    const fenetreImpression = window.open('', '', 'height=600,width=800');
+    
+    fenetreImpression.document.write('<html><head><title>Badge Officiel - HEPP</title>');
+    fenetreImpression.document.write('<style>');
+    fenetreImpression.document.write('body { font-family: Poppins, Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #fff; }');
+    fenetreImpression.document.write('</style>');
+    fenetreImpression.document.write('</head><body>');
+    fenetreImpression.document.write(contenuBadge);
+    fenetreImpression.document.write('</body></html>');
+    
+    fenetreImpression.document.close();
+    fenetreImpression.focus();
+    
+    setTimeout(() => {
+        fenetreImpression.print();
+        fenetreImpression.close();
+    }, 500);
+}
 
         // Service Worker PWA
         if ('serviceWorker' in navigator) {
