@@ -872,37 +872,41 @@
 
         // --- GESTION DE L'ESPACE ÉTUDIANT SÉCURISÉ ---
         function verifierAccesEtudiant() {
-            const inputEl = document.getElementById("etudiantIdInput");
-            const errEl = document.getElementById("erreurLoginEtudiant");
-            
-            if (!inputEl) return;
-            const saisie = inputEl.value.trim().toLowerCase();
-            
-            if (!saisie) {
-                alert("Veuillez entrer votre e-mail ou votre matricule.");
-                return;
-            }
+  const inputEl = document.getElementById("etudiantIdInput");
+  const errEl = document.getElementById("erreurLoginEtudiant");
+  
+  if (!inputEl) return;
+  const saisie = inputEl.value.trim().toLowerCase();
+  
+  if (!saisie) {
+    alert("Veuillez entrer votre e-mail ou votre matricule.");
+    return;
+  }
 
-            let etudiants = JSON.parse(localStorage.getItem("hepp_etudiants_admis")) || [];
-            
-            etudiantConnecte = etudiants.find(e => 
-                (e.email && e.email.toLowerCase() === saisie) || 
-                (e.code && e.code.toLowerCase() === saisie)
-            );
+  let etudiants = JSON.parse(localStorage.getItem("hepp_etudiants_admis")) || [];
+  
+  etudiantConnecte = etudiants.find(e => 
+    (e.email && e.email.toLowerCase() === saisie) || 
+    (e.code && e.code.toLowerCase() === saisie)
+  );
 
-            if (etudiantConnecte) {
-                const loginBox = document.getElementById("etudiantLoginBox");
-                if (loginBox) loginBox.style.display = "none";
-                
-                const dashboard = document.getElementById("etudiantDashboard");
-                if (dashboard) dashboard.style.display = "flex";
-                
-                chargerDonneesBadgeEtudiant();
-                afficherOngletEtudiant('badge');
-            } else {
-                if (errEl) errEl.style.display = "block";
-            }
-        }
+  if (etudiantConnecte) {
+    const loginBox = document.getElementById("etudiantLoginBox");
+    if (loginBox) loginBox.style.display = "none";
+    
+    const dashboard = document.getElementById("etudiantDashboard");
+    if (dashboard) dashboard.style.display = "flex";
+    
+    if (typeof chargerDonneesBadgeEtudiant === 'function') {
+      chargerDonneesBadgeEtudiant();
+    }
+    if (typeof afficherOngletEtudiant === 'function') {
+      afficherOngletEtudiant('badge');
+    }
+  } else {
+    if (errEl) errEl.style.display = "block";
+  }
+}
 
         function chargerDonneesBadgeEtudiant() {
             if (!etudiantConnecte) return;
