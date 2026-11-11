@@ -556,9 +556,24 @@
   <button type="submit" style="width: 100%; padding: 12px; background: #004080; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Soumettre mon inscription</button>
 </form>
        
-     <!-- ESPACE ÉTUDIANT SÉCURISÉ AVEC MENU LATÉRAL -->
-<div class="panel-section" id="espace-etudiant" style="padding: 20px; background: #f4f6f9; border-radius: 8px; margin-top: 20px;">
-  <h2 class="section-title" style="color: #004080; border-bottom: 2px solid #004080; padding-bottom: 8px;">Portail Étudiant HEPP</h2>
+<!-- ESPACE ÉTUDIANT GLOBAL -->
+<div class="panel-section" id="espace-etudiant" style="display: none; padding: 20px; background: #f4f6f9; border-radius: 8px; margin-top: 20px;">
+  
+  <!-- Boîte de connexion (Visible par défaut quand on arrive sur l'espace étudiant) -->
+  <div id="etudiantLoginBox" style="max-width: 450px; margin: 40px auto; padding: 30px; background: white; border: 1px solid #ddd; border-radius: 8px;">
+    <h3 style="color: #004080; margin-top: 0;">Connexion à votre Campus Virtuel</h3>
+    <p style="color: #666; font-size: 14px;">Entrez votre e-mail ou votre matricule officiel :</p>
+    <input type="text" id="etudiantIdInput" placeholder="Ex: hepp-2026-001" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px;">
+    <button onclick="verifierAccesEtudiant()" style="width: 100%; padding: 12px; background: #004080; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Accéder à mon espace</button>
+    <p id="erreurLoginEtudiant" style="color: red; margin-top: 12px; display: none; font-size: 14px;">Identifiant introuvable dans le registre des étudiants admis.</p>
+  </div>
+
+  <!-- Tableau de bord (strictement masqué avec display: none par défaut) -->
+  <div id="etudiantDashboard" style="display: none; gap: 20px; margin-top: 20px;">
+    <!-- Le menu latéral et les onglets -->
+  </div>
+
+</div>
 
   <!-- Écran de Connexion Étudiant (Par E-mail ou Matricule) -->
   <div id="etudiantLoginBox" style="max-width: 450px; margin: 40px auto; padding: 30px; background: white; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
@@ -569,9 +584,8 @@
     <p id="erreurLoginEtudiant" style="color: red; margin-top: 12px; display: none; font-size: 14px;">Identifiant introuvable dans le registre des étudiants admis.</p>
   </div>
 
-  <!-- Tableau de bord Étudiant (Affiché après connexion réussie) -->
-  <div id="etudiantDashboard" style="display: none; display: flex; gap: 20px; margin-top: 20px;">
-    
+  
+  
     <!-- MENU LATÉRAL (SIDEBAR) -->
  <!-- MENU LATÉRAL (SIDEBAR) ÉTUDIANT -->
 <div style="width: 280px; background: white; padding: 20px; border-radius: 8px; border: 1px solid #ddd; height: fit-content;">
