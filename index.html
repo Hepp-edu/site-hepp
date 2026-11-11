@@ -13,7 +13,7 @@
     <!-- Police Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- html2canvas et jsPDF pour l'export PNG / PDF du badge PVC -->
+    <!-- Bibliothèques pour le téléchargement direct en PNG et PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -555,7 +555,7 @@
       
       <!-- Photo d'Identité -->
       <div style="width: 85px; height: 100px; border-radius: 6px; border: 2px solid #1B365D; overflow: hidden; box-shadow: 0 3px 8px rgba(0,0,0,0.1); margin-bottom: 8px;">
-        <img id="badgePhoto" src="https://via.placeholder.com/110" alt="Photo Étudiant" style="width: 100%; height: 100%; object-fit: cover;">
+        <img id="badgePhoto" crossorigin="anonymous" src="https://via.placeholder.com/110" alt="Photo Étudiant" style="width: 100%; height: 100%; object-fit: cover;">
       </div>
 
       <!-- Nom & Prénom -->
@@ -579,7 +579,7 @@
         <span style="color: #28a745; font-weight: bold;">● Étudiant Admis</span>
       </div>
       <div>
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=45x45&data=HEPP-VERIFIED" alt="QR Code" style="display: block; width: 40px; height: 40px;">
+        <img crossorigin="anonymous" src="https://api.qrserver.com/v1/create-qr-code/?size=45x45&data=HEPP-VERIFIED" alt="QR Code" style="display: block; width: 40px; height: 40px;">
       </div>
     </div>
 
@@ -589,10 +589,10 @@
     </div>
   </div>
 
-  <!-- Boutons de téléchargement PNG & PDF -->
-  <div style="text-align: center; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-    <button onclick="telechargerBadgePNG()" style="padding: 10px 18px; background: #004080; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px;">📥 Télécharger en PNG</button>
-    <button onclick="telechargerBadgePDF()" style="padding: 10px 18px; background: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px;">📄 Télécharger en PDF</button>
+  <!-- Boutons de téléchargement direct PNG & PDF -->
+  <div style="text-align: center; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px;">
+    <button onclick="telechargerBadgePNG()" style="padding: 12px 22px; background: #004080; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; box-shadow: 0 4px 10px rgba(0,64,128,0.3);">📥 Télécharger en PNG</button>
+    <button onclick="telechargerBadgePDF()" style="padding: 12px 22px; background: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; box-shadow: 0 4px 10px rgba(40,167,69,0.3);">📄 Télécharger en PDF</button>
   </div>
 </div>
               
@@ -813,24 +813,26 @@
         const MOT_DE_PASSE_ADMIN = "HeppAdmin#2026$Secure!";
         let etudiantConnecte = null;
 
-        // --- TÉLÉCHARGEMENT BADGE EN PNG ---
+        // --- TÉLÉCHARGEMENT DIRECT EN PNG ---
         function telechargerBadgePNG() {
             const badgeElement = document.getElementById("badgeImprimable");
-            html2canvas(badgeElement, { scale: 3 }).then(canvas => {
+            html2canvas(badgeElement, { scale: 3, useCORS: true, allowTaint: true }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = `Badge_PVC_${etudiantConnecte ? etudiantConnecte.code : 'HEPP'}.png`;
                 link.href = canvas.toDataURL('image/png');
                 link.click();
+            }).catch(err => {
+                alert("Erreur lors de la génération du PNG : " + err);
             });
         }
 
-        // --- TÉLÉCHARGEMENT BADGE EN PDF ---
+        // --- TÉLÉCHARGEMENT DIRECT EN PDF ---
         function telechargerBadgePDF() {
             const badgeElement = document.getElementById("badgeImprimable");
-            html2canvas(badgeElement, { scale: 3 }).then(canvas => {
+            html2canvas(badgeElement, { scale: 3, useCORS: true, allowTaint: true }).then(canvas => {
                 const imgData = canvas.toDataURL('image/png');
                 const { jsPDF } = window.jspdf;
-                // Format standard PVC ou carte de visite adapté en PDF (80mm x 90mm)
+                // Format PVC standard (80mm x 90mm)
                 const pdf = new jsPDF({
                     orientation: 'portrait',
                     unit: 'mm',
@@ -838,6 +840,8 @@
                 });
                 pdf.addImage(imgData, 'PNG', 0, 0, 80, 90);
                 pdf.save(`Badge_PVC_${etudiantConnecte ? etudiantConnecte.code : 'HEPP'}.pdf`);
+            }).catch(err => {
+                alert("Erreur lors de la génération du PDF : " + err);
             });
         }
 
@@ -944,7 +948,6 @@
             
             conteneur.innerHTML = "";
 
-            // RESTRICTION : Vérification stricte si l'étudiant est connecté et enregistré dans le registre
             if (!etudiantConnecte) {
                 conteneur.innerHTML = `<p style="color: #dc3545; font-weight: bold; text-align: center;">Accès restreint : Vous devez être connecté avec un compte enregistré dans le registre des étudiants admis pour consulter la bibliothèque.</p>`;
                 return;
