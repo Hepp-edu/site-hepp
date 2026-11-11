@@ -824,7 +824,7 @@
 
 <script>
   const MOT_DE_PASSE_ADMIN = "hepp2026adm"; 
-  
+
 <!-- SECTION ADMIN : GESTION DE LA BIBLIOTHÈQUE -->
 <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; margin-top: 20px;">
   <h4 style="color: #004080;">Gestion de la Bibliothèque Numérique</h4>
@@ -1157,6 +1157,103 @@ function afficherOngletEtudiant(nomOnglet) {
     cible.style.display = "block";
   }
 }
+// --- GESTION DE LA BIBLIOTHÈQUE ---
 
+function ajouterDocumentBibliotheque() {
+  const titre = document.getElementById("adminTitreDoc").value.trim();
+  const categorie = document.getElementById("adminCategorieDoc").value;
+  const fichierInput = document.getElementById("adminFichierDoc");
+
+  if (!titre || fichierInput.files.length === 0) {
+    alert("Veuillez entrer un titre et sélectionner un fichier.");
+    return;
+  }
+
+  const nomFichier = fichierInput.files[0].name;
+
+  const nouveauDoc = {
+    id: Date.now(),
+    titre,
+    categorie,
+    nomFichier
+  };
+
+  let documents = JSON.parse(localStorage.getItem("hepp_bibliotheque")) || [];
+  documents.push(nouveauDoc);
+  localStorage.setItem("hepp_bibliotheque", JSON.stringify(documents));
+
+  document.getElementById("adminTitreDoc").value = "";
+  document.getElementById("adminFichierDoc").value = "";
+
+  chargerAdminDocuments();
+  alert("Document publié avec succès dans la bibliothèque !");
+}
+
+function chargerAdminDocuments() {
+  const tbody = document.getElementById("adminTableDocuments");
+  if (!tbody) return;
+  tbody.innerHTML = "";
+  let documents = JSON.parse(localStorage.getItem("hepp_bibliotheque")) || [];
+
+  if (documents.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="4" style="padding: 10px; text-align: center; color: #666;">Aucun document dans la bibliothèque.</td></tr>`;
+    return;
+  }
+
+  documents.forEach(doc => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td style="padding: 8px; border: 1px solid #ddd;"><strong>${doc.titre}</strong></td>
+      <td style="padding: 8px; border: 1px solid #ddd;">${doc.categorie}</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">${doc.nomFichier}</td>
+      <td style="padding: 8px; border: 1px solid #ddd;"><button onclick="supprimerDocBibliotheque(${doc.id})" style="padding: 4px 8px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Supprimer</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function supprimerDocBibliotheque(id) {
+  let documents = JSON.parse(localStorage.getItem("hepp_bibliotheque")) || [];
+  documents = documents.filter(doc => doc.id !== id);
+  localStorage.setItem("hepp_bibliotheque", JSON.stringify(documents));
+  chargerAdminDocuments();
+}
+
+function chargerBibliothequeEtudiant() {
+  afficherOngletEtudiant('bibliotheque');
+  const conteneur = document.getElementById("listeDocumentsBibliotheque");
+  if (!conteneur) return;
+  
+  conteneur.innerHTML = "";
+  let documents = JSON.parse(localStorage.getItem("hepp_bibliotheque")) || [];
+
+  if (documents.length === 0) {
+    conteneur.innerHTML = `<p style="color: #666; font-style: italic;">Aucun document n'est disponible pour le moment dans la bibliothèque.</p>`;
+    return;
+  }
+
+  documents.forEach(doc => {
+    const div = document.createElement("div");
+    div.style.cssText = "padding: 15px; border: 1px solid #ddd; border-radius: 6px; background: #fafafa; display: flex; justify-content: space-between; align-items: center;";
+    div.innerHTML = `
+      <div>
+        <span style="font-size: 11px; background: #004080; color: white; padding: 2px 6px; border-radius: 3px;">${doc.categorie}</span>
+        <h4 style="margin: 8px 0 3px 0; color: #004080;">${doc.titre}</h4>
+        <small style="color: #666;">Fichier : ${doc.nomFichier}</small>
+      </div>
+      <button onclick="alerteTelechargement('${doc.nomFichier}')" style="padding: 8px 15px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px;">Télécharger</button>
+    `;
+    conteneur.appendChild(div);
+  });
+}
+
+function alerteTelechargement(nomFichier) {
+  alert("Téléchargement du fichier : " + nomFichier);
+}
+
+// Chargement automatique au démarrage
+window.addEventListener('DOMContentLoaded', () => {
+  chargerAdminDocuments();
+});
 </body>
 </html>
