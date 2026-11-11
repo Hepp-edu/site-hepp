@@ -1128,8 +1128,14 @@ window.addEventListener('appinstalled', () => {
             }
         }
     // --- GESTION DE L'ESPACE ÉTUDIANT SÉCURISÉ ---
-function verifierAccesEtudiant() {
-  const saisie = document.getElementById("etudiantIdInput").value.trim().toLowerCase();
+
+    function verifierAccesEtudiant() {
+  const inputEl = document.getElementById("etudiantIdInput");
+  const errEl = document.getElementById("erreurLoginEtudiant");
+  
+  if (!inputEl) return;
+  const saisie = inputEl.value.trim().toLowerCase();
+  
   if (!saisie) {
     alert("Veuillez entrer votre e-mail ou votre matricule.");
     return;
@@ -1137,29 +1143,34 @@ function verifierAccesEtudiant() {
 
   let etudiants = JSON.parse(localStorage.getItem("hepp_etudiants_admis")) || [];
   
-  etudiantConnecte = etudiants.find(e => 
+  let etudiantTrouve = etudiants.find(e => 
     (e.email && e.email.toLowerCase() === saisie) || 
     (e.code && e.code.toLowerCase() === saisie)
   );
 
-  if (etudiantConnecte) {
-    // Masquer l'écran de connexion
-    document.getElementById("etudiantLoginBox").style.display = "none";
+  if (etudiantTrouve) {
+    // Masquer la boîte de connexion
+    const loginBox = document.getElementById("etudiantLoginBox");
+    if (loginBox) loginBox.style.display = "none";
     
-    // Afficher le tableau de bord en mode flex
+    // Afficher le tableau de bord
     const dashboard = document.getElementById("etudiantDashboard");
-    dashboard.style.display = "flex";
+    if (dashboard) dashboard.style.display = "flex";
     
-    chargerDonneesBadgeEtudiant();
+    window.etudiantConnecte = etudiantTrouve;
     
-    // Afficher par défaut le premier onglet (le badge)
-    afficherOngletEtudiant('badge');
+    if (typeof chargerDonneesBadgeEtudiant === 'function') {
+      chargerDonneesBadgeEtudiant();
+    }
+    if (typeof afficherOngletEtudiant === 'function') {
+      afficherOngletEtudiant('badge');
+    }
   } else {
-    document.getElementById("erreurLoginEtudiant").style.display = "block";
+    if (errEl) errEl.style.display = "block";
   }
 }
 
-  // Remplissage dynamique des informations sur le badge officiel
+    e dynamique des informations sur le badge officiel
   document.getElementById("badgeNom").innerText = etudiantConnecte.nom || "Nom Inconnu";
   document.getElementById("badgeMatricule").innerText = etudiantConnecte.code || "HEPP-000";
   document.getElementById("badgeFiliere").innerText = etudiantConnecte.filiere || "Filière Générale";
