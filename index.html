@@ -813,36 +813,36 @@
         const MOT_DE_PASSE_ADMIN = "HeppAdmin#2026$Secure!";
         let etudiantConnecte = null;
 
-        // --- TÉLÉCHARGEMENT DIRECT EN PNG ---
+        // --- IMPRESSION / ENREGISTREMENT EN FORMAT PVC (8cm x 9cm) ---
         function telechargerBadgePNG() {
-            const badgeElement = document.getElementById("badgeImprimable");
-            html2canvas(badgeElement, { scale: 3, useCORS: true, allowTaint: true }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = `Badge_PVC_${etudiantConnecte ? etudiantConnecte.code : 'HEPP'}.png`;
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            }).catch(err => {
-                alert("Erreur lors de la génération du PNG : " + err);
-            });
+            imprimerBadgePVC();
         }
 
-        // --- TÉLÉCHARGEMENT DIRECT EN PDF ---
         function telechargerBadgePDF() {
-            const badgeElement = document.getElementById("badgeImprimable");
-            html2canvas(badgeElement, { scale: 3, useCORS: true, allowTaint: true }).then(canvas => {
-                const imgData = canvas.toDataURL('image/png');
-                const { jsPDF } = window.jspdf;
-                // Format PVC standard (80mm x 90mm)
-                const pdf = new jsPDF({
-                    orientation: 'portrait',
-                    unit: 'mm',
-                    format: [80, 90]
-                });
-                pdf.addImage(imgData, 'PNG', 0, 0, 80, 90);
-                pdf.save(`Badge_PVC_${etudiantConnecte ? etudiantConnecte.code : 'HEPP'}.pdf`);
-            }).catch(err => {
-                alert("Erreur lors de la génération du PDF : " + err);
-            });
+            imprimerBadgePVC();
+        }
+
+        function imprimerBadgePVC() {
+            const contenuBadge = document.getElementById("badgeImprimable").outerHTML;
+            const fenetreImpression = window.open('', '', 'height=700,width=600');
+            
+            fenetreImpression.document.write('<html><head><title>Badge PVC - HEPP</title>');
+            fenetreImpression.document.write('<style>');
+            fenetreImpression.document.write('@page { size: 80mm 90mm; margin: 0; }');
+            fenetreImpression.document.write('body { font-family: Poppins, Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }');
+            fenetreImpression.document.write('#badgeImprimable { box-shadow: none !important; border: 1px solid #1B365D !important; }');
+            fenetreImpression.document.write('</style>');
+            fenetreImpression.document.write('</head><body>');
+            fenetreImpression.document.write(contenuBadge);
+            fenetreImpression.document.write('</body></html>');
+            
+            fenetreImpression.document.close();
+            fenetreImpression.focus();
+            
+            setTimeout(() => {
+                fenetreImpression.print();
+                fenetreImpression.close();
+            }, 600);
         }
 
         // Service Worker PWA
