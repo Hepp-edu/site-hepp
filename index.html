@@ -514,36 +514,48 @@
                 Depuis sa fondation en <strong>Mars 2010</strong>, les programmes des <strong>HEPP</strong> sont élaborés en conformité avec les prescrits du Ministère de l'Éducation Nationale et de la Formation Professionnelle (MENFP) en Haïti et bénéficient du soutien de partenaires académiques majeurs (SAEP).
             </p>
         </div>
+<form action="https://formspree.io/f/xbgorobg" method="POST" enctype="multipart/form-data" style="max-width: 800px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+  <h3 style="color: #004080; margin-bottom: 20px;">Formulaire d'Inscription Officiel</h3>
 
-        <form action="https://formspree.io/f/xbgorobg" method="POST">
   <div style="margin-bottom: 15px;">
     <label for="nom" style="display: block; margin-bottom: 5px; font-weight: bold;">Nom complet :</label>
-    <input type="text" id="nom" name="nom" placeholder="Entrez votre nom et prénom" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    <input type="text" id="nom" name="nom" placeholder="Entrez votre nom et prénom" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
   </div>
 
   <div style="margin-bottom: 15px;">
     <label for="email" style="display: block; margin-bottom: 5px; font-weight: bold;">Adresse e-mail :</label>
-    <input type="email" id="email" name="email" placeholder="votre.email@exemple.com" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    <input type="email" id="email" name="email" placeholder="votre.email@example.com" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+    <div>
+      <label for="nif_cin" style="display: block; margin-bottom: 5px; font-weight: bold;">NIF / CIN :</label>
+      <input type="text" id="nif_cin" name="nif_cin" placeholder="Numéro NIF ou CIN" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+    </div>
+    <div>
+      <label for="telephone" style="display: block; margin-bottom: 5px; font-weight: bold;">Numéro de téléphone :</label>
+      <input type="tel" id="telephone" name="telephone" placeholder="+509 ..." required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+    </div>
   </div>
 
   <div style="margin-bottom: 15px;">
-    <label for="telephone" style="display: block; margin-bottom: 5px; font-weight: bold;">Téléphone (MonCash / NatCash) :</label>
-    <input type="tel" id="telephone" name="telephone" placeholder="+509 XXXX-XXXX" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-  </div>
-
-  <div style="margin-bottom: 15px;">
-    <label for="filiere" style="display: block; margin-bottom: 5px; font-weight: bold;">Programme / Filière :</label>
-    <select id="filiere" name="filiere" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-      <option value="">-- Choisissez un programme --</option>
-      <option value="Double Diplome Administration Scolaire & Gestion de Projet">Double Diplôme (Administration Scolaire & Gestion de Projet - 3 mois)</option>
-      <option value="Licence en Sciences de l'Education">Licence en Sciences de l'Éducation (3 ans)</option>
+    <label for="filiere" style="display: block; margin-bottom: 5px; font-weight: bold;">Filière choisie :</label>
+    <select id="filiere" name="filiere" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+      <option value="Double Diplôme Admin & Gestion">Double Diplôme Admin & Gestion</option>
+      <option value="Licence en Sciences de l'Éducation">Licence en Sciences de l'Éducation</option>
     </select>
   </div>
 
-  <button type="submit" style="background-color: #004080; color: white; padding: 12px 20px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; width: 100%;">Soumettre l'inscription</button>
+  <div style="margin-bottom: 20px;">
+    <label for="documents" style="display: block; margin-bottom: 5px; font-weight: bold;">Soumettre les documents requis (Pièce d'identité, Diplômes, etc.) :</label>
+    <!-- L'attribut 'multiple' permet de sélectionner plusieurs fichiers en même temps -->
+    <input type="file" id="documents" name="documents[]" multiple style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; background: #f9f9f9;">
+    <small style="color: #666;">Vous pouvez sélectionner plusieurs fichiers à la fois (PDF, images).</small>
+  </div>
+
+  <button type="submit" style="width: 100%; padding: 12px; background: #004080; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Soumettre mon inscription</button>
 </form>
        
-
         <!-- ESPACE ÉTUDIANT (CAMPUS VIRTUEL) -->
         <div class="panel-section" id="cours">
             <h2 class="section-title">Espace Étudiant (Campus Virtuel & App)</h2>
