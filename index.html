@@ -556,59 +556,153 @@
   <button type="submit" style="width: 100%; padding: 12px; background: #004080; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Soumettre mon inscription</button>
 </form>
        
-        <!-- ESPACE ÉTUDIANT (CAMPUS VIRTUEL) -->
-        <div class="panel-section" id="cours">
-            <h2 class="section-title">Espace Étudiant (Campus Virtuel & App)</h2>
-            
-            <div class="login-gate" id="studentLoginGate">
-                <h3 style="color: var(--primary); margin-top: 0;">🔒 Connexion au Portail Étudiant</h3>
-                <p style="font-size: 14px; color: #555;">Entrez votre matricule officiel pour déverrouiller l'accès aux modules de cours et aux devoirs.</p>
-                <div style="display: flex; gap: 10px; justify-content: center; max-width: 400px; margin: 20px auto 0 auto;">
-                    <input type="text" id="studentCodeInput" placeholder="Ex: HEPP-2026-001" style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-family:'Poppins', sans-serif;">
-                    <button type="button" class="btn" onclick="verifyStudentCode()" style="padding: 10px 20px;">Connexion</button>
-                </div>
-                <p id="loginError" style="color: #dc3545; font-size: 13px; margin-top: 10px; display: none;">Code invalide. Essayez avec 'HEPP-2026-001'.</p>
-            </div>
+     <!-- ESPACE ÉTUDIANT SÉCURISÉ AVEC MENU LATÉRAL -->
+<div class="panel-section" id="espace-etudiant" style="padding: 20px; background: #f4f6f9; border-radius: 8px; margin-top: 20px;">
+  <h2 class="section-title" style="color: #004080; border-bottom: 2px solid #004080; padding-bottom: 8px;">Portail Étudiant HEPP</h2>
 
-            <div class="protected-content" id="studentPortalContent">
-                <div style="background: #d4edda; color: #155724; padding: 12px; border-radius: 6px; margin-bottom: 20px; font-size: 14px; text-align: center;">
-                    ✅ <strong>Session Ouverte :</strong> Bienvenue sur le Campus Virtuel HEPP.
-                </div>
+  <!-- Écran de Connexion Étudiant (Par E-mail ou Matricule) -->
+  <div id="etudiantLoginBox" style="max-width: 450px; margin: 40px auto; padding: 30px; background: white; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+    <h3 style="color: #004080; margin-top: 0;">Connexion à votre Campus Virtuel</h3>
+    <p style="color: #666; font-size: 14px;">Entrez votre adresse e-mail ou votre matricule officiel (enregistré par l'administration) :</p>
+    <input type="text" id="etudiantIdInput" placeholder="Ex: hepp-2026-001 ou email@example.com" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;">
+    <button onclick="verifierAccesEtudiant()" style="width: 100%; padding: 12px; background: #004080; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; font-weight: bold;">Accéder à mon espace</button>
+    <p id="erreurLoginEtudiant" style="color: red; margin-top: 12px; display: none; font-size: 14px;">Identifiant introuvable dans le registre des étudiants admis.</p>
+  </div>
 
-                <div class="module-list">
-                    <div class="module-item">
-                        <div><h4>Administration Scolaire & Leadership</h4><p style="margin:0;font-size:13px;color:#666;">Organisation et direction des structures éducatives.</p></div>
-                        <span class="module-badge">ADS101</span>
-                        <button class="btn-sm" onclick="alert('Accès au module ADS101');">Télécharger le cours</button>
-                    </div>
-                    <div class="module-item">
-                        <div><h4>Gestion et Élaboration de Projets</h4><p style="margin:0;font-size:13px;color:#666;">Planification, suivi et évaluation des projets éducatifs.</p></div>
-                        <span class="module-badge">GEP103</span>
-                        <button class="btn-sm" onclick="alert('Accès au module GEP103');">Télécharger le cours</button>
-                    </div>
-                    <div class="module-item">
-                        <div><h4>Comptabilité & Gestion Financière</h4><p style="margin:0;font-size:13px;color:#666;">Budgétisation et comptabilité des établissements.</p></div>
-                        <span class="module-badge">ICO102</span>
-                        <button class="btn-sm" onclick="alert('Accès au module ICO102');">Télécharger le cours</button>
-                    </div>
-                </div>
+  <!-- Tableau de bord Étudiant (Affiché après connexion réussie) -->
+  <div id="etudiantDashboard" style="display: none; display: flex; gap: 20px; margin-top: 20px;">
+    
+    <!-- MENU LATÉRAL (SIDEBAR) -->
+    <div style="width: 280px; background: white; padding: 20px; border-radius: 8px; border: 1px solid #ddd; height: fit-content;">
+      <h3 style="color: #004080; font-size: 16px; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 0;">Menu Principal</h3>
+      
+      <ul style="list-style: none; padding: 0; margin: 0; font-size: 14px;">
+        <li style="margin-bottom: 12px;">
+          <strong style="color: #333; display: block; margin-bottom: 4px;">📂 1. Mon Dossier & Identité</strong>
+          <ul style="list-style: none; padding-left: 15px; color: #555;">
+            <li style="padding: 3px 0; cursor: pointer; color: #004080;" onclick="afficherOngletEtudiant('badge')">▪ Mon Badge Officiel</li>
+            <li style="padding: 3px 0; cursor: pointer;" onclick="afficherOngletEtudiant('infos')">▪ Informations Personnelles</li>
+          </ul>
+        </li>
 
-                <!-- Remise de Devoirs -->
-                <div style="background:var(--light); padding:20px; border-radius:6px; margin-top:30px;">
-                    <h3 style="color:var(--primary); margin-top:0; font-size:18px; font-weight:600;">📤 Espace de Remise des Devoirs</h3>
-                    <form onsubmit="event.preventDefault(); alert('Devoir transmis avec succès à l\'enseignant !');" style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
-                        <select required style="padding: 10px; border-radius: 6px; border: 1px solid #ccc; flex: 1; min-width: 200px; font-family:'Poppins', sans-serif;">
-                            <option value="">Sélectionner le cours...</option>
-                            <option value="ADS101">ADS101 - Administration Scolaire</option>
-                            <option value="GEP103">GEP103 - Gestion de Projet</option>
-                            <option value="ICO102">ICO102 - Comptabilité</option>
-                        </select>
-                        <input type="file" required style="padding: 6px; background: white; border: 1px solid #ccc; border-radius: 6px; font-family:'Poppins', sans-serif;">
-                        <button type="submit" class="btn-sm" style="padding: 10px 20px;">Soumettre le fichier</button>
-                    </form>
-                </div>
-            </div>
+        <li style="margin-bottom: 12px;">
+          <strong style="color: #333; display: block; margin-bottom: 4px;">📚 2. Espace Pédagogique</strong>
+          <ul style="list-style: none; padding-left: 15px; color: #555;">
+            <li style="padding: 3px 0; cursor: pointer;" onclick="afficherOngletEtudiant('cours')">▪ Mes Cours & Supports</li>
+            <li style="padding: 3px 0; cursor: pointer;" onclick="afficherOngletEtudiant('devoirs')">▪ Devoirs & Évaluations</li>
+            <li style="padding: 3px 0; cursor: pointer;" onclick="afficherOngletEtudiant('notes')">▪ Relevé de Notes</li>
+          </ul>
+        </li>
+
+        <li style="margin-bottom: 12px;">
+          <strong style="color: #333; display: block; margin-bottom: 4px;">💰 3. Finances & Scolarité</strong>
+          <ul style="list-style: none; padding-left: 15px; color: #555;">
+            <li style="padding: 3px 0; cursor: pointer;" onclick="afficherOngletEtudiant('finances')">▪ État des Versements & Balance</li>
+          </ul>
+        </li>
+
+        <li style="margin-bottom: 12px;">
+          <strong style="color: #333; display: block; margin-bottom: 4px;">📁 4. Documents & Archives</strong>
+          <ul style="list-style: none; padding-left: 15px; color: #555;">
+            <li style="padding: 3px 0; cursor: pointer;" onclick="afficherOngletEtudiant('documents')">▪ Certificats & Diplômes</li>
+          </ul>
+        </li>
+      </ul>
+
+      <button onclick="deconnexionEtudiant()" style="width: 100%; margin-top: 20px; padding: 8px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px;">Se déconnecter</button>
+    </div>
+
+    <!-- CONTENU PRINCIPAL DE L'ESPACE ÉTUDIANT -->
+    <div style="flex-grow: 1; background: white; padding: 25px; border-radius: 8px; border: 1px solid #ddd;">
+      
+      <!-- ONGLÉ 1 : BADGE AUTOMATIQUE -->
+      <div id="onglet-badge" class="etudiant-onglet">
+        <h3 style="color: #004080; margin-top: 0;">Mon Badge d'Admission Officiel</h3>
+        <p style="color: #666; font-size: 14px;">Ce badge est généré automatiquement à partir de votre dossier validé par l'administration.</p>
+
+        <!-- DESIGN DU BADGE OFFICIEL HEPP -->
+        <div style="max-width: 350px; margin: 30px auto; background: #fff; border: 3px solid #004080; border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.15); text-align: center; overflow: hidden; font-family: Arial, sans-serif;">
+          
+          <!-- Entête du Badge -->
+          <div style="background: #004080; color: white; padding: 15px 10px;">
+            <h4 style="margin: 0; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px;">HAUTES ÉTUDES DES PRATIQUES PÉDAGOGIQUES</h4>
+            <span style="font-size: 13px; font-weight: bold; background: #ffc107; color: #000; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-top: 5px;">HEPP</span>
+          </div>
+
+          <!-- Photo d'identité -->
+          <div style="padding: 20px 0 10px 0;">
+            <img id="badgePhoto" src="https://via.placeholder.com/110" alt="Photo Étudiant" style="width: 110px; height: 110px; object-fit: cover; border-radius: 50%; border: 3px solid #004080;">
+          </div>
+
+          <!-- Informations Étudiant -->
+          <div style="padding: 0 20px 20px 20px;">
+            <h3 id="badgeNom" style="margin: 5px 0; color: #222; font-size: 18px;">Nom Prénom</h3>
+            <p style="margin: 3px 0; color: #555; font-size: 14px;"><strong>Matricule :</strong> <span id="badgeMatricule">HEPP-000</span></p>
+            <p style="margin: 3px 0; color: #555; font-size: 14px;"><strong>Filière :</strong> <span id="badgeFiliere">Filière</span></p>
+            <p style="margin: 3px 0; color: #555; font-size: 13px; background: #e2f0d9; color: #155724; padding: 4px; border-radius: 4px; margin-top: 8px;"><strong>Session :</strong> 2026 - 2027</p>
+          </div>
+
+          <!-- Pied du badge -->
+          <div style="background: #f8f9fa; padding: 8px; font-size: 11px; color: #777; border-top: 1px solid #ddd;">
+            Document Officiel - Campus Virtuel HEPP
+          </div>
         </div>
+
+        <div style="text-align: center;">
+          <button onclick="window.print()" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Imprimer / Télécharger mon Badge</button>
+        </div>
+      </div>
+
+      <!-- ONGLET 2 : COURS & SUPPORTS -->
+      <div id="onglet-cours" class="etudiant-onglet" style="display: none;">
+        <h3 style="color: #004080; margin-top: 0;">Mes Cours & Supports Pédagogiques</h3>
+        <p>Retrouvez ci-dessous les cours enregistrés et disponibles pour votre formation :</p>
+        
+        <div style="display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 15px;">
+          <div style="padding: 15px; border: 1px solid #ddd; border-radius: 6px; background: #fafafa;">
+            <h4 style="margin: 0 0 5px 0; color: #004080;">Module 1 : Introduction aux Pratiques Pédagogiques</h4>
+            <p style="margin: 0 0 10px 0; font-size: 13px; color: #666;">Enseignant : Direction Académique HEPP</p>
+            <a href="cours-pedagogie.html" target="_blank" style="padding: 6px 12px; background: #004080; color: white; text-decoration: none; border-radius: 4px; font-size: 13px; display: inline-block;">Ouvrir le fichier du cours</a>
+          </div>
+
+          <div style="padding: 15px; border: 1px solid #ddd; border-radius: 6px; background: #fafafa;">
+            <h4 style="margin: 0 0 5px 0; color: #004080;">Module 2 : Gestion Administrative et Stratégique</h4>
+            <p style="margin: 0 0 10px 0; font-size: 13px; color: #666;">Enseignant : Administration HEPP</p>
+            <a href="cours-gestion.html" target="_blank" style="padding: 6px 12px; background: #004080; color: white; text-decoration: none; border-radius: 4px; font-size: 13px; display: inline-block;">Ouvrir le fichier du cours</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ONGLET 3 : FINANCES & VERSEMENTS -->
+      <div id="onglet-finances" class="etudiant-onglet" style="display: none;">
+        <h3 style="color: #004080; margin-top: 0;">Suivi Financier & Scolarité</h3>
+        <div style="background: #f9f9f9; padding: 20px; border-radius: 6px; border: 1px solid #ddd;">
+          <p><strong>Montant Total Versé :</strong> <span id="resVersement" style="color: #28a745; font-weight: bold;">0</span></p>
+          <p><strong>Balance Restante à Payer :</strong> <span id="resBalance" style="color: #dc3545; font-weight: bold;">0</span></p>
+          <hr style="border: 0; border-top: 1px solid #ddd; margin: 15px 0;">
+          <p style="font-size: 13px; color: #666;">Pour tout versement via MonCash ou NatCash, veuillez transmettre la référence à la comptabilité.</p>
+        </div>
+      </div>
+
+      <!-- AUTRES ONGLETS (DEVOIRS, NOTES, DOCUMENTS) -->
+      <div id="onglet-devoirs" class="etudiant-onglet" style="display: none;">
+        <h3 style="color: #004080; margin-top: 0;">Devoirs & Évaluations</h3>
+        <p>Aucun devoir en attente pour le moment.</p>
+      </div>
+
+      <div id="onglet-notes" class="etudiant-onglet" style="display: none;">
+        <h3 style="color: #004080; margin-top: 0;">Relevé de Notes</h3>
+        <p>Vos notes s'afficheront ici au fur et à mesure des validations de semestres.</p>
+      </div>
+
+      <div id="onglet-documents" class="etudiant-onglet" style="display: none;">
+        <h3 style="color: #004080; margin-top: 0;">Certificats & Diplômes Soumis</h3>
+        <p>Fichiers enregistrés dans votre dossier : <span id="resDocs" style="font-weight: bold; color: #333;">Aucun</span></p>
+      </div>
+
+    </div>
+  </div>
+</div>
 
         <!-- ESPACE ENSEIGNANT -->
         <div class="panel-section" id="espace-enseignant">
