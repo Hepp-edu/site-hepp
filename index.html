@@ -726,7 +726,7 @@
     if (saisi === MOT_DE_PASSE_ADMIN) {
       document.getElementById("adminLoginBox").style.display = "none";
       document.getElementById("adminDashboard").style.display = "block";
-      chargerEtudiants();
+      chargerEtudiantsComplet();
     } else {
       document.getElementById("erreurLogin").style.display = "block";
     }
@@ -738,48 +738,79 @@
     document.getElementById("adminPasswordInput").value = "";
   }
 
-  function ajouterEtudiant() {
-    const nom = document.getElementById("nomEtudiant").value;
-    const email = document.getElementById("emailEtudiant").value;
-    const filiere = document.getElementById("filiereEtudiant").value;
-    const ref = document.getElementById("refPaiement").value;
+  function ajouterEtudiantComplet() {
+    const nom = document.getElementById("adminNom").value;
+    const code = document.getElementById("adminCode").value;
+    const email = document.getElementById("adminEmail").value;
+    const tel = document.getElementById("adminTel").value;
+    const nifCin = document.getElementById("adminNifCin").value;
+    const filiere = document.getElementById("adminFiliere").value;
+    const versement = document.getElementById("adminVersement").value;
+    const balance = document.getElementById("adminBalance").value;
+    const coursDevoirs = document.getElementById("adminCoursDevoirs").value;
+    
+    // Récupération des noms des fichiers (certificats et diplômes)
+    const fileInput = document.getElementById("adminDocs");
+    let docsNoms = [];
+    if (fileInput && fileInput.files) {
+      for (let i = 0; i < fileInput.files.length; i++) {
+        docsNoms.push(fileInput.files[i].name);
+      }
+    }
 
-    if (!nom || !email) {
-      alert("Veuillez remplir au moins le nom et l'e-mail de l'étudiant.");
+    if (!nom || !email || !code) {
+      alert("Veuillez remplir au moins le nom, le code/matricule et l'e-mail de l'étudiant.");
       return;
     }
 
-    const nouvelEtudiant = { nom, email, filiere, ref };
+    const nouvelEtudiant = {
+      nom, code, email, tel, nifCin, filiere, versement, balance, coursDevoirs, docsNoms
+    };
+
     let etudiants = JSON.parse(localStorage.getItem("hepp_etudiants_admis")) || [];
     etudiants.push(nouvelEtudiant);
     localStorage.setItem("hepp_etudiants_admis", JSON.stringify(etudiants));
 
-    document.getElementById("nomEtudiant").value = "";
-    document.getElementById("emailEtudiant").value = "";
-    document.getElementById("refPaiement").value = "";
-    
-    chargerEtudiants();
-    alert("Dossier de l'étudiant enregistré avec succès !");
+    // Réinitialisation des champs du formulaire admin
+    document.getElementById("adminNom").value = "";
+    document.getElementById("adminCode").value = "";
+    document.getElementById("adminEmail").value = "";
+    document.getElementById("adminTel").value = "";
+    document.getElementById("adminNifCin").value = "";
+    document.getElementById("adminVersement").value = "";
+    document.getElementById("adminBalance").value = "";
+    document.getElementById("adminCoursDevoirs").value = "";
+    document.getElementById("adminDocs").value = "";
+
+    chargerEtudiantsComplet();
+    alert("Dossier complet de l'étudiant enregistré avec succès !");
   }
 
-  function chargerEtudiants() {
-    const tbody = document.getElementById("listeEtudiantsTable");
+  function chargerEtudiantsComplet() {
+    const tbody = document.getElementById("listeEtudiantsCompletTable");
+    if (!tbody) return;
     tbody.innerHTML = "";
     let etudiants = JSON.parse(localStorage.getItem("hepp_etudiants_admis")) || [];
 
     etudiants.forEach(et => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td style="padding: 8px; border: 1px solid #ddd;">${et.nom}</td>
-        <td style="padding: 8px; border: 1px solid #ddd;">${et.email}</td>
-        <td style="padding: 8px; border: 1px solid #ddd;">${et.filiere}</td>
-        <td style="padding: 8px; border: 1px solid #ddd;">${et.ref}</td>
+        <td style="padding: 8px; border: 1px solid #ddd;"><strong>${et.code || 'N/A'}</strong><br>${et.nom}</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">${et.email}<br>${et.tel || ''}</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">${et.nifCin || 'N/A'}</td>
+        <td style="padding: 8px; border: 1px solid #ddd; color: #004080;">Versé: ${et.versement || 0}<br>Reste: <strong style="color: red;">${et.balance || 0}</strong></td>
+        <td style="padding: 8px; border: 1px solid #ddd;">${et.coursDevoirs || '0'}<br><small style="color: #666;">Docs: ${et.docsNoms && et.docsNoms.length > 0 ? et.docsNoms.join(', ') : 'Aucun'}</small></td>
       `;
       tbody.appendChild(tr);
     });
   }
-</script>
 
+  // Chargement automatique au démarrage de la page
+  window.addEventListener('DOMContentLoaded', () => {
+    chargerEtudiantsComplet();
+  });
+</script>
+ 
 
         <!-- Bibliothèque Numérique -->
         <div class="panel-section" id="bibliotheque">
