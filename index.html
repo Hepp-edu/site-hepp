@@ -1128,9 +1128,6 @@ window.addEventListener('appinstalled', () => {
             }
         }
     // --- GESTION DE L'ESPACE ÉTUDIANT SÉCURISÉ ---
-
-let etudiantConnecte = null;
-
 function verifierAccesEtudiant() {
   const saisie = document.getElementById("etudiantIdInput").value.trim().toLowerCase();
   if (!saisie) {
@@ -1140,31 +1137,27 @@ function verifierAccesEtudiant() {
 
   let etudiants = JSON.parse(localStorage.getItem("hepp_etudiants_admis")) || [];
   
-  // Recherche de l'étudiant par son e-mail ou son matricule (code)
   etudiantConnecte = etudiants.find(e => 
     (e.email && e.email.toLowerCase() === saisie) || 
     (e.code && e.code.toLowerCase() === saisie)
   );
 
   if (etudiantConnecte) {
+    // Masquer l'écran de connexion
     document.getElementById("etudiantLoginBox").style.display = "none";
-    document.getElementById("etudiantDashboard").style.display = "flex";
+    
+    // Afficher le tableau de bord en mode flex
+    const dashboard = document.getElementById("etudiantDashboard");
+    dashboard.style.display = "flex";
+    
     chargerDonneesBadgeEtudiant();
+    
+    // Afficher par défaut le premier onglet (le badge)
+    afficherOngletEtudiant('badge');
   } else {
     document.getElementById("erreurLoginEtudiant").style.display = "block";
   }
 }
-
-function deconnexionEtudiant() {
-  etudiantConnecte = null;
-  document.getElementById("etudiantDashboard").style.display = "none";
-  document.getElementById("etudiantLoginBox").style.display = "block";
-  document.getElementById("etudiantIdInput").value = "";
-  document.getElementById("erreurLoginEtudiant").style.display = "none";
-}
-
-function chargerDonneesBadgeEtudiant() {
-  if (!etudiantConnecte) return;
 
   // Remplissage dynamique des informations sur le badge officiel
   document.getElementById("badgeNom").innerText = etudiantConnecte.nom || "Nom Inconnu";
