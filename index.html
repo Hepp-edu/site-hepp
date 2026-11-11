@@ -515,41 +515,34 @@
             </p>
         </div>
 
-        <!-- Formulaire d'Inscription en Ligne -->
-        <div class="panel-section" id="inscription">
-            <h2 class="section-title">Formulaire d'Inscription en Ligne</h2>
-            
-            <div class="payment-box">
-                <h4>💳 Frais d'inscription (Modes de paiement officiels)</h4>
-                <p>Veuillez effectuer votre dépôt de dossier puis renseigner la référence ci-dessous :</p>
-                <ul>
-                    <li><strong>MONCASH :</strong> (+509) 4647-5772 — <em>Nom : Deborah FRANKLIN</em></li>
-                    <li><strong>NATCASH :</strong> (+509) 3338-1049 — <em>Nom : FRANÇOIS GAEZICO KEVIN</em></li>
-                </ul>
-            </div>
+        <form action="https://formspree.io/fxbgorobg" method="POST">
+  <div style="margin-bottom: 15px;">
+    <label for="nom" style="display: block; margin-bottom: 5px; font-weight: bold;">Nom complet :</label>
+    <input type="text" id="nom" name="nom" placeholder="Entrez votre nom et prénom" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+  </div>
 
-            <form class="form-grid" onsubmit="event.preventDefault(); alert('Inscription soumise avec succès ! Un code d\'accès vous sera transmis après vérification.');">
-                <div class="form-group"><label>Nom et Prénom *</label><input type="text" required placeholder="Ex: Jean Pierre"></div>
-                <div class="form-group"><label>Adresse E-mail *</label><input type="email" required placeholder="votre.email@example.com"></div>
-                <div class="form-group"><label>Téléphone *</label><input type="text" required placeholder="+509 XXXX-XXXX"></div>
-                <div class="form-group"><label>Sexe *</label><select required><option value="">Sélectionner...</option><option value="M">Masculin</option><option value="F">Féminin</option></select></div>
-                <div class="form-group"><label>Date de Naissance *</label><input type="date" required></div>
-                <div class="form-group"><label>Année du Bac *</label><input type="text" required placeholder="Ex: 2023"></div>
-                <div class="form-group"><label>Programme Choisi *</label>
-                    <select required>
-                        <option value="">Sélectionner le programme...</option>
-                        <option value="double_diplome">Double Diplôme (3 mois) : Admin. Scolaire & Gestion de Projet</option>
-                        <option value="licence">Licence en Sciences de l'Éducation (3 ans)</option>
-                    </select>
-                </div>
-                <div class="form-group"><label>NIF / CIN *</label><input type="text" required placeholder="Numéro d'identité"></div>
-                <div class="form-group full"><label>Adresse Résidentielle *</label><input type="text" required placeholder="Ville, Quartier..."></div>
-                <div class="form-group full"><label>Code de transaction (MonCash / NatCash) *</label><input type="text" required placeholder="Référence du paiement"></div>
-                <div class="form-group full" style="text-align: center; margin-top: 15px;">
-                    <button type="submit" class="btn" style="padding: 14px 30px;">Soumettre mon inscription</button>
-                </div>
-            </form>
-        </div>
+  <div style="margin-bottom: 15px;">
+    <label for="email" style="display: block; margin-bottom: 5px; font-weight: bold;">Adresse e-mail :</label>
+    <input type="email" id="email" name="email" placeholder="votre.email@exemple.com" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <label for="telephone" style="display: block; margin-bottom: 5px; font-weight: bold;">Téléphone (MonCash / NatCash) :</label>
+    <input type="tel" id="telephone" name="telephone" placeholder="+509 XXXX-XXXX" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <label for="filiere" style="display: block; margin-bottom: 5px; font-weight: bold;">Programme / Filière :</label>
+    <select id="filiere" name="filiere" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+      <option value="">-- Choisissez un programme --</option>
+      <option value="Double Diplome Administration Scolaire & Gestion de Projet">Double Diplôme (Administration Scolaire & Gestion de Projet - 3 mois)</option>
+      <option value="Licence en Sciences de l'Education">Licence en Sciences de l'Éducation (3 ans)</option>
+    </select>
+  </div>
+
+  <button type="submit" style="background-color: #004080; color: white; padding: 12px 20px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; width: 100%;">Soumettre l'inscription</button>
+</form>
+       
 
         <!-- ESPACE ÉTUDIANT (CAMPUS VIRTUEL) -->
         <div class="panel-section" id="cours">
