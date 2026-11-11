@@ -627,36 +627,127 @@
             </div>
         </div>
 
-        <!-- PANNEAU D'ADMINISTRATION -->
-        <div class="panel-section" id="admin-panel" style="border-top-color: var(--dark);">
-            <h2 class="section-title">Tableau de Bord Administratif (Secrétariat & Direction)</h2>
-            
-            <div class="admin-dashboard">
-                <div class="stat-card">
-                    <h4>Étudiants Inscrits</h4>
-                    <div class="number">1,240</div>
-                </div>
-                <div class="stat-card">
-                    <h4>Inscriptions en Attente</h4>
-                    <div class="number" style="color: var(--secondary);">18</div>
-                </div>
-                <div class="stat-card">
-                    <h4>Enseignants Actifs</h4>
-                    <div class="number">24</div>
-                </div>
-                <div class="stat-card">
-                    <h4>Années d'Existence</h4>
-                    <div class="number" style="color: var(--accent);">16 Ans</div>
-                </div>
-            </div>
+    <!-- SECTION ADMINISTRATION SÉCURISÉE -->
+<div class="panel-section" id="administration" style="padding: 20px; background: #f9f9f9; border-radius: 8px; margin-top: 20px;">
+  <h2 class="section-title" style="color: #004080;">Portail Administratif Sécurisé</h2>
 
-            <div style="background: var(--light); padding: 20px; border-radius: 8px; margin-top: 20px;">
-                <h4 style="color: var(--primary); margin-top: 0;">📢 Diffuser une annonce officielle</h4>
-                <textarea id="creatorAnnouncement" rows="3" placeholder="Saisissez un communiqué officiel pour le portail des étudiants..." style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-family:'Poppins', sans-serif; box-sizing: border-box;"></textarea>
-                <button type="button" class="btn-sm" style="margin-top: 10px; padding: 10px 20px;" onclick="publishAnnouncement()">Publier l'annonce</button>
-            </div>
-            <div id="liveAnnouncement" style="margin-top: 15px; padding: 12px; background: #d1ecf1; color: #0c5460; border-radius: 6px; display: none;"></div>
-        </div>
+  <!-- Écran de Connexion Admin -->
+  <div id="adminLoginBox" style="max-width: 400px; margin: 20px auto; padding: 20px; background: white; border: 1px solid #ddd; border-radius: 6px;">
+    <h3>Connexion Administrateur</h3>
+    <p>Veuillez entrer le mot de passe administrateur :</p>
+    <input type="password" id="adminPasswordInput" placeholder="Mot de passe admin" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px;">
+    <button onclick="verifierAdmin()" style="width: 100%; padding: 10px; background: #004080; color: white; border: none; border-radius: 4px; cursor: pointer;">Se connecter</button>
+    <p id="erreurLogin" style="color: red; margin-top: 10px; display: none;">Mot de passe incorrect.</p>
+  </div>
+
+  <!-- Contenu Protégé de l'Administration -->
+  <div id="adminDashboard" style="display: none;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <h3 style="color: #28a745;">Bienvenue, Administrateur</h3>
+      <button onclick="deconnexionAdmin()" style="padding: 5px 10px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Se déconnecter</button>
+    </div>
+
+    <!-- SOUS-SECTION : Enregistrement des Étudiants Admis -->
+    <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 20px;">
+      <h4>Registre des Étudiants Admis et Dossiers</h4>
+      <p>Enregistrez ici les nouveaux étudiants admis pour conserver leur dossier.</p>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+        <input type="text" id="nomEtudiant" placeholder="Nom complet de l'étudiant" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+        <input type="email" id="emailEtudiant" placeholder="Adresse e-mail" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+        <select id="filiereEtudiant" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+          <option value="Double Diplôme Admin & Gestion">Double Diplôme Admin & Gestion</option>
+          <option value="Licence en Sciences de l'Éducation">Licence en Sciences de l'Éducation</option>
+        </select>
+        <input type="text" id="refPaiement" placeholder="Réf. Paiement (MonCash/NatCash)" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+      </div>
+      <button onclick="ajouterEtudiant()" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">Enregistrer l'étudiant admis</button>
+    </div>
+
+    <!-- Liste des dossiers enregistrés -->
+    <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd;">
+      <h4>Liste des Dossiers Enregistrés</h4>
+      <table style="width: 100%; margin-top: 10px; border-collapse: collapse;">
+        <thead>
+          <tr style="background: #f1f1f1; text-align: left;">
+            <th style="padding: 8px; border: 1px solid #ddd;">Nom</th>
+            <th style="padding: 8px; border: 1px solid #ddd;">E-mail</th>
+            <th style="padding: 8px; border: 1px solid #ddd;">Filière</th>
+            <th style="padding: 8px; border: 1px solid #ddd;">Référence</th>
+          </tr>
+        </thead>
+        <tbody id="listeEtudiantsTable">
+          <!-- Les étudiants s'afficheront ici -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  const MOT_DE_PASSE_ADMIN = "hepp2026"; 
+
+  function verifierAdmin() {
+    const saisi = document.getElementById("adminPasswordInput").value;
+    if (saisi === MOT_DE_PASSE_ADMIN) {
+      document.getElementById("adminLoginBox").style.display = "none";
+      document.getElementById("adminDashboard").style.display = "block";
+      chargerEtudiants();
+    } else {
+      document.getElementById("erreurLogin").style.display = "block";
+    }
+  }
+
+  function deconnexionAdmin() {
+    document.getElementById("adminDashboard").style.display = "none";
+    document.getElementById("adminLoginBox").style.display = "block";
+    document.getElementById("adminPasswordInput").value = "";
+  }
+
+  function ajouterEtudiant() {
+    const nom = document.getElementById("nomEtudiant").value;
+    const email = document.getElementById("emailEtudiant").value;
+    const filiere = document.getElementById("filiereEtudiant").value;
+    const ref = document.getElementById("refPaiement").value;
+
+    if (!nom || !email) {
+      alert("Veuillez remplir au moins le nom et l'e-mail de l'étudiant.");
+      return;
+    }
+
+    const nouvelEtudiant = { nom, email, filiere, ref };
+    let etudiants = JSON.parse(localStorage.getItem("hepp_etudiants_admis")) || [];
+    etudiants.push(nouvelEtudiant);
+    localStorage.setItem("hepp_etudiants_admis", JSON.stringify(etudiants));
+
+    document.getElementById("nomEtudiant").value = "";
+    document.getElementById("emailEtudiant").value = "";
+    document.getElementById("refPaiement").value = "";
+    
+    chargerEtudiants();
+    alert("Dossier de l'étudiant enregistré avec succès !");
+  }
+
+  function chargerEtudiants() {
+    const tbody = document.getElementById("listeEtudiantsTable");
+    tbody.innerHTML = "";
+    let etudiants = JSON.parse(localStorage.getItem("hepp_etudiants_admis")) || [];
+
+    etudiants.forEach(et => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td style="padding: 8px; border: 1px solid #ddd;">${et.nom}</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">${et.email}</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">${et.filiere}</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">${et.ref}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+</script>
+
 
         <!-- Bibliothèque Numérique -->
         <div class="panel-section" id="bibliotheque">
