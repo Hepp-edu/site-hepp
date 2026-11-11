@@ -1038,7 +1038,75 @@ window.addEventListener('appinstalled', () => {
                 chatBox.scrollTop = chatBox.scrollHeight;
             }
         }
-    </script>
+    // --- GESTION DE L'ESPACE ÉTUDIANT SÉCURISÉ ---
+
+let etudiantConnecte = null;
+
+function verifierAccesEtudiant() {
+  const saisie = document.getElementById("etudiantIdInput").value.trim().toLowerCase();
+  if (!saisie) {
+    alert("Veuillez entrer votre e-mail ou votre matricule.");
+    return;
+  }
+
+  let etudiants = JSON.parse(localStorage.getItem("hepp_etudiants_admis")) || [];
+  
+  // Recherche de l'étudiant par son e-mail ou son matricule (code)
+  etudiantConnecte = etudiants.find(e => 
+    (e.email && e.email.toLowerCase() === saisie) || 
+    (e.code && e.code.toLowerCase() === saisie)
+  );
+
+  if (etudiantConnecte) {
+    document.getElementById("etudiantLoginBox").style.display = "none";
+    document.getElementById("etudiantDashboard").style.display = "flex";
+    chargerDonneesBadgeEtudiant();
+  } else {
+    document.getElementById("erreurLoginEtudiant").style.display = "block";
+  }
+}
+
+function deconnexionEtudiant() {
+  etudiantConnecte = null;
+  document.getElementById("etudiantDashboard").style.display = "none";
+  document.getElementById("etudiantLoginBox").style.display = "block";
+  document.getElementById("etudiantIdInput").value = "";
+  document.getElementById("erreurLoginEtudiant").style.display = "none";
+}
+
+function chargerDonneesBadgeEtudiant() {
+  if (!etudiantConnecte) return;
+
+  // Remplissage dynamique des informations sur le badge officiel
+  document.getElementById("badgeNom").innerText = etudiantConnecte.nom || "Nom Inconnu";
+  document.getElementById("badgeMatricule").innerText = etudiantConnecte.code || "HEPP-000";
+  document.getElementById("badgeFiliere").innerText = etudiantConnecte.filiere || "Filière Générale";
+  
+  // Photo si définie par l'admin, sinon image par défaut
+  if (etudiantConnecte.photoUrl) {
+    document.getElementById("badgePhoto").src = etudiantConnecte.photoUrl;
+  }
+
+  // Remplissage des données financières et des documents dans le profil
+  document.getElementById("resVersement").innerText = etudiantConnecte.versement ? etudiantConnecte.versement + " HTG / $" : "0";
+  document.getElementById("resBalance").innerText = etudiantConnecte.balance ? etudiantConnecte.balance + " HTG / $" : "0";
+
+  if (etudiantConnecte.docsNoms && etudiantConnecte.docsNoms.length > 0) {
+    document.getElementById("resDocs").innerText = etudiantConnecte.docsNoms.join(', ');
+  }
+}
+
+function afficherOngletEtudiant(nomOnglet) {
+  // Masquer tous les onglets de l'espace étudiant
+  const onglets = document.querySelectorAll(".etudiant-onglet");
+  onglets.forEach(o => o.style.display = "none");
+
+  // Afficher uniquement l'onglet cible sélectionné dans le menu latéral
+  const cible = document.getElementById("onglet-" + nomOnglet);
+  if (cible) {
+    cible.style.display = "block";
+  }
+}
 
 </body>
 </html>
