@@ -926,7 +926,7 @@
             });
         }
 
-   // --- TÉLÉCHARGEMENT DIRECT EN PNG ---
+  // --- TÉLÉCHARGEMENT DIRECT EN PNG ---
 function telechargerBadgePNG() {
     const nom = document.getElementById("badgeNom").innerText || "Etudiant";
     const matricule = document.getElementById("badgeMatricule").innerText || "HEPP";
@@ -935,6 +935,7 @@ function telechargerBadgePNG() {
     const tel = document.getElementById("badgeTel").innerText || "";
     const email = document.getElementById("badgeEmail").innerText || "";
     const photoSrc = document.getElementById("badgePhoto").src || "https://via.placeholder.com/110";
+    const logoSrc = "logo.jpeg"; // Assurez-vous que le fichier s'appelle bien ainsi sur votre serveur/GitHub
     const qrSrc = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=HEPP-" + encodeURIComponent(matricule);
 
     const canvas = document.createElement("canvas");
@@ -950,7 +951,6 @@ function telechargerBadgePNG() {
             img.src = url;
             img.onload = () => resolve(img);
             img.onerror = () => {
-                // Image de secours en cas d'échec
                 const fallback = new Image();
                 fallback.src = "https://via.placeholder.com/120";
                 fallback.onload = () => resolve(fallback);
@@ -958,8 +958,8 @@ function telechargerBadgePNG() {
         });
     }
 
-    // Attendre que la photo et le QR code soient 100% chargés avant de dessiner
-    Promise.all([chargerImage(photoSrc), chargerImage(qrSrc)]).then(([imgPhoto, imgQR]) => {
+    // Attendre que le logo, la photo et le QR code soient 100% chargés
+    Promise.all([chargerImage(logoSrc), chargerImage(photoSrc), chargerImage(qrSrc)]).then(([imgLogo, imgPhoto, imgQR]) => {
         ctx.fillStyle = "#ffffff";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -973,13 +973,19 @@ function telechargerBadgePNG() {
         ctx.fillStyle = "#ffc107";
         ctx.fillRect(8, 94, canvas.width - 16, 8);
 
+        // --- DESSIN DU LOGO EN HAUT À GAUCHE ---
+        // On dessine un petit fond blanc pour que le logo ressorte bien sur le fond bleu
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(20, 20, 75, 75);
+        ctx.drawImage(imgLogo, 22, 22, 71, 71);
+
         ctx.fillStyle = "#ffc107";
         ctx.font = "bold 15px Montserrat, Arial, sans-serif";
-        ctx.fillText("HAUTES ÉTUDES DES PRATIQUES PÉDAGOGIQUES", 30, 40);
+        ctx.fillText("HAUTES ÉTUDES DES PRATIQUES PÉDAGOGIQUES", 115, 40);
 
         ctx.fillStyle = "#ffffff";
         ctx.font = "bold 26px Montserrat, Arial, sans-serif";
-        ctx.fillText("CARTE D'ÉTUDIANT OFFICIELLE", 30, 75);
+        ctx.fillText("CARTE D'ÉTUDIANT OFFICIELLE", 115, 75);
 
         ctx.fillStyle = "#ffc107";
         ctx.fillRect(790, 30, 135, 45);
@@ -987,7 +993,7 @@ function telechargerBadgePNG() {
         ctx.font = "bold 20px Poppins, Arial, sans-serif";
         ctx.fillText("2026-2027", 805, 60);
 
-        // Dessin de la photo
+        // Dessin de la photo de l'étudiant
         ctx.strokeStyle = "#1B365D";
         ctx.lineWidth = 6;
         ctx.strokeRect(30, 130, 160, 200);
@@ -1045,7 +1051,7 @@ function telechargerBadgePNG() {
         ctx.fillText("secrétariat.hepp@gmail.com", 360, 490);
         ctx.fillText("Port-au-Prince, HAÏTI", 730, 490);
 
-        // Déclenchement du téléchargement PNG
+        // Téléchargement du PNG final complet
         const imageURL = canvas.toDataURL("image/png");
         const link = document.createElement("a");
         link.href = imageURL;
