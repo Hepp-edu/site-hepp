@@ -367,7 +367,7 @@
                 </div>
             </div>
 
-            <!-- Reconnaissance institutionnelle  -->
+            <!-- Reconnaissance institutionnelle -->
             <div class="accreditation-box">
                 <h3 style="color: var(--primary); margin-top: 0; font-weight: 600; font-size: 16px;">🏛️ Cadre Institutionnel</h3>
                 <p style="color: #555; max-width: 750px; margin: 0 auto; line-height: 1.6; font-size: 13.5px;">
@@ -561,8 +561,8 @@
                            <strong style="color: #555; width: 32%;">Matricule :</strong> <span id="badgeMatricule" style="color: #004080; font-weight: 700; width: 68%; text-align: right;">HEPP-000</span>
                          </div>
                          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
- <strong style="color: #555; width: 28%;">Filière :</strong> <span id="badgeFiliere" style="font-weight: 600; width: 72%; text-align: right; font-size: 6.5px; line-height: 1.1; word-break: break-word;">Filière Générale</span>
-                        </div>
+                           <strong style="color: #555; width: 28%;">Filière :</strong> <span id="badgeFiliere" style="font-weight: 600; width: 72%; text-align: right; font-size: 6.5px; line-height: 1.1; word-break: break-word;">Filière Générale</span>
+                         </div>
                          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
                            <strong style="color: #555; width: 32%;">NIF / CIN :</strong> <span id="badgeNifCin" style="font-weight: 500; width: 68%; text-align: right;">000-000-000-0</span>
                          </div>
@@ -910,7 +910,6 @@
                     conteneur.innerHTML = `<p style="color: #666; font-style: italic; text-align: center; width: 100%;">Aucun séminaire ou formation ponctuelle pour le moment.</p>`;
                     return;
                 }
-
                 seminaires.forEach(sem => {
                     const card = document.createElement("div");
                     card.className = "card";
@@ -926,174 +925,166 @@
             });
         }
 
-  // --- TÉLÉCHARGEMENT DIRECT EN PNG ---
-function telechargerBadgePNG() {
-    const nom = document.getElementById("badgeNom").innerText || "Etudiant";
-    const matricule = document.getElementById("badgeMatricule").innerText || "HEPP";
-    const filiere = document.getElementById("badgeFiliere").innerText || "";
-    const nifCin = document.getElementById("badgeNifCin").innerText || "";
-    const tel = document.getElementById("badgeTel").innerText || "";
-    const email = document.getElementById("badgeEmail").innerText || "";
-    const photoSrc = document.getElementById("badgePhoto").src || "https://via.placeholder.com/110";
-    const logoSrc = "logo.jpeg"; // Assurez-vous que le fichier s'appelle bien ainsi sur votre serveur/GitHub
-    const qrSrc = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://hepp-edu.github.io/site-hepp/#espace-etudiant";
-    const canvas = document.createElement("canvas");
-    canvas.width = 960;
-    canvas.height = 520;
-    const ctx = canvas.getContext("2d");
+        // --- TÉLÉCHARGEMENT DIRECT EN PNG ---
+        function telechargerBadgePNG() {
+            const nom = document.getElementById("badgeNom").innerText || "Etudiant";
+            const matricule = document.getElementById("badgeMatricule").innerText || "HEPP";
+            const filiere = document.getElementById("badgeFiliere").innerText || "";
+            const nifCin = document.getElementById("badgeNifCin").innerText || "";
+            const tel = document.getElementById("badgeTel").innerText || "";
+            const email = document.getElementById("badgeEmail").innerText || "";
+            const photoSrc = document.getElementById("badgePhoto").src || "https://via.placeholder.com/110";
+            const logoSrc = "logo.jpeg";
+            const qrSrc = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://hepp-edu.github.io/site-hepp/#espace-etudiant";
 
-    // Fonction utilitaire pour charger une image de manière sécurisée
-    function chargerImage(url) {
-        return new Promise((resolve, reject) => {
-            const img = new Image();
-            img.crossOrigin = "anonymous";
-            img.src = url;
-            img.onload = () => resolve(img);
-            img.onerror = () => {
-                const fallback = new Image();
-                fallback.src = "https://via.placeholder.com/120";
-                fallback.onload = () => resolve(fallback);
-            };
-        });
-    }
+            const canvas = document.createElement("canvas");
+            canvas.width = 960;
+            canvas.height = 520;
+            const ctx = canvas.getContext("2d");
 
-    // Attendre que le logo, la photo et le QR code soient 100% chargés
-    Promise.all([chargerImage(logoSrc), chargerImage(photoSrc), chargerImage(qrSrc)]).then(([imgLogo, imgPhoto, imgQR]) => {
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+            function chargerImage(url) {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.crossOrigin = "anonymous";
+                    img.src = url;
+                    img.onload = () => resolve(img);
+                    img.onerror = () => {
+                        const fallback = new Image();
+                        fallback.src = "https://via.placeholder.com/120";
+                        fallback.onload = () => resolve(fallback);
+                    };
+                });
+            }
 
-        ctx.strokeStyle = "#1B365D";
-        ctx.lineWidth = 8;
-        ctx.strokeRect(4, 4, canvas.width - 8, canvas.height - 8);
+            Promise.all([chargerImage(logoSrc), chargerImage(photoSrc), chargerImage(qrSrc)]).then(([imgLogo, imgPhoto, imgQR]) => {
+                ctx.fillStyle = "#ffffff";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.fillStyle = "#1B365D";
-        ctx.fillRect(8, 8, canvas.width - 16, 90);
+                ctx.strokeStyle = "#1B365D";
+                ctx.lineWidth = 8;
+                ctx.strokeRect(4, 4, canvas.width - 8, canvas.height - 8);
 
-        ctx.fillStyle = "#ffc107";
-        ctx.fillRect(8, 94, canvas.width - 16, 8);
+                ctx.fillStyle = "#1B365D";
+                ctx.fillRect(8, 8, canvas.width - 16, 90);
 
-        // --- DESSIN DU LOGO EN HAUT À GAUCHE ---
-        // On dessine un petit fond blanc pour que le logo ressorte bien sur le fond bleu
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(20, 20, 75, 75);
-        ctx.drawImage(imgLogo, 22, 22, 71, 71);
+                ctx.fillStyle = "#ffc107";
+                ctx.fillRect(8, 94, canvas.width - 16, 8);
 
-        ctx.fillStyle = "#ffc107";
-        ctx.font = "bold 15px Montserrat, Arial, sans-serif";
-        ctx.fillText("HAUTES ÉTUDES DES PRATIQUES PÉDAGOGIQUES", 115, 40);
+                ctx.fillStyle = "#ffffff";
+                ctx.fillRect(20, 20, 75, 75);
+                ctx.drawImage(imgLogo, 22, 22, 71, 71);
 
-        ctx.fillStyle = "#ffffff";
-        ctx.font = "bold 26px Montserrat, Arial, sans-serif";
-        ctx.fillText("CARTE D'ÉTUDIANT OFFICIELLE", 115, 75);
+                ctx.fillStyle = "#ffc107";
+                ctx.font = "bold 15px Montserrat, Arial, sans-serif";
+                ctx.fillText("HAUTES ÉTUDES DES PRATIQUES PÉDAGOGIQUES", 115, 40);
 
-        ctx.fillStyle = "#ffc107";
-        ctx.fillRect(790, 30, 135, 45);
-        ctx.fillStyle = "#1B365D";
-        ctx.font = "bold 20px Poppins, Arial, sans-serif";
-        ctx.fillText("2026-2027", 805, 60);
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "bold 26px Montserrat, Arial, sans-serif";
+                ctx.fillText("CARTE D'ÉTUDIANT OFFICIELLE", 115, 75);
 
-        // Dessin de la photo de l'étudiant
-        ctx.strokeStyle = "#1B365D";
-        ctx.lineWidth = 6;
-        ctx.strokeRect(30, 130, 160, 200);
-        ctx.drawImage(imgPhoto, 33, 133, 154, 194);
+                ctx.fillStyle = "#ffc107";
+                ctx.fillRect(790, 30, 135, 45);
+                ctx.fillStyle = "#1B365D";
+                ctx.font = "bold 20px Poppins, Arial, sans-serif";
+                ctx.fillText("2026-2027", 805, 60);
 
-        ctx.fillStyle = "#e8f5e9";
-        ctx.fillRect(55, 345, 110, 30);
-        ctx.fillStyle = "#28a745";
-        ctx.font = "bold 14px Poppins, Arial, sans-serif";
-        ctx.fillText("● ADMIS(E)", 68, 366);
+                ctx.strokeStyle = "#1B365D";
+                ctx.lineWidth = 6;
+                ctx.strokeRect(30, 130, 160, 200);
+                ctx.drawImage(imgPhoto, 33, 133, 154, 194);
 
-        ctx.fillStyle = "#1B365D";
-        ctx.font = "bold 22px Montserrat, Arial, sans-serif";
-        ctx.textAlign = "center";
-        ctx.fillText(nom.toUpperCase(), 530, 150);
-        ctx.textAlign = "left";
+                ctx.fillStyle = "#e8f5e9";
+                ctx.fillRect(55, 345, 110, 30);
+                ctx.fillStyle = "#28a745";
+                ctx.font = "bold 14px Poppins, Arial, sans-serif";
+                ctx.fillText("● ADMIS(E)", 68, 366);
 
-        ctx.fillStyle = "#f8f9fa";
-        ctx.fillRect(220, 175, 480, 180);
-        ctx.strokeStyle = "#e1e4e8";
-        ctx.lineWidth = 2;
-        ctx.strokeRect(220, 175, 480, 180);
+                ctx.fillStyle = "#1B365D";
+                ctx.font = "bold 22px Montserrat, Arial, sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText(nom.toUpperCase(), 530, 150);
+                ctx.textAlign = "left";
 
-        ctx.font = "bold 16px Poppins, Arial, sans-serif";
-        let yPos = 205;
-        const lignes = [
-            { label: "Matricule :", val: matricule },
-            { label: "Filière :", val: filiere },
-            { label: "NIF / CIN :", val: nifCin },
-            { label: "Tél :", val: tel },
-            { label: "E-mail :", val: email }
-        ];
+                ctx.fillStyle = "#f8f9fa";
+                ctx.fillRect(220, 175, 480, 180);
+                ctx.strokeStyle = "#e1e4e8";
+                ctx.lineWidth = 2;
+                ctx.strokeRect(220, 175, 480, 180);
 
-        lignes.forEach(ligne => {
-            ctx.fillStyle = "#555555";
-            ctx.fillText(ligne.label, 240, yPos);
-            ctx.fillStyle = "#004080";
-            ctx.fillText(ligne.val, 360, yPos);
-            yPos += 30;
-        });
+                ctx.font = "bold 16px Poppins, Arial, sans-serif";
+                let yPos = 205;
+                const lignes = [
+                    { label: "Matricule :", val: matricule },
+                    { label: "Filière :", val: filiere },
+                    { label: "NIF / CIN :", val: nifCin },
+                    { label: "Tél :", val: tel },
+                    { label: "E-mail :", val: email }
+                ];
 
-        // Dessin du QR Code
-        ctx.drawImage(imgQR, 730, 205, 120, 120);
-        ctx.fillStyle = "#1B365D";
-        ctx.font = "bold 14px Poppins, Arial, sans-serif";
-        ctx.textAlign = "center";
-        ctx.fillText("SÉCURISÉ", 790, 345);
-        ctx.textAlign = "left";
+                lignes.forEach(ligne => {
+                    ctx.fillStyle = "#555555";
+                    ctx.fillText(ligne.label, 240, yPos);
+                    ctx.fillStyle = "#004080";
+                    ctx.fillText(ligne.val, 360, yPos);
+                    yPos += 30;
+                });
 
-        ctx.fillStyle = "#1B365D";
-        ctx.fillRect(8, 455, canvas.width - 16, 55);
-        ctx.fillStyle = "#ffc107";
-        ctx.font = "bold 12px Poppins, Arial, sans-serif";
-        ctx.fillText("Propriété de HEPP", 30, 490);
-        ctx.fillText("secrétariat.hepp@gmail.com", 360, 490);
-        ctx.fillText("Port-au-Prince, HAÏTI", 730, 490);
+                ctx.drawImage(imgQR, 730, 205, 120, 120);
+                ctx.fillStyle = "#1B365D";
+                ctx.font = "bold 14px Poppins, Arial, sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText("SÉCURISÉ", 790, 345);
+                ctx.textAlign = "left";
 
-        // Téléchargement du PNG final complet
-        const imageURL = canvas.toDataURL("image/png");
-        const link = document.createElement("a");
-        link.href = imageURL;
-        link.download = `Carte_Etudiant_${matricule}.png`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    });
-}
+                ctx.fillStyle = "#1B365D";
+                ctx.fillRect(8, 455, canvas.width - 16, 55);
+                ctx.fillStyle = "#ffc107";
+                ctx.font = "bold 12px Poppins, Arial, sans-serif";
+                ctx.fillText("Propriété de HEPP", 30, 490);
+                ctx.fillText("secrétariat.hepp@gmail.com", 360, 490);
+                ctx.fillText("Port-au-Prince, HAÏTI", 730, 490);
 
-    // --- TÉLÉCHARGEMENT EN PDF ---
-function telechargerBadgePDF() {
-    // S'assurer que le QR code de la carte à l'écran est bien à jour avec le bon matricule
-    const matricule = document.getElementById("badgeMatricule").innerText || "HEPP";
-    const qrImgElement = document.querySelector("#badgeImprimable img[alt='QR Code']");
-    if (qrImgElement) {
-        qrImgElement.src = "https://api.qrserver.com/v1/create-qr-code/?size=40x40&data=HEPP-" + encodeURIComponent(matricule);
-    }
+                const imageURL = canvas.toDataURL("image/png");
+                const link = document.createElement("a");
+                link.href = imageURL;
+                link.download = `Carte_Etudiant_${matricule}.png`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+        }
 
-    // Petit délai de 400ms pour garantir le chargement complet des images dans le DOM avant l'impression
-    setTimeout(() => {
-        const contenuBadge = document.getElementById("badgeImprimable").outerHTML;
-        const fenetreImpression = window.open('', '', 'height=700,width=600');
-        
-        fenetreImpression.document.write('<html><head><title>Carte_Etudiant_HEPP_' + matricule + '</title>');
-        fenetreImpression.document.write('<style>');
-        fenetreImpression.document.write('@page { size: 90mm 80mm; margin: 0; }');
-        fenetreImpression.document.write('body { font-family: Poppins, Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; overflow: hidden; }');
-        fenetreImpression.document.write('#badgeImprimable { box-shadow: none !important; border: 3px solid #1B365D !important; width: 480px !important; height: 260px !important; page-break-inside: avoid; }');
-        fenetreImpression.document.write('</style>');
-        fenetreImpression.document.write('</head><body>');
-        fenetreImpression.document.write(contenuBadge);
-        fenetreImpression.document.write('</body></html>');
-        
-        fenetreImpression.document.close();
-        fenetreImpression.focus();
-        
-        setTimeout(() => {
-            fenetreImpression.print();
-            fenetreImpression.close();
-        }, 600);
-    }, 400);
-}
+        // --- TÉLÉCHARGEMENT EN PDF ---
+        function telechargerBadgePDF() {
+            const matricule = document.getElementById("badgeMatricule").innerText || "HEPP";
+            const qrImgElement = document.getElementById("badgeQrImage");
+            if (qrImgElement) {
+                qrImgElement.src = "https://api.qrserver.com/v1/create-qr-code/?size=40x40&data=https://hepp-edu.github.io/site-hepp/#espace-etudiant";
+            }
+
+            setTimeout(() => {
+                const contenuBadge = document.getElementById("badgeImprimable").outerHTML;
+                const fenetreImpression = window.open('', '', 'height=700,width=600');
+                
+                fenetreImpression.document.write('<html><head><title>Carte_Etudiant_HEPP_' + matricule + '</title>');
+                fenetreImpression.document.write('<style>');
+                fenetreImpression.document.write('@page { size: 90mm 80mm; margin: 0; }');
+                fenetreImpression.document.write('body { font-family: Poppins, Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; overflow: hidden; }');
+                fenetreImpression.document.write('#badgeImprimable { box-shadow: none !important; border: 3px solid #1B365D !important; width: 480px !important; height: 260px !important; page-break-inside: avoid; }');
+                fenetreImpression.document.write('</style>');
+                fenetreImpression.document.write('</head><body>');
+                fenetreImpression.document.write(contenuBadge);
+                fenetreImpression.document.write('</body></html>');
+                
+                fenetreImpression.document.close();
+                fenetreImpression.focus();
+                
+                setTimeout(() => {
+                    fenetreImpression.print();
+                    fenetreImpression.close();
+                }, 600);
+            }, 400);
+        }
 
         // --- CONNEXION ADMINISTRATEUR ---
         function verifierAdmin() {
@@ -1395,6 +1386,8 @@ function telechargerBadgePDF() {
         }
 
         // --- ADMINISTRATION (CLOUD) : GESTION DES ÉTUDIANTS & AJUSTEMENT FINANCIER ---
+        let etiquetteCleModificationCourante = null;
+
         function ajouterEtudiantComplet() {
             const nom = document.getElementById("adminNom").value;
             const code = document.getElementById("adminCode").value;
@@ -1410,20 +1403,42 @@ function telechargerBadgePDF() {
                 return;
             }
 
-            const nouvelEtudiant = { nom, code, email, tel, nifCin, filiere, versement: versement || "0", balance: balance || "0", photoUrl: "" };
-            db.ref("hepp_etudiants_admis").push(nouvelEtudiant, () => {
-                document.getElementById("adminNom").value = "";
-                document.getElementById("adminCode").value = "";
-                document.getElementById("adminEmail").value = "";
-                document.getElementById("adminTel").value = "";
-                document.getElementById("adminNifCin").value = "";
-                document.getElementById("adminVersement").value = "";
-                document.getElementById("adminBalance").value = "";
+            if (etiquetteCleModificationCourante) {
+                db.ref("hepp_etudiants_admis/" + etiquetteCleModificationCourante).once('value', (snapshot) => {
+                    let anciennePhoto = snapshot.val() ? snapshot.val().photoUrl || "" : "";
+                    const etudiantModifie = { nom, code, email, tel, nifCin, filiere, versement: versement || "0", balance: balance || "0", photoUrl: anciennePhoto };
+                    
+                    db.ref("hepp_etudiants_admis/" + etiquetteCleModificationCourante).set(etudiantModifie, () => {
+                        nettoyerFormulaireEtudiant();
+                        chargerEtudiantsComplet();
+                        alert("Informations de l'étudiant mises à jour avec succès !");
+                    });
+                });
+            } else {
+                const nouvelEtudiant = { nom, code, email, tel, nifCin, filiere, versement: versement || "0", balance: balance || "0", photoUrl: "" };
+                db.ref("hepp_etudiants_admis").push(nouvelEtudiant, () => {
+                    nettoyerFormulaireEtudiant();
+                    chargerEtudiantsComplet();
+                    alert("Étudiant enregistré et synchronisé dans le Cloud !");
+                });
+            }
+        }
 
-                chargerEtudiantsComplet();
-                chargerAdminSelectEtudiantsCertificats();
-                alert("Étudiant enregistré et synchronisé dans le Cloud !");
-            });
+        function nettoyerFormulaireEtudiant() {
+            document.getElementById("adminNom").value = "";
+            document.getElementById("adminCode").value = "";
+            document.getElementById("adminEmail").value = "";
+            document.getElementById("adminTel").value = "";
+            document.getElementById("adminNifCin").value = "";
+            document.getElementById("adminVersement").value = "";
+            document.getElementById("adminBalance").value = "";
+            etiquetteCleModificationCourante = null;
+
+            const btnEnregistrer = document.querySelector("#adminDashboard button[onclick='ajouterEtudiantComplet()']");
+            if (btnEnregistrer) {
+                btnEnregistrer.innerText = "Enregistrer dans le Cloud";
+                btnEnregistrer.style.background = "#28a745";
+            }
         }
 
         function chargerEtudiantsComplet() {
@@ -1454,8 +1469,9 @@ function telechargerBadgePDF() {
                           Reste: <input type="text" id="balance_${key}" value="${et.balance || 0}" style="width:70px; padding:3px; color:red;">
                         </td>
                         <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
-                            <button onclick="mettreAJourFinances('${key}')" style="padding: 6px 10px; background: #004080; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; margin-bottom: 4px;">Mettre à jour</button><br>
-                            <button onclick="supprimerEtudiant('${key}')" style="padding: 6px 10px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold;">Retirer</button>
+                            <button onclick="mettreAJourFinances('${key}')" style="padding: 5px 8px; background: #004080; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; margin-bottom: 3px;">Mettre à jour</button><br>
+                            <button onclick="preparerModificationEtudiant('${key}', '${encodeURIComponent(JSON.stringify(et))}')" style="padding: 5px 8px; background: #e67e22; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; margin-bottom: 3px;">Modifier</button><br>
+                            <button onclick="supprimerEtudiant('${key}')" style="padding: 5px 8px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold;">Retirer</button>
                         </td>
                     `;
                     tbody.appendChild(tr);
@@ -1473,6 +1489,29 @@ function telechargerBadgePDF() {
             }, () => {
                 alert("Dossier financier mis à jour avec succès dans le Cloud !");
             });
+        }
+
+        function preparerModificationEtudiant(key, etudiantJsonStr) {
+            const et = JSON.parse(decodeURIComponent(etudiantJsonStr));
+            
+            document.getElementById("adminNom").value = et.nom || "";
+            document.getElementById("adminCode").value = et.code || "";
+            document.getElementById("adminEmail").value = et.email || "";
+            document.getElementById("adminTel").value = et.tel || "";
+            document.getElementById("adminNifCin").value = et.nifCin || "";
+            document.getElementById("adminFiliere").value = et.filiere || "Double Diplôme Admin & Gestion";
+            document.getElementById("adminVersement").value = et.versement || "";
+            document.getElementById("adminBalance").value = et.balance || "";
+
+            etiquetteCleModificationCourante = key;
+
+            const btnEnregistrer = document.querySelector("#adminDashboard button[onclick='ajouterEtudiantComplet()']");
+            if (btnEnregistrer) {
+                btnEnregistrer.innerText = "Enregistrer les modifications";
+                btnEnregistrer.style.background = "#e67e22";
+            }
+
+            window.scrollTo({ top: document.getElementById("adminNom").offsetTop - 100, behavior: 'smooth' });
         }
 
         function supprimerEtudiant(key) {
@@ -1826,7 +1865,7 @@ function telechargerBadgePDF() {
                     return;
                 }
 
-                keys.keys().forEach(key => {
+                keys.forEach(key => {
                     let doc = data[key];
                     const tr = document.createElement("tr");
                     tr.innerHTML = `
