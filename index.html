@@ -586,16 +586,11 @@
         </div>
       </div>
 
-      <!-- Bloc QR Code stylisé à droite -->
+      <!-- QR Code Standardisé et Garanti -->
       <div style="text-align: center; flex-shrink: 0; border-left: 2px dashed #dcdcdc; padding-left: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-        <svg width="52" height="52" viewBox="0 0 25 25" style="display: block; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); background: white; padding: 2px;">
-          <rect width="25" height="25" fill="#fff"/>
-          <path d="M0 0h7v7H0zM2 2h3v3H2zM18 0h7v7h-7zM20 2h3v3h-3zM0 18h7v7H0zM2 20h3v3H2z" fill="#1B365D"/>
-          <path d="M9 2h2v2H9zm4 0h2v2H9zm-2 4h2v2H9zm4-2h2v2H9zm-6 4h2v2H9zm4 0h2v2H9zm-2 4h2v2H9zm4 0h2v2H9zM9 18h2v2H9zm4 0h2v2H9zm4 2h2v2H9zm-2 4h2v2H9zm4-2h2v2H9zm-6-2h2v2H9z" fill="#1B365D"/>
-        </svg>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=50x50&data=HEPP-VERIFIED-STUDENT" crossorigin="anonymous" alt="QR Code" style="display: block; width: 48px; height: 48px; border-radius: 4px; background: white; padding: 2px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
         <span style="color: #1B365D; font-weight: 700; font-size: 7px; display: block; margin-top: 3px; letter-spacing: 0.5px;">SÉCURISÉ</span>
       </div>
-    </div>
 
     <!-- Bande finale institutionnelle élégante -->
     <div style="background: #1B365D; color: #ffc107; padding: 4px 12px; display: flex; justify-content: space-between; align-items: center; font-size: 7.5px; font-weight: 700; letter-spacing: 0.8px; border-top: 1px solid #ffc107;">
@@ -829,40 +824,20 @@
         const MOT_DE_PASSE_ADMIN = "HeppAdmin#2026$Secure!";
         let etudiantConnecte = null;
 
-        // --- TÉLÉCHARGEMENT EN PNG ---
+       // --- TÉLÉCHARGEMENT ET ENREGISTREMENT SÉCURISÉ DU BADGE ---
         function telechargerBadgePNG() {
-            const badgeElement = document.getElementById("badgeImprimable");
-            
-            if (typeof html2canvas === 'undefined') {
-                alert("Erreur : La bibliothèque de téléchargement n'est pas chargée.");
-                return;
-            }
-
-            html2canvas(badgeElement, {
-                scale: 4, // Haute résolution (4x)
-                useCORS: true,
-                allowTaint: false,
-                backgroundColor: "#ffffff"
-            }).then(canvas => {
-                const imageURL = canvas.toDataURL("image/png");
-                const link = document.createElement("a");
-                link.href = imageURL;
-                link.download = `Carte_Etudiant_HEPP_${etudiantConnecte ? etudiantConnecte.code : 'Officiel'}.png`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }).catch(err => {
-                console.error("Erreur de téléchargement PNG :", err);
-                alert("Erreur lors de la génération de l'image.");
-            });
+            imprimerBadgePVC();
         }
 
-        // --- TÉLÉCHARGEMENT EN PDF (FORMAT PVC PAYSAGE 90mm x 80mm) ---
         function telechargerBadgePDF() {
+            imprimerBadgePVC();
+        }
+
+        function imprimerBadgePVC() {
             const contenuBadge = document.getElementById("badgeImprimable").outerHTML;
             const fenetreImpression = window.open('', '', 'height=700,width=600');
             
-            fenetreImpression.document.write('<html><head><title>Carte_Etudiant_HEPP</title>');
+            fenetreImpression.document.write('<html><head><title>Carte_Etudiant_HEPP_' + (etudiantConnecte ? etudiantConnecte.code : 'Officiel') + '</title>');
             fenetreImpression.document.write('<style>');
             fenetreImpression.document.write('@page { size: 90mm 80mm; margin: 0; }');
             fenetreImpression.document.write('body { font-family: Poppins, Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; overflow: hidden; }');
@@ -878,9 +853,10 @@
             setTimeout(() => {
                 fenetreImpression.print();
                 fenetreImpression.close();
-            }, 500);
+            }, 600);
         }
-
+           
+        
         // Service Worker PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
