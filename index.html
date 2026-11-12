@@ -367,11 +367,11 @@
                 </div>
             </div>
 
-            <!-- Reconnaissance institutionnelle (Synthèse) -->
+            <!-- Reconnaissance institutionnelle  -->
             <div class="accreditation-box">
                 <h3 style="color: var(--primary); margin-top: 0; font-weight: 600; font-size: 16px;">🏛️ Cadre Institutionnel</h3>
                 <p style="color: #555; max-width: 750px; margin: 0 auto; line-height: 1.6; font-size: 13.5px;">
-                    Établies depuis <strong>Mars 2010</strong>, l'institution ''HAUTES ÉTUDES DES PRATIQUES PÉDAGOGIQUES (HEPP)'' respecte scrupuleusement les normes du MENFP, avec l'appui de partenaires académiques internationaux.
+                    Établie depuis <strong>Mars 2010</strong>, l'institution ''HAUTES ÉTUDES DES PRATIQUES PÉDAGOGIQUES (HEPP)'' respecte scrupuleusement les normes du MENFP, avec l'appui de partenaires académiques internationaux.
                 </p>
             </div>
 
@@ -408,7 +408,7 @@
         <!-- ================= SECTION 2 : À PROPOS ET PROGRAMMES (Isolé) ================= -->
         <div id="sec-apropos" class="site-section">
             <div class="panel-section" style="margin-top: 0;">
-                <h2 class="section-title">Détails des Cursus Académiques</h2>
+                <h2 class="section-title">Détails des Cursus Académiques & Séminaires</h2>
                 <div class="grid" style="margin-bottom: 30px;">
                     <div class="card">
                         <h3>🏆 Double Diplôme Professionnel (3 mois)</h3>
@@ -424,7 +424,15 @@
                     </div>
                 </div>
 
-                <div class="accreditation-box">
+                <!-- Section dynamique des Séminaires et Formations Ponctuelles -->
+                <div style="margin-top: 40px;">
+                    <h3 style="color: var(--primary); text-align: center; margin-bottom: 20px;">🌟 Séminaires & Formations Ponctuelles Disponibles</h3>
+                    <div id="listeSeminairesPublic" class="grid">
+                        <p style="color: #666; font-style: italic; text-align: center; width: 100%;">Chargement des séminaires disponibles...</p>
+                    </div>
+                </div>
+
+                <div class="accreditation-box" style="margin-top: 35px;">
                     <h3 style="color: var(--primary); margin-top: 0; font-weight: 600;">🏛️ Reconnaissance Institutionnelle</h3>
                     <p style="color: #555; max-width: 800px; margin: 0 auto; line-height: 1.7; font-size: 14px;">
                         Depuis sa fondation en <strong>Mars 2010</strong>, les programmes des <strong>HEPP</strong> sont élaborés en conformité avec les prescrits du Ministère de l'Éducation Nationale et de la Formation Professionnelle (MENFP) en Haïti et bénéficient du soutien de partenaires académiques majeurs (SAEP).
@@ -469,6 +477,7 @@
                       <select id="filiere" name="filiere" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; background: white; box-sizing: border-box;">
                         <option value="Double Diplôme Admin & Gestion">Double Diplôme Admin & Gestion (3 mois)</option>
                         <option value="Licence en Sciences de l'Éducation">Licence en Sciences de l'Éducation (3 ans)</option>
+                        <option value="Séminaire / Formation Ponctuelle">Séminaire / Formation Ponctuelle</option>
                       </select>
                     </div>
                   </div>
@@ -491,7 +500,7 @@
             
             <div id="etudiantLoginBox" style="max-width: 450px; margin: 20px auto; padding: 30px; background: white; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
               <h3 style="color: #004080; margin-top: 0;">Connexion à votre Campus Virtuel</h3>
-              <p style="color: #666; font-size: 14px;">Entrez votre adresse e-mail ou votre matricule officiel :</p>
+              <p style="color: #666; font-size: 14px;">Entrez votre matricule officiel :</p>
               <input type="text" id="etudiantIdInput" placeholder="Ex: hepp-2026-001 ou email@example.com" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; box-sizing: border-box;">
               <button onclick="verifierAccesEtudiant()" style="width: 100%; padding: 12px; background: #004080; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; font-weight: bold;">Accéder à mon espace</button>
               <p id="erreurLoginEtudiant" style="color: red; margin-top: 12px; display: none; font-size: 14px;">Identifiant introuvable dans le registre des étudiants admis.</p>
@@ -505,6 +514,7 @@
                   <button onclick="chargerCoursEtudiant()" style="padding: 8px 14px; background: #f8f9fa; color: #004080; border: 1px solid #004080; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500;">📚 Mes Cours</button>
                   <button onclick="afficherOngletEtudiant('finances')" style="padding: 8px 14px; background: #f8f9fa; color: #004080; border: 1px solid #004080; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500;">💰 Finances</button>
                   <button onclick="chargerBibliothequeEtudiant()" style="padding: 8px 14px; background: #f8f9fa; color: #004080; border: 1px solid #004080; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500;">📑 Bibliothèque</button>
+                  <button onclick="chargerCertificatsEtudiant()" style="padding: 8px 14px; background: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500;">🎓 Diplômes & Certificats</button>
                 </div>
                 <button onclick="deconnexionEtudiant()" style="padding: 8px 14px; background: #dc3545; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500;">Se déconnecter</button>
               </div>
@@ -606,12 +616,19 @@
                   <div id="listeDocumentsBibliotheque" style="display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 15px;"></div>
                 </div>
 
+                <!-- ONGLET CERTIFICATS & DIPLÔMES -->
+                <div id="onglet-certificats" class="etudiant-onglet" style="display: none;">
+                  <h3 style="color: #004080; margin-top: 0;">🎓 Mes Diplômes et Certificats</h3>
+                  <p style="color: #666; font-size: 14px; margin-bottom: 20px;">Téléchargez directement vos diplômes et certificats officiels au format PDF dès leur validation par l'administration.</p>
+                  <div id="listeCertificatsEtudiant" style="display: grid; grid-template-columns: 1fr; gap: 15px;"></div>
+                </div>
+
               </div>
             </div>
           </div>
         </div>
 
-        <!-- ================= SECTION 5 : ADMINISTRATION  (Isolé) ================= -->
+        <!-- ================= SECTION 5 : ADMINISTRATION (Isolé) ================= -->
         <div id="sec-administration" class="site-section">
           <div class="panel-section" style="margin-top: 0;">
             <h2 class="section-title">Portail Administratif</h2>
@@ -646,6 +663,7 @@
                   <select id="adminFiliere" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
                     <option value="Double Diplôme Admin & Gestion">Double Diplôme Admin & Gestion</option>
                     <option value="Licence en Sciences de l'Éducation">Licence en Sciences de l'Éducation</option>
+                    <option value="Séminaire / Formation Ponctuelle">Séminaire / Formation Ponctuelle</option>
                   </select>
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
@@ -655,21 +673,116 @@
                 <button onclick="ajouterEtudiantComplet()" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Enregistrer dans le Cloud</button>
               </div>
 
-              <!-- Tableau récapitulatif étudiants -->
+              <!-- Tableau récapitulatif étudiants & Ajustement Financier -->
               <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; overflow-x: auto; margin-bottom: 20px;">
-                <h4>Étudiants Admis (<span id="totalEtudiantsCount">0</span>)</h4>
-                <table style="width: 100%; margin-top: 10px; border-collapse: collapse; font-size: 14px;">
+                <h4>Étudiants Admis & Ajustement Financier (<span id="totalEtudiantsCount">0</span>)</h4>
+                <p style="font-size: 13px; color: #666;">Modifiez directement les versements ou la balance et cliquez sur "Mettre à jour" pour impacter le dossier financier de l'étudiant.</p>
+                <table style="width: 100%; margin-top: 10px; border-collapse: collapse; font-size: 13.5px;">
                   <thead>
                     <tr style="background: #f1f1f1; text-align: left;">
                       <th style="padding: 8px; border: 1px solid #ddd;">Matricule / Nom</th>
                       <th style="padding: 8px; border: 1px solid #ddd;">Contact</th>
                       <th style="padding: 8px; border: 1px solid #ddd;">NIF / CIN</th>
-                      <th style="padding: 8px; border: 1px solid #ddd;">Finances</th>
-                      <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Action</th>
+                      <th style="padding: 8px; border: 1px solid #ddd;">Finances (Versé / Reste)</th>
+                      <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Actions</th>
                     </tr>
                   </thead>
                   <tbody id="listeEtudiantsCompletTable"></tbody>
                 </table>
+              </div>
+
+              <!-- REGISTRE DES ANCIENS ÉTUDIANTS (ARCHIVES) -->
+              <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 20px;">
+                <h4 style="color: #7f8c8d;">🏛️ Dossier des Anciens Étudiants (Archives)</h4>
+                <p style="font-size: 13px; color: #666;">Enregistrez ici les informations des anciens étudiants avec les mêmes critères (Nom, Matricule, Email, Téléphone, NIF/CIN, Filière, Historique financier).</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                  <input type="text" id="ancienNom" placeholder="Nom complet" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                  <input type="text" id="ancienCode" placeholder="Matricule (ex: hepp-2022-015)" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                  <input type="email" id="ancienEmail" placeholder="Adresse e-mail" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                  <input type="text" id="ancienTel" placeholder="Téléphone" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                  <input type="text" id="ancienNifCin" placeholder="NIF / CIN" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                  <select id="ancienFiliere" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                    <option value="Double Diplôme Admin & Gestion">Double Diplôme Admin & Gestion</option>
+                    <option value="Licence en Sciences de l'Éducation">Licence en Sciences de l'Éducation</option>
+                    <option value="Séminaire / Formation Ponctuelle">Séminaire / Formation Ponctuelle</option>
+                  </select>
+                </div>
+                <button onclick="ajouterAncienEtudiant()" style="padding: 10px 20px; background: #7f8c8d; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Archiver l'ancien étudiant</button>
+
+                <div style="margin-top: 15px; overflow-x: auto;">
+                  <table style="width: 100%; border-collapse: collapse; font-size: 13.5px;">
+                    <thead>
+                      <tr style="background: #f1f1f1; text-align: left;">
+                        <th style="padding: 8px; border: 1px solid #ddd;">Matricule / Nom</th>
+                        <th style="padding: 8px; border: 1px solid #ddd;">Contact</th>
+                        <th style="padding: 8px; border: 1px solid #ddd;">Filière / Année</th>
+                        <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="listeAnciensEtudiantsTable"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- GESTION DES SÉMINAIRES & FORMATIONS PONCTUELLES -->
+              <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 20px;">
+                <h4 style="color: #e67e22;">🌟 Gestion des Séminaires et Formations Ponctuelles</h4>
+                <p style="font-size: 13px; color: #666;">Publiez de nouveaux séminaires ou formations offerts en dehors du cursus régulier.</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                  <input type="text" id="adminTitreSeminaire" placeholder="Intitulé du séminaire" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                  <input type="text" id="adminDateSeminaire" placeholder="Date / Durée (ex: 15 Mars 2026 - 2 jours)" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                  <textarea id="adminDescSeminaire" placeholder="Description du séminaire..." style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; height: 60px; font-family: 'Poppins', sans-serif; box-sizing: border-box;"></textarea>
+                </div>
+                <button onclick="creerSeminaire()" style="padding: 10px 20px; background: #e67e22; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Publier le séminaire</button>
+
+                <div style="margin-top: 15px; overflow-x: auto;">
+                  <table style="width: 100%; border-collapse: collapse; font-size: 13.5px;">
+                    <thead>
+                      <tr style="background: #f1f1f1; text-align: left;">
+                        <th style="padding: 8px; border: 1px solid #ddd;">Intitulé</th>
+                        <th style="padding: 8px; border: 1px solid #ddd;">Date & Description</th>
+                        <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="adminTableSeminaires"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- TÉLÉVERSEMENT DES CERTIFICATS & DIPLÔMES -->
+              <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 20px;">
+                <h4 style="color: #27ae60;">🎓 Téléversement de Certificats & Diplômes PDF</h4>
+                <p style="font-size: 13px; color: #666;">Attribuez et téléversez le certificat ou diplôme officiel en PDF pour un étudiant spécifique. Il sera immédiatement disponible dans son espace.</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                  <select id="selectEtudiantCertificat" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; background: white;">
+                    <option value="">Sélectionner un étudiant...</option>
+                  </select>
+                  <input type="text" id="adminTitreCertificat" placeholder="Titre du diplôme (ex: Diplôme en Administration Scolaire)" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                  <input type="file" id="adminFichierCertificat" accept=".pdf" style="padding: 6px; border: 1px solid #ccc; border-radius: 4px; width: 100%; background: #f9f9f9; box-sizing: border-box;">
+                </div>
+                <button onclick="ajouterCertificatEtudiant()" style="padding: 10px 20px; background: #27ae60; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Téléverser et Publier le Diplôme</button>
+
+                <div style="margin-top: 15px; overflow-x: auto;">
+                  <table style="width: 100%; border-collapse: collapse; font-size: 13.5px;">
+                    <thead>
+                      <tr style="background: #f1f1f1; text-align: left;">
+                        <th style="padding: 8px; border: 1px solid #ddd;">Étudiant (Matricule)</th>
+                        <th style="padding: 8px; border: 1px solid #ddd;">Intitulé du Diplôme</th>
+                        <th style="padding: 8px; border: 1px solid #ddd;">Fichier</th>
+                        <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="adminTableCertificats"></tbody>
+                  </table>
+                </div>
               </div>
 
               <!-- CRÉATION ET GESTION DES DOSSIERS DE COURS -->
@@ -680,6 +793,7 @@
                   <select id="adminProgrammeCours" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
                     <option value="Double Diplôme Admin & Gestion">Double Diplôme Admin & Gestion</option>
                     <option value="Licence en Sciences de l'Éducation">Licence en Sciences de l'Éducation</option>
+                    <option value="Séminaire / Formation Ponctuelle">Séminaire / Formation Ponctuelle</option>
                   </select>
                 </div>
                 <div style="margin-bottom: 10px;">
@@ -747,7 +861,7 @@
 
     <!-- Pied de page -->
     <footer>
-        <p><strong>Hautes Études des Pratiques Pédagogiques (HEPP)</strong> — Fondée en Mars 2010</p>
+        <p><strong>Hautes Études des Pédagogiques (HEPP)</strong> — Fondée en Mars 2010</p>
         <p>Port-au-Prince, Haïti | Contact: secrétariat.hepp@gmail.com | (+509) 4647-5772</p>
         <p>© 2026 HEPP. Tous droits réservés.</p>
     </footer>
@@ -776,6 +890,40 @@
                 cible.classList.add("active-section");
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
+            if (nomSection === 'apropos') {
+                chargerSeminairesPublic();
+            }
+        }
+
+        // --- CHARGEMENT DES SÉMINAIRES CÔTÉ PUBLIC ---
+        function chargerSeminairesPublic() {
+            const conteneur = document.getElementById("listeSeminairesPublic");
+            if (!conteneur) return;
+            conteneur.innerHTML = "<p style='color: #666; font-style: italic; text-align: center; width: 100%;'>Chargement des séminaires...</p>";
+
+            db.ref("hepp_seminaires").once('value', (snapshot) => {
+                const data = snapshot.val() || {};
+                let seminaires = Object.values(data);
+                conteneur.innerHTML = "";
+
+                if (seminaires.length === 0) {
+                    conteneur.innerHTML = `<p style="color: #666; font-style: italic; text-align: center; width: 100%;">Aucun séminaire ou formation ponctuelle pour le moment.</p>`;
+                    return;
+                }
+
+                seminaires.forEach(sem => {
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.style.borderTop = "4px solid #e67e22";
+                    card.innerHTML = `
+                        <h3 style="color: #e67e22;">🌟 ${sem.titre}</h3>
+                        <p style="font-weight: bold; color: #333; font-size: 13px;">📅 Date / Durée : ${sem.date}</p>
+                        <p>${sem.description}</p>
+                        <a onclick="basculerSection('inscription')" class="btn" style="background-color: #e67e22; color: white; margin-top: 10px; cursor: pointer;">S'inscrire au séminaire</a>
+                    `;
+                    conteneur.appendChild(card);
+                });
+            });
         }
 
         // --- TÉLÉCHARGEMENT DIRECT EN PNG ---
@@ -930,6 +1078,10 @@
                 document.getElementById("adminDashboard").style.display = "block";
                 document.getElementById("erreurLogin").style.display = "none";
                 chargerEtudiantsComplet();
+                chargerAnciensEtudiants();
+                chargerAdminSeminaires();
+                chargerAdminSelectEtudiantsCertificats();
+                chargerAdminCertificats();
                 chargerAdminDossiersCours();
                 chargerAdminDocuments();
             } else {
@@ -1023,7 +1175,7 @@
             document.getElementById("etudiantIdInput").value = "";
         }
 
-        // --- CHARGEMENT DES COURS CÔTÉ ÉTUDIANT (AVEC ONGLETS DE TYPE DE FICHIER & TÉLÉCHARGEMENT) ---
+        // --- CHARGEMENT DES COURS CÔTÉ ÉTUDIANT ---
         function chargerCoursEtudiant() {
             afficherOngletEtudiant('cours');
             const conteneur = document.getElementById("listeCoursDossiersEtudiant");
@@ -1078,7 +1230,6 @@
                       </div>
                       <p style="margin: 0 0 12px 0; color: #555; font-size: 13.5px;">${cours.description}</p>
                       
-                      <!-- ONGLETS DE FICHIERS DÉDIÉS -->
                       <div style="background: #f1f5f9; padding: 15px; border-radius: 6px; margin-bottom: 12px;">
                         <h5 style="margin: 0 0 10px 0; color: #004080; font-size: 14px;">📖 Supports Pédagogiques :</h5>
                         
@@ -1181,7 +1332,41 @@
             });
         }
 
-        // --- ADMINISTRATION (CLOUD) ---
+        // --- CHARGEMENT DES CERTIFICATS CÔTÉ ÉTUDIANT ---
+        function chargerCertificatsEtudiant() {
+            afficherOngletEtudiant('certificats');
+            const conteneur = document.getElementById("listeCertificatsEtudiant");
+            if (!conteneur || !etudiantConnecte) return;
+            conteneur.innerHTML = "Chargement de vos diplômes...";
+
+            db.ref("hepp_certificats").once('value', (snapshot) => {
+                const data = snapshot.val() || {};
+                let certificats = Object.values(data);
+                let mesCertificats = certificats.filter(c => c.etudiantCode === etudiantConnecte.code);
+                conteneur.innerHTML = "";
+
+                if (mesCertificats.length === 0) {
+                    conteneur.innerHTML = `<p style="color: #666; font-style: italic; text-align: center;">Aucun diplôme ou certificat disponible pour le moment.</p>`;
+                    return;
+                }
+
+                mesCertificats.forEach(cert => {
+                    const div = document.createElement("div");
+                    div.style.cssText = "padding: 15px; border: 2px solid #27ae60; border-radius: 6px; background: #f4fcf7; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;";
+                    div.innerHTML = `
+                      <div>
+                        <span style="font-size: 11px; background: #27ae60; color: white; padding: 2px 6px; border-radius: 3px;">OFFICIEL VALIDÉ</span>
+                        <h4 style="margin: 8px 0 3px 0; color: #27ae60;">🎓 ${cert.titre}</h4>
+                        <small style="color: #666;">Fichier PDF : ${cert.nomFichier}</small>
+                      </div>
+                      <button onclick="telechargerFichierVirtuel('${cert.nomFichier}', 'Diplôme/Certificat')" style="padding: 10px 20px; background: #27ae60; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px;">📥 Télécharger en PDF</button>
+                    `;
+                    conteneur.appendChild(div);
+                });
+            });
+        }
+
+        // --- ADMINISTRATION (CLOUD) : GESTION DES ÉTUDIANTS & AJUSTEMENT FINANCIER ---
         function ajouterEtudiantComplet() {
             const nom = document.getElementById("adminNom").value;
             const code = document.getElementById("adminCode").value;
@@ -1197,7 +1382,7 @@
                 return;
             }
 
-            const nouvelEtudiant = { nom, code, email, tel, nifCin, filiere, versement, balance, photoUrl: "" };
+            const nouvelEtudiant = { nom, code, email, tel, nifCin, filiere, versement: versement || "0", balance: balance || "0", photoUrl: "" };
             db.ref("hepp_etudiants_admis").push(nouvelEtudiant, () => {
                 document.getElementById("adminNom").value = "";
                 document.getElementById("adminCode").value = "";
@@ -1208,6 +1393,7 @@
                 document.getElementById("adminBalance").value = "";
 
                 chargerEtudiantsComplet();
+                chargerAdminSelectEtudiantsCertificats();
                 alert("Étudiant enregistré et synchronisé dans le Cloud !");
             });
         }
@@ -1235,9 +1421,13 @@
                         <td style="padding: 8px; border: 1px solid #ddd;"><strong>${et.code}</strong><br>${et.nom}</td>
                         <td style="padding: 8px; border: 1px solid #ddd;">${et.email}<br>${et.tel || ''}</td>
                         <td style="padding: 8px; border: 1px solid #ddd;">${et.nifCin || 'N/A'}</td>
-                        <td style="padding: 8px; border: 1px solid #ddd; color: #004080;">Versé: ${et.versement || 0}<br>Reste: <strong style="color: red;">${et.balance || 0}</strong></td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">
+                          Versé: <input type="text" id="versement_${key}" value="${et.versement || 0}" style="width:70px; padding:3px;"><br>
+                          Reste: <input type="text" id="balance_${key}" value="${et.balance || 0}" style="width:70px; padding:3px; color:red;">
+                        </td>
                         <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
-                            <button onclick="supprimerEtudiant('${key}')" style="padding: 6px 12px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold;">Retirer</button>
+                            <button onclick="mettreAJourFinances('${key}')" style="padding: 6px 10px; background: #004080; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; margin-bottom: 4px;">Mettre à jour</button><br>
+                            <button onclick="supprimerEtudiant('${key}')" style="padding: 6px 10px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold;">Retirer</button>
                         </td>
                     `;
                     tbody.appendChild(tr);
@@ -1245,10 +1435,224 @@
             });
         }
 
+        function mettreAJourFinances(key) {
+            const nouveauVersement = document.getElementById(`versement_${key}`).value;
+            const nouvelleBalance = document.getElementById(`balance_${key}`).value;
+
+            db.ref("hepp_etudiants_admis/" + key).update({
+                versement: nouveauVersement,
+                balance: nouvelleBalance
+            }, () => {
+                alert("Dossier financier mis à jour avec succès dans le Cloud !");
+            });
+        }
+
         function supprimerEtudiant(key) {
             if (confirm("Voulez-vous retirer cet étudiant du Cloud ?")) {
                 db.ref("hepp_etudiants_admis/" + key).remove(() => {
                     alert("Étudiant retiré.");
+                });
+            }
+        }
+
+        // --- ANCIENS ÉTUDIANTS (ARCHIVES) ---
+        function ajouterAncienEtudiant() {
+            const nom = document.getElementById("ancienNom").value;
+            const code = document.getElementById("ancienCode").value;
+            const email = document.getElementById("ancienEmail").value;
+            const tel = document.getElementById("ancienTel").value;
+            const nifCin = document.getElementById("ancienNifCin").value;
+            const filiere = document.getElementById("ancienFiliere").value;
+
+            if (!nom || !code || !email) {
+                alert("Veuillez remplir les champs obligatoires (Nom, Matricule, Email).");
+                return;
+            }
+
+            const ancien = { nom, code, email, tel, nifCin, filiere };
+            db.ref("hepp_anciens_etudiants").push(ancien, () => {
+                document.getElementById("ancienNom").value = "";
+                document.getElementById("ancienCode").value = "";
+                document.getElementById("ancienEmail").value = "";
+                document.getElementById("ancienTel").value = "";
+                document.getElementById("ancienNifCin").value = "";
+                chargerAnciensEtudiants();
+                alert("Ancien étudiant archivé avec succès dans le Cloud !");
+            });
+        }
+
+        function chargerAnciensEtudiants() {
+            const tbody = document.getElementById("listeAnciensEtudiantsTable");
+            if (!tbody) return;
+
+            db.ref("hepp_anciens_etudiants").on('value', (snapshot) => {
+                const data = snapshot.val() || {};
+                tbody.innerHTML = "";
+                let keys = Object.keys(data);
+
+                if (keys.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="4" style="padding: 10px; text-align: center; color: #666; font-style: italic;">Aucun ancien étudiant archivé.</td></tr>`;
+                    return;
+                }
+
+                keys.forEach(key => {
+                    let anc = data[key];
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td style="padding: 8px; border: 1px solid #ddd;"><strong>${anc.code}</strong><br>${anc.nom}</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${anc.email}<br>${anc.tel || ''}</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${anc.filiere}</td>
+                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                            <button onclick="supprimerAncienEtudiant('${key}')" style="padding: 4px 8px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">Supprimer</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            });
+        }
+
+        function supprimerAncienEtudiant(key) {
+            if (confirm("Supprimer cet ancien étudiant des archives ?")) {
+                db.ref("hepp_anciens_etudiants/" + key).remove(() => {
+                    alert("Archive supprimée.");
+                });
+            }
+        }
+
+        // --- GESTION DES SÉMINAIRES (ADMIN) ---
+        function creerSeminaire() {
+            const titre = document.getElementById("adminTitreSeminaire").value.trim();
+            const date = document.getElementById("adminDateSeminaire").value.trim();
+            const description = document.getElementById("adminDescSeminaire").value.trim();
+
+            if (!titre || !date) {
+                alert("Veuillez entrer au moins le titre et la date du séminaire.");
+                return;
+            }
+
+            const seminaire = { titre, date, description };
+            db.ref("hepp_seminaires").push(seminaire, () => {
+                document.getElementById("adminTitreSeminaire").value = "";
+                document.getElementById("adminDateSeminaire").value = "";
+                document.getElementById("adminDescSeminaire").value = "";
+                chargerAdminSeminaires();
+                alert("Séminaire publié avec succès dans le Cloud !");
+            });
+        }
+
+        function chargerAdminSeminaires() {
+            const tbody = document.getElementById("adminTableSeminaires");
+            if (!tbody) return;
+
+            db.ref("hepp_seminaires").on('value', (snapshot) => {
+                const data = snapshot.val() || {};
+                tbody.innerHTML = "";
+                let keys = Object.keys(data);
+
+                if (keys.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="3" style="padding: 10px; text-align: center; color: #666; font-style: italic;">Aucun séminaire publié.</td></tr>`;
+                    return;
+                }
+
+                keys.forEach(key => {
+                    let sem = data[key];
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td style="padding: 8px; border: 1px solid #ddd;"><strong>${sem.titre}</strong></td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">📅 ${sem.date}<br>${sem.description}</td>
+                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                            <button onclick="supprimerSeminaire('${key}')" style="padding: 4px 8px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">Supprimer</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            });
+        }
+
+        function supprimerSeminaire(key) {
+            if (confirm("Supprimer ce séminaire ?")) {
+                db.ref("hepp_seminaires/" + key).remove(() => {
+                    alert("Séminaire supprimé.");
+                });
+            }
+        }
+
+        // --- TÉLÉVERSEMENT DES CERTIFICATS & DIPLÔMES (ADMIN) ---
+        function chargerAdminSelectEtudiantsCertificats() {
+            const select = document.getElementById("selectEtudiantCertificat");
+            if (!select) return;
+
+            db.ref("hepp_etudiants_admis").once('value', (snapshot) => {
+                const data = snapshot.val() || {};
+                select.innerHTML = '<option value="">Sélectionner un étudiant...</option>';
+                Object.values(data).forEach(et => {
+                    const opt = document.createElement("option");
+                    opt.value = et.code;
+                    opt.textContent = `${et.nom} (${et.code})`;
+                    select.appendChild(opt);
+                });
+            });
+        }
+
+        function ajouterCertificatEtudiant() {
+            const select = document.getElementById("selectEtudiantCertificat");
+            const titre = document.getElementById("adminTitreCertificat").value.trim();
+            const fichierInput = document.getElementById("adminFichierCertificat");
+
+            if (!select.value || !titre || fichierInput.files.length === 0) {
+                alert("Veuillez sélectionner un étudiant, entrer un titre et choisir un fichier PDF.");
+                return;
+            }
+
+            const certificat = {
+                etudiantCode: select.value,
+                titre: titre,
+                nomFichier: fichierInput.files[0].name
+            };
+
+            db.ref("hepp_certificats").push(certificat, () => {
+                document.getElementById("adminTitreCertificat").value = "";
+                document.getElementById("adminFichierCertificat").value = "";
+                select.value = "";
+                chargerAdminCertificats();
+                alert("Diplôme/Certificat téléversé et attribué avec succès !");
+            });
+        }
+
+        function chargerAdminCertificats() {
+            const tbody = document.getElementById("adminTableCertificats");
+            if (!tbody) return;
+
+            db.ref("hepp_certificats").on('value', (snapshot) => {
+                const data = snapshot.val() || {};
+                tbody.innerHTML = "";
+                let keys = Object.keys(data);
+
+                if (keys.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="4" style="padding: 10px; text-align: center; color: #666; font-style: italic;">Aucun diplôme ou certificat téléversé.</td></tr>`;
+                    return;
+                }
+
+                keys.forEach(key => {
+                    let cert = data[key];
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td style="padding: 8px; border: 1px solid #ddd;"><strong>${cert.etudiantCode}</strong></td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${cert.titre}</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">📄 ${cert.nomFichier}</td>
+                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                            <button onclick="supprimerCertificat('${key}')" style="padding: 4px 8px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">Supprimer</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            });
+        }
+
+        function supprimerCertificat(key) {
+            if (confirm("Supprimer ce diplôme ou certificat ?")) {
+                db.ref("hepp_certificats/" + key).remove(() => {
+                    alert("Certificat supprimé.");
                 });
             }
         }
@@ -1394,13 +1798,13 @@
                     return;
                 }
 
-                keys.forEach(key => {
+                keys.keys().forEach(key => {
                     let doc = data[key];
                     const tr = document.createElement("tr");
                     tr.innerHTML = `
                         <td style="padding: 8px; border: 1px solid #ddd;"><strong>${doc.titre}</strong></td>
                         <td style="padding: 8px; border: 1px solid #ddd;">${doc.categorie}</td>
-                        <td style="padding: 8px; border: 1px solid #ddd;">${doc.nomFirection || doc.nomFichier}</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${doc.nomFichier}</td>
                         <td style="padding: 8px; border: 1px solid #ddd; text-align: center;"><button onclick="supprimerDocBibliotheque('${key}')" style="padding: 4px 8px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">Supprimer</button></td>
                     `;
                     tbody.appendChild(tr);
