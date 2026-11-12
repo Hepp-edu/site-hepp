@@ -295,30 +295,6 @@
         .btn-sm:hover {
             background-color: #11223f;
         }
-        .chat-container {
-            height: 220px;
-            background: white;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            padding: 15px;
-            overflow-y: auto;
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            color: #333;
-            font-size: 14px;
-        }
-        .chat-message {
-            background: #e9ecef;
-            padding: 10px;
-            border-radius: 5px;
-            max-width: 80%;
-        }
-        .chat-message.me {
-            background: #d4edda;
-            align-self: flex-end;
-        }
         footer {
             background-color: var(--primary);
             color: white;
@@ -377,7 +353,7 @@
     <!-- Page d'accueil Vitrine -->
     <section class="hero">
         <span class="badge-history">🎓 Institution au service de l'éducation depuis Mars 2010</span>
-        <h1>Hautes Études des Pédagogiques (HEPP)</h1>
+        <h1>Hautes Études des Pratiques Pédagogiques (HEPP)</h1>
         <p>L'excellence académique ancrée en Haïti et ouverte sur le monde. Découvrez notre double diplôme professionnel de 3 mois (Administration Scolaire & Gestion de Projet) ainsi que notre Licence en Sciences de l'Éducation en 3 ans.</p>
         <a href="#inscription" class="btn">Rejoignez HEPP dès aujourd'hui</a>
     </section>
@@ -399,25 +375,6 @@
                 <div class="card">
                     <h3>🎓 Licence en Sciences de l'Éducation (3 ans)</h3>
                     <p>Une formation académique supérieure dispensée sur 3 années. Apprenez à concevoir, gérer et évaluer des programmes d'enseignement modernes adaptés aux standards internationaux.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Témoignages -->
-        <div style="margin-bottom: 50px;">
-            <h2 class="section-title">Ce que disent nos étudiants</h2>
-            <div class="grid">
-                <div class="testimonial-card">
-                    <p>"Grâce au cursus en Administration Scolaire de HEPP, j'ai pu structurer et diriger mon établissement avec une aisance professionnelle remarquable."</p>
-                    <div class="testimonial-author">— Magalie Saint-Fleur, Directrice d'école (Port-au-Prince)</div>
-                </div>
-                <div class="testimonial-card">
-                    <p>"La double diplomation en 3 mois m'a permis de valider rapidement des compétences clés en Gestion de Projet. La plateforme mobile est très pratique."</p>
-                    <div class="testimonial-author">— Jean-Rony Pierre, Consultant en éducation (Cap-Haïtien)</div>
-                </div>
-                <div class="testimonial-card">
-                    <p>"Étudier la Licence à distance tout en conservant mon emploi à Delmas est une opportunité formidable offerte par les HEPP."</p>
-                    <div class="testimonial-author">— Woodly Joseph, Étudiant en Licence</div>
                 </div>
             </div>
         </div>
@@ -467,7 +424,6 @@
               <div style="margin-bottom: 20px;">
                 <label for="documents" style="display: block; margin-bottom: 5px; font-weight: bold;">Soumettre les documents requis (Pièce d'identité, Diplômes, etc.) :</label>
                 <input type="file" id="documents" name="documents[]" multiple style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; background: #f9f9f9;">
-                <small style="color: #666;">Vous pouvez sélectionner plusieurs fichiers à la fois (PDF, images).</small>
               </div>
 
               <button type="submit" style="width: 100%; padding: 12px; background: #004080; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Soumettre mon inscription</button>
@@ -486,7 +442,7 @@
             <p id="erreurLoginEtudiant" style="color: red; margin-top: 12px; display: none; font-size: 14px;">Identifiant introuvable dans le registre des étudiants admis.</p>
           </div>
 
-          <div id="etudiantDashboard" style="display: none; display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap; flex-direction: column;">
+          <div id="etudiantDashboard" style="display: none; gap: 20px; margin-top: 20px; flex-wrap: wrap; flex-direction: column;">
             
             <div style="background: white; padding: 15px 25px; border-radius: 8px; border: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
               <div style="display: flex; gap: 10px; flex-wrap: wrap;">
@@ -713,8 +669,9 @@
         <p>© 2026 HEPP. Tous droits réservés.</p>
     </footer>
 
-    <!-- Scripts JavaScript avec Connexion Cloud (Firebase) -->
-   // CONFIGURATION FIREBASE CLOUD
+    <!-- Scripts JavaScript complets et corrigés -->
+    <script>
+        // CONFIGURATION FIREBASE CLOUD
         const firebaseConfig = {
             databaseURL: "https://hepp-campus-default-rtdb.firebaseio.com/"
         };
@@ -724,20 +681,7 @@
         const db = firebase.database();
 
         const MOT_DE_PASSE_ADMIN = "HeppAdmin#2026$Secure!";
-
-        // --- CONNEXION ADMINISTRATEUR ---
-        function verifierAdmin() {
-            const saisie = document.getElementById("adminPasswordInput").value.trim();
-            if (saisie === MOT_DE_PASSE_ADMIN) {
-                document.getElementById("adminLoginBox").style.display = "none";
-                document.getElementById("adminDashboard").style.display = "block";
-                document.getElementById("erreurLogin").style.display = "none";
-                chargerEtudiantsComplet();
-                chargerAdminDossiersCours();
-            } else {
-                document.getElementById("erreurLogin").style.display = "block";
-            }
-        }
+        let etudiantConnecte = null;
 
         // --- TÉLÉCHARGEMENT DIRECT EN PNG ---
         function telechargerBadgePNG() {
@@ -878,6 +822,29 @@
                 fenetreImpression.print();
                 fenetreImpression.close();
             }, 600);
+        }
+
+        // --- CONNEXION ADMINISTRATEUR ---
+        function verifierAdmin() {
+            const inputElement = document.getElementById("adminPasswordInput");
+            if (!inputElement) return;
+            const saisie = inputElement.value.trim();
+            
+            if (saisie === MOT_DE_PASSE_ADMIN) {
+                document.getElementById("adminLoginBox").style.display = "none";
+                document.getElementById("adminDashboard").style.display = "block";
+                document.getElementById("erreurLogin").style.display = "none";
+                chargerEtudiantsComplet();
+                chargerAdminDossiersCours();
+            } else {
+                document.getElementById("erreurLogin").style.display = "block";
+            }
+        }
+
+        function deconnexionAdmin() {
+            document.getElementById("adminDashboard").style.display = "none";
+            document.getElementById("adminLoginBox").style.display = "block";
+            document.getElementById("adminPasswordInput").value = "";
         }
 
         // --- ESPACE ÉTUDIANT ---
@@ -1069,23 +1036,6 @@
         }
 
         // --- ADMINISTRATION (CLOUD) ---
-        function verifierAdmin() {
-            if (document.getElementById("adminPasswordInput").value === MOT_DE_PASSE_ADMIN) {
-                document.getElementById("adminLoginBox").style.display = "none";
-                document.getElementById("adminDashboard").style.display = "block";
-                chargerEtudiantsComplet();
-                chargerAdminDossiersCours();
-            } else {
-                document.getElementById("erreurLogin").style.display = "block";
-            }
-        }
-
-        function deconnexionAdmin() {
-            document.getElementById("adminDashboard").style.display = "none";
-            document.getElementById("adminLoginBox").style.display = "block";
-            document.getElementById("adminPasswordInput").value = "";
-        }
-
         function ajouterEtudiantComplet() {
             const nom = document.getElementById("adminNom").value;
             const code = document.getElementById("adminCode").value;
@@ -1262,3 +1212,4 @@
     </script>
 </body>
 </html>
+
