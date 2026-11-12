@@ -829,8 +829,8 @@
             fenetreImpression.document.write('<html><head><title>Badge PVC - HEPP</title>');
             fenetreImpression.document.write('<style>');
             fenetreImpression.document.write('@page { size: 80mm 90mm; margin: 0; }');
-            fenetreImpression.document.write('body { font-family: Poppins, Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }');
-            fenetreImpression.document.write('#badgeImprimable { box-shadow: none !important; border: 2px solid #1B365D !important; width: 320px !important; height: 360px !important; }');
+            fenetreImpression.document.write('body { font-family: Poppins, Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; overflow: hidden; }');
+            fenetreImpression.document.write('#badgeImprimable { box-shadow: none !important; border: 2px solid #1B365D !important; width: 300px !important; height: 340px !important; max-width: 100% !important; max-height: 100% !important; page-break-after: avoid; page-break-before: avoid; page-break-inside: avoid; }');
             fenetreImpression.document.write('</style>');
             fenetreImpression.document.write('</head><body>');
             fenetreImpression.document.write(contenuBadge);
@@ -844,7 +844,7 @@
                 fenetreImpression.close();
             }, 600);
         }
-        
+
         // Service Worker PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
