@@ -327,48 +327,74 @@
                 <div class="logo-subtext">Fondée en Mars 2010</div>
             </div>
         </div>
-        <nav>
+       <nav>
             <a onclick="basculerSection('accueil')" style="cursor: pointer;">Accueil</a>
-            <a onclick="basculerSection('apropos')" style="cursor: pointer;">À Propos</a>
-            <a onclick="basculerSection('inscription')" style="cursor: pointer;">Admission</a>
-
+            
+            <!-- Menu déroulant regroupant toutes les sections -->
             <div class="dropdown">
-                <button class="dropbtn">Programmes ▾</button>
+                <button class="dropbtn">Menu Sections ▾</button>
                 <div class="dropdown-content">
-                    <a onclick="basculerSection('apropos')">Offres Académiques</a>
-                    <a onclick="basculerSection('inscription')">Formulaire d'inscription</a>
+                    <a onclick="basculerSection('accueil')">🏠 Accueil Principal</a>
+                    <a onclick="basculerSection('apropos')">📚 À Propos & Programmes</a>
+                    <a onclick="basculerSection('inscription')">📝 Admission / Inscription</a>
+                    <a onclick="basculerSection('espace-etudiant')">🎓 Espace Étudiant</a>
+                    <a onclick="basculerSection('administration')">⚙️ Administration</a>
+                    <a onclick="basculerSection('contact')">📞 Contact & Secrétariat</a>
                 </div>
             </div>
 
-            <div class="dropdown">
-                <button class="dropbtn">Espace Étudiant ▾</button>
-                <div class="dropdown-content">
-                    <a onclick="basculerSection('espace-etudiant')">Espace Étudiant</a>
-                    <a onclick="basculerSection('espace-etudiant')">Campus Virtuel</a>
-                    <a onclick="basculerSection('espace-etudiant'); chargerBibliothequeEtudiant();">Bibliothèque</a>
-                </div>
-            </div>
-
-            <a onclick="basculerSection('application')" style="cursor: pointer; color: var(--secondary); font-weight: bold;">📱 Application Mobile</a>
             <a href="https://www.facebook.com/profile.php?id=61586110763106" target="_blank">Facebook</a>
-            <a onclick="basculerSection('administration')" style="cursor: pointer;">Administration</a>
-            <a onclick="basculerSection('contact')" style="cursor: pointer;">Contact</a>
         </nav>
-    </header>
+         
 
-    <!-- SECTION 1 : ACCUEIL -->
+ <!-- SECTION 1 : ACCUEIL (Contient l'intégralité des renseignements du site) -->
     <div id="sec-accueil" class="site-section active-section">
         <section class="hero">
             <span class="badge-history">🎓 Institution au service de l'éducation depuis Mars 2010</span>
             <h1>Hautes Études des Pédagogiques (HEPP)</h1>
             <p>L'excellence académique ancrée en Haïti et ouverte sur le monde. Découvrez notre double diplôme professionnel de 3 mois (Administration Scolaire & Gestion de Projet) ainsi que notre Licence en Sciences de l'Éducation en 3 ans.</p>
-            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                <a onclick="basculerSection('inscription')" class="btn" style="cursor: pointer;">Rejoignez HEPP dès aujourd'hui</a>
-         </div>
+            <a onclick="basculerSection('inscription')" class="btn" style="cursor: pointer;">Rejoignez HEPP dès aujourd'hui</a>
         </section>
-    </div>
 
-    <div class="container">
+        <div class="container" style="margin-top: 40px;">
+            <!-- Intégration directe de la section À Propos & Programmes sur l'accueil -->
+            <div style="margin-bottom: 50px;">
+                <h2 class="section-title">Nos Cursus Académiques</h2>
+                <div class="grid">
+                    <div class="card">
+                        <h3>🏆 Double Diplôme Professionnel (3 mois)</h3>
+                        <p>Un programme certifiant intensif conçu pour les professionnels et dirigeants d'établissements. Obtenez une double diplomation reconnue :</p>
+                        <ul>
+                            <li><strong>Diplôme 1 :</strong> Administration Scolaire</li>
+                            <li><strong>Diplôme 2 :</strong> Gestion de Projet</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>🎓 Licence en Sciences de l'Éducation (3 ans)</h3>
+                        <p>Une formation académique supérieure dispensée sur 3 années. Apprenez à concevoir, gérer et évaluer des programmes d'enseignement modernes adaptés aux standards internationaux.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accréditations sur l'accueil -->
+            <div class="accreditation-box">
+                <h3 style="color: var(--primary); margin-top: 0; font-weight: 600;">🏛️ Reconnaissance Institutionnelle</h3>
+                <p style="color: #555; max-width: 800px; margin: 0 auto; line-height: 1.7; font-size: 14px;">
+                    Depuis sa fondation en <strong>Mars 2010</strong>, les programmes des <strong>HEPP</strong> sont élaborés en conformité avec les prescrits du Ministère de l'Éducation Nationale et de la Formation Professionnelle (MENFP) en Haïti et bénéficient du soutien de partenaires académiques majeurs (SAEP).
+                </p>
+            </div>
+
+            <!-- Section Contact intégrée également sur l'accueil si souhaité -->
+            <div class="panel-section">
+                <h2 class="section-title">Secrétariat Académique</h2>
+                <div style="text-align: center; margin-bottom: 10px; font-size: 14px; color: #555;">
+                    <p>📍 <strong>Adresse :</strong> Port-au-Prince, Haïti</p>
+                    <p>📧 <strong>E-mail :</strong> secrétariat.hepp@gmail.com</p>
+                    <p>📞 <strong>Téléphones :</strong> (+509) 4647-5772 / 4486-6248 / 4114-7495</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
         <!-- SECTION 2 : À PROPOS & PROGRAMMES -->
         <div id="sec-apropos" class="site-section">
