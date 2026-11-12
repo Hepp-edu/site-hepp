@@ -364,8 +364,7 @@
             <p>L'excellence académique ancrée en Haïti et ouverte sur le monde. Découvrez notre double diplôme professionnel de 3 mois (Administration Scolaire & Gestion de Projet) ainsi que notre Licence en Sciences de l'Éducation en 3 ans.</p>
             <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
                 <a onclick="basculerSection('inscription')" class="btn" style="cursor: pointer;">Rejoignez HEPP dès aujourd'hui</a>
-                <a onclick="basculerSection('application')" class="btn" style="background-color: #28a745; color: white; cursor: pointer;">📥 Télécharger l'Application Mobile</a>
-            </div>
+         </div>
         </section>
     </div>
 
@@ -773,21 +772,7 @@
         }
 
         // --- FONCTIONS DE TÉLÉCHARGEMENT DE L'APPLICATION MOBILE ---
-        function telechargerAppAndroid() {
-            // Génération d'un fichier manifeste/package virtuel ou simulation du téléchargement de l'APK officiel
-            const contenuAppInfo = "HEPP Mobile App v1.0 - Package Android Officiel. Synchronisé avec le Cloud Firebase HEPP.";
-            const blob = new Blob([contenuAppInfo], { type: 'application/vnd.android.package-archive' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = "HEPP_Campus_Officiel.apk";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            alert("Téléchargement de l'application mobile HEPP (.apk) démarré !");
-        }
-
+       
         function installerPWA() {
             if (window.deferredPrompt) {
                 window.deferredPrompt.prompt();
