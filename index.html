@@ -537,7 +537,8 @@
 
   
  
-  <!-- DESIGN DE LA CARTE OPTIMISÉ (Espace maximisé et QR code repositionné) -->
+  
+  <!-- DESIGN DE LA CARTE CORRIGÉ (Nom complet garanti sans coupure) -->
   <div id="badgeImprimable" style="width: 480px; height: 260px; margin: 0 auto 20px auto; background: linear-gradient(145deg, #ffffff, #f8f9fa); border: 3px solid #1B365D; border-radius: 12px; box-shadow: 0 10px 30px rgba(27,54,93,0.25); overflow: hidden; font-family: 'Poppins', Arial, sans-serif; position: relative; display: flex; flex-direction: column; justify-content: space-between;">
     
     <!-- En-tête institutionnel haut de gamme -->
@@ -563,13 +564,13 @@
         <span style="font-size: 6px; color: #28a745; font-weight: 800; background: #e8f5e9; padding: 1px 4px; border-radius: 3px; border: 1px solid #c8e6c9;">● ADMIS(E)</span>
       </div>
 
-      <!-- Informations de l'étudiant (Espace élargi) -->
+      <!-- Informations de l'étudiant (Nom entièrement visible) -->
       <div style="display: flex; flex-direction: column; justify-content: center; flex-grow: 1; overflow: hidden;">
-        <!-- Nom parfaitement centré -->
-        <h3 id="badgeNom" style="margin: 0 0 5px 0; color: #1B365D; font-size: 12px; font-weight: 700; text-transform: uppercase; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Montserrat', sans-serif; background: rgba(27,54,93,0.06); padding: 3px 6px; border-radius: 4px; border-bottom: 2px solid #ffc107;">Nom Prénom</h3>
+        <!-- Nom ajusté pour s'adapter et s'afficher en entier sans troncature -->
+        <h3 id="badgeNom" style="margin: 0 0 5px 0; color: #1B365D; font-size: 11px; font-weight: 700; text-transform: uppercase; text-align: center; overflow: hidden; word-break: break-word; font-family: 'Montserrat', sans-serif; background: rgba(27,54,93,0.06); padding: 3px 6px; border-radius: 4px; border-bottom: 2px solid #ffc107; line-height: 1.2;">Nom Prénom</h3>
         
         <!-- Bloc des détails -->
-        <div style="display: flex; flex-direction: column; gap: 2px; font-size: 8px; color: #2c3e50; background: white; padding: 5px 8px; border-radius: 6px; border: 1px solid #e1e4e8;">
+        <div style="display: flex; flex-direction: column; gap: 2px; font-size: 7.5px; color: #2c3e50; background: white; padding: 4px 8px; border-radius: 6px; border: 1px solid #e1e4e8;">
           <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
             <strong style="color: #555; width: 32%;">Matricule :</strong> <span id="badgeMatricule" style="color: #004080; font-weight: 700; width: 68%; text-align: right;">HEPP-000</span>
           </div>
@@ -588,7 +589,7 @@
         </div>
       </div>
 
-      <!-- QR Code réduit et repositionné à droite -->
+      <!-- QR Code compact à droite -->
       <div style="text-align: center; flex-shrink: 0; border-left: 2px dashed #dcdcdc; padding-left: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
         <img src="https://api.qrserver.com/v1/create-qr-code/?size=40x40&data=HEPP-VERIFIED-STUDENT" crossorigin="anonymous" alt="QR Code" style="display: block; width: 38px; height: 38px; border-radius: 4px; background: white; padding: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
         <span style="color: #1B365D; font-weight: 700; font-size: 6px; display: block; margin-top: 2px; letter-spacing: 0.5px;">SÉCURISÉ</span>
