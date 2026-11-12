@@ -866,7 +866,7 @@
         const MOT_DE_PASSE_ADMIN = "HeppAdmin#2026$Secure!";
         let etudiantConnecte = null;
 
-        // --- TÉLÉCHARGEMENT EN PNG ---
+       // --- TÉLÉCHARGEMENT EN PNG ROBUSTE (AVEC SÉCOURS AUTOMATIQUE) ---
         function telechargerBadgePNG() {
             const badgeElement = document.getElementById("badgeImprimable");
             if (typeof html2canvas === 'undefined') {
@@ -874,9 +874,9 @@
                 return;
             }
             html2canvas(badgeElement, {
-                scale: 4,
+                scale: 3,
                 useCORS: true,
-                allowTaint: false,
+                allowTaint: true,
                 backgroundColor: "#ffffff"
             }).then(canvas => {
                 const imageURL = canvas.toDataURL("image/png");
@@ -887,8 +887,9 @@
                 link.click();
                 document.body.removeChild(link);
             }).catch(err => {
-                console.error("Erreur de téléchargement PNG :", err);
-                alert("Erreur lors de la génération de l'image.");
+                console.warn("Restriction de sécurité du navigateur détectée pour le PNG, basculement vers l'impression sécurisée.", err);
+                // Secours automatique : ouvre la fenêtre d'impression pour enregistrer l'image/PDF sans erreur
+                imprimerBadgePVC();
             });
         }
 
