@@ -812,36 +812,31 @@
         const MOT_DE_PASSE_ADMIN = "HeppAdmin#2026$Secure!";
         let etudiantConnecte = null;
 
-     // --- TÉLÉCHARGEMENT DIRECT ET GARANTI DU BADGE ---
+    // --- TÉLÉCHARGEMENT / IMPRESSION SÉCURISÉE DU BADGE PVC ---
         function telechargerBadgePNG() {
-            const badgeElement = document.getElementById("badgeImprimable");
+            const contenuBadge = document.getElementById("badgeImprimable").outerHTML;
+            const fenetreImpression = window.open('', '', 'height=700,width=600');
             
-            // Vérification de sécurité de la bibliothèque
-            if (typeof html2canvas === 'undefined') {
-                alert("Erreur : La bibliothèque de téléchargement charge encore. Veuillez patienter une seconde et réessayer.");
-                return;
-            }
-
-            html2canvas(badgeElement, {
-                scale: 3,
-                useCORS: true,
-                allowTaint: true,
-                backgroundColor: "#ffffff"
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = `Carte_Etudiant_HEPP_${etudiantConnecte ? etudiantConnecte.code : 'Officiel'}.png`;
-                link.href = canvas.toDataURL('image/png');
-                
-                // Déclenchement propre du téléchargement
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }).catch(err => {
-                console.error("Erreur de capture :", err);
-                alert("Impossible de télécharger directement l'image. Veuillez vérifier que votre photo de profil est bien locale.");
-            });
+            fenetreImpression.document.write('<html><head><title>Carte_Etudiant_HEPP</title>');
+            fenetreImpression.document.write('<style>');
+            fenetreImpression.document.write('@page { size: 80mm 90mm; margin: 0; }');
+            fenetreImpression.document.write('body { font-family: Poppins, Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; overflow: hidden; }');
+            fenetreImpensionCSS = '#badgeImprimable { box-shadow: none !important; border: 3px solid #1B365D !important; width: 320px !important; height: 360px !important; page-break-inside: avoid; }';
+            fenetreImpression.document.write(fenetreImpensionCSS);
+            fenetreImpression.document.write('</style>');
+            fenetreImpression.document.write('</head><body>');
+            fenetreImpression.document.write(contenuBadge);
+            fenetreImpression.document.write('</body></html>');
+            
+            fenetreImpression.document.close();
+            fenetreImpression.focus();
+            
+            setTimeout(() => {
+                fenetreImpression.print();
+                fenetreImpression.close();
+            }, 500);
         }
-
+        
         // Service Worker PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
