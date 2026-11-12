@@ -866,31 +866,138 @@
         const MOT_DE_PASSE_ADMIN = "HeppAdmin#2026$Secure!";
         let etudiantConnecte = null;
 
-       // --- TÉLÉCHARGEMENT EN PNG ROBUSTE (AVEC SÉCOURS AUTOMATIQUE) ---
+      
+    // --- TÉLÉCHARGEMENT DIRECT EN PNG (SANS ERREUR 0 OCTET) ---
         function telechargerBadgePNG() {
-            const badgeElement = document.getElementById("badgeImprimable");
-            if (typeof html2canvas === 'undefined') {
-                alert("Erreur : La bibliothèque de téléchargement n'est pas chargée.");
-                return;
-            }
-            html2canvas(badgeElement, {
-                scale: 3,
-                useCORS: true,
-                allowTaint: true,
-                backgroundColor: "#ffffff"
-            }).then(canvas => {
-                const imageURL = canvas.toDataURL("image/png");
-                const link = document.createElement("a");
-                link.href = imageURL;
-                link.download = `Carte_Etudiant_HEPP_${etudiantConnecte ? etudiantConnecte.code : 'Officiel'}.png`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }).catch(err => {
-                console.warn("Restriction de sécurité du navigateur détectée pour le PNG, basculement vers l'impression sécurisée.", err);
-                // Secours automatique : ouvre la fenêtre d'impression pour enregistrer l'image/PDF sans erreur
-                imprimerBadgePVC();
-            });
+            // Récupération des données actuelles de l'étudiant
+            const nom = document.getElementById("badgeNom").innerText || "Etudiant";
+            const matricule = document.getElementById("badgeMatricule").innerText || "HEPP";
+            const filiere = document.getElementById("badgeFiliere").innerText || "";
+            const nifCin = document.getElementById("badgeNifCin").innerText || "";
+            const tel = document.getElementById("badgeTel").innerText || "";
+            const email = document.getElementById("badgeEmail").innerText || "";
+            const photoSrc = document.getElementById("badgePhoto").src || "https://via.placeholder.com/110";
+
+            // Création d'un canvas invisible aux dimensions exactes de la carte (480x260 pixels)
+            const canvas = document.createElement("canvas");
+            canvas.width = 960;  // Double de résolution pour une qualité HD nette
+            canvas.height = 520;
+            const ctx = canvas.getContext("2d");
+
+            // Fond blanc de la carte
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Bordure extérieure bleue
+            ctx.strokeStyle = "#1B365D";
+            ctx.lineWidth = 8;
+            ctx.strokeRect(4, 4, canvas.width - 8, canvas.height - 8);
+
+            // En-tête bleu institutionnel
+            ctx.fillStyle = "#1B365D";
+            ctx.fillRect(8, 8, canvas.width - 16, 90);
+
+            // Liseré jaune doré sous l'en-tête
+            ctx.fillStyle = "#ffc107";
+            ctx.fillRect(8, 94, canvas.width - 16, 8);
+
+            // Texte de l'en-tête
+            ctx.fillStyle = "#ffc107";
+            ctx.font = "bold 16px Montserrat, Arial, sans-serif";
+            ctx.fillText("HAUTES ÉTUDES DES PRATIQUES PÉDAGOGIQUES", 30, 40);
+
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 26px Montserrat, Arial, sans-serif";
+            ctx.fillText("CARTE D'ÉTUDIANT OFFICIELLE", 30, 75);
+
+            // Badge Année académique à droite
+            ctx.fillStyle = "#ffc107";
+            ctx.fillRect(790, 30, 135, 45);
+            ctx.fillStyle = "#1B365D";
+            ctx.font = "bold 20px Poppins, Arial, sans-serif";
+            ctx.fillText("2026-2027", 805, 60);
+
+            // Chargement de la photo de profil pour l'intégrer proprement
+            const imgPhoto = new Image();
+            imgPhoto.crossOrigin = "anonymous";
+            imgPhoto.src = photoSrc;
+            imgPhoto.onload = function() {
+                // Cadre de la photo
+                ctx.strokeStyle = "#1B365D";
+                ctx.lineWidth = 6;
+                ctx.strokeRect(30, 130, 160, 200);
+                ctx.drawImage(imgPhoto, 33, 133, 154, 194);
+
+                // Badge Admis(e) sous la photo
+                ctx.fillStyle = "#e8f5e9";
+                ctx.fillRect(55, 345, 110, 30);
+                ctx.fillStyle = "#28a745";
+                ctx.font = "bold 14px Poppins, Arial, sans-serif";
+                ctx.fillText("● ADMIS(E)", 68, 366);
+
+                // Nom de l'étudiant centré
+                ctx.fillStyle = "#1B365D";
+                ctx.font = "bold 24px Montserrat, Arial, sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText(nom.toUpperCase(), 530, 150);
+                ctx.textAlign = "left"; // Réinitialisation
+
+                // Bloc des informations textuelles
+                ctx.fillStyle = "#f8f9fa";
+                ctx.fillRect(220, 175, 480, 180);
+                ctx.strokeStyle = "#e1e4e8";
+                ctx.lineWidth = 2;
+                ctx.strokeRect(220, 175, 480, 180);
+
+                ctx.font = "bold 16px Poppins, Arial, sans-serif";
+                let yPos = 205;
+                const lignes = [
+                    { label: "Matricule :", val: matricule },
+                    { label: "Filière :", val: filiere },
+                    { label: "NIF / CIN :", val: nifCin },
+                    { label: "Tél :", val: tel },
+                    { label: "E-mail :", val: email }
+                ];
+
+                lignes.forEach(ligne => {
+                    ctx.fillStyle = "#555555";
+                    ctx.fillText(ligne.label, 240, yPos);
+                    ctx.fillStyle = "#004080";
+                    ctx.fillText(ligne.val, 360, yPos);
+                    yPos += 30;
+                });
+
+                // QR Code statique ou sécurisé à droite
+                const imgQR = new Image();
+                imgQR.crossOrigin = "anonymous";
+                imgQR.src = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=HEPP-" + encodeURIComponent(matricule);
+                imgQR.onload = function() {
+                    ctx.drawImage(imgQR, 730, 205, 120, 120);
+                    ctx.fillStyle = "#1B365D";
+                    ctx.font = "bold 14px Poppins, Arial, sans-serif";
+                    ctx.textAlign = "center";
+                    ctx.fillText("SÉCURISÉ", 790, 345);
+                    ctx.textAlign = "left";
+
+                    // Pied de page institutionnel
+                    ctx.fillStyle = "#1B365D";
+                    ctx.fillRect(8, 455, canvas.width - 16, 55);
+                    ctx.fillStyle = "#ffc107";
+                    ctx.font = "bold 13px Poppins, Arial, sans-serif";
+                    ctx.fillText("Propriété de HEPP", 30, 490);
+                    ctx.fillText("secrétariat.hepp@gmail.com", 360, 490);
+                    ctx.fillText("Port-au-Prince, HAÏTI", 730, 490);
+
+                    // Déclenchement du téléchargement direct du fichier PNG
+                    const imageURL = canvas.toDataURL("image/png");
+                    const link = document.createElement("a");
+                    link.href = imageURL;
+                    link.download = `Carte_Etudiant_${matricule}.png`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                };
+            };
         }
 
         // --- TÉLÉCHARGEMENT EN PDF (FORMAT PVC PAYSAGE) ---
