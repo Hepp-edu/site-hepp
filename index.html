@@ -10,11 +10,12 @@
     <meta name="theme-color" content="#1B365D">
     <link rel="apple-touch-icon" href="./logo-192.png">
 
-    <!-- Police Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Police Poppins & Montserrat pour un design moderne et professionnel -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Bibliothèques pour le téléchargement -->
+    <!-- Bibliothèques pour le téléchargement PNG et PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <style>
         :root {
@@ -524,10 +525,10 @@
             <!-- CONTENU DES ONGLETS ÉTUDIANT -->
             <div style="flex: 1; min-width: 280px; background: white; padding: 25px; border-radius: 8px; border: 1px solid #ddd;">
               
-             <!-- ONGLET 1 : CARTE D'ÉTUDIANT PROFESSIONNELLE HORIZONTALE (Format PVC Paysage 90mm x 80mm) -->
+             <!-- ONGLET 1 : CARTE D'ÉTUDIANT PROFESSIONNELLE HORIZONTALE -->
 <div id="onglet-badge" class="etudiant-onglet">
   <h3 style="color: #1B365D; margin-top: 0; text-align: center; font-weight: 700;">Carte d'Étudiant Officielle (Format Paysage)</h3>
-  <p style="color: #555; font-size: 14px; text-align: center; margin-bottom: 25px;">Format standard PVC horizontal professionnel (9 cm × 8 cm). Téléchargez votre carte haute définition prête pour l'impression.</p>
+  <p style="color: #555; font-size: 14px; text-align: center; margin-bottom: 25px;">Format standard PVC horizontal professionnel (9 cm × 8 cm). Téléchargez votre carte en haute définition (PNG ou PDF).</p>
 
   <!-- Input Photo centré -->
   <div style="max-width: 400px; margin: 0 auto 20px auto; background: #f8f9fa; padding: 12px; border-radius: 8px; text-align: center; border: 1px dashed #1B365D;">
@@ -535,48 +536,49 @@
     <input type="file" id="inputPhotoEtudiant" accept="image/*" onchange="chargerPhotoEtudiant(event)" style="font-size: 12px; width: 100%;">
   </div>
 
-  <!-- DESIGN DE LA CARTE HORIZONTALE PROFESSIONNELLE (90mm x 80mm -> 360px x 320px) -->
-  <div id="badgeImprimable" style="width: 380px; height: 235px; margin: 0 auto 20px auto; background: #ffffff; border: 3px solid #1B365D; border-radius: 12px; box-shadow: 0 10px 30px rgba(27,54,93,0.2); overflow: hidden; font-family: 'Poppins', Arial, sans-serif; position: relative; display: flex; flex-direction: column; justify-content: space-between;">
+  <!-- DESIGN DE LA CARTE HORIZONTALE PROFESSIONNELLE (Nom parfaitement centré & infos complètes) -->
+  <div id="badgeImprimable" style="width: 420px; height: 260px; margin: 0 auto 20px auto; background: #ffffff; border: 3px solid #1B365D; border-radius: 12px; box-shadow: 0 10px 30px rgba(27,54,93,0.2); overflow: hidden; font-family: 'Poppins', Arial, sans-serif; position: relative; display: flex; flex-direction: column; justify-content: space-between;">
     
-    <!-- En-tête institutionnel professionnel horizontal -->
+    <!-- En-tête institutionnel professionnel -->
     <div style="background: linear-gradient(135deg, #1B365D, #0f223f); color: white; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid #ffc107;">
       <div style="display: flex; align-items: center; gap: 8px;">
         <img src="logo.jpeg" alt="Logo HEPP" crossorigin="anonymous" style="height: 28px; width: auto; border-radius: 3px; background: white; padding: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
         <div>
-          <div style="font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #ffc107;">Hautes Études des Pédagogiques</div>
-          <div style="font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: #ffffff;">CARTE D'ÉTUDIANT HEPP</div>
+          <div style="font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #ffc107; font-family: 'Montserrat', sans-serif;">Hautes Études des Pédagogiques</div>
+          <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: #ffffff; font-family: 'Montserrat', sans-serif;">CARTE D'ÉTUDIANT HEPP</div>
         </div>
       </div>
-      <div style="font-size: 8px; color: #ffc107; font-weight: bold; background: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">2026-2027</div>
+      <div style="font-size: 8.5px; color: #ffc107; font-weight: bold; background: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">2026-2027</div>
     </div>
 
-    <!-- Corps de la carte en mode paysage (Photo à gauche, Informations à droite) -->
-    <div style="padding: 12px; background: #fff; display: flex; gap: 14px; align-items: center; flex-grow: 1;">
+    <!-- Corps de la carte en mode paysage -->
+    <div style="padding: 10px 14px; background: #fff; display: flex; gap: 12px; align-items: center; flex-grow: 1;">
       
       <!-- Photo d'Identité -->
-      <div style="width: 75px; height: 95px; border-radius: 6px; border: 2px solid #1B365D; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.15); background: #eee; flex-shrink: 0;">
+      <div style="width: 80px; height: 100px; border-radius: 6px; border: 2px solid #1B365D; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.15); background: #eee; flex-shrink: 0;">
         <img id="badgePhoto" crossorigin="anonymous" src="https://via.placeholder.com/110" alt="Photo Étudiant" style="width: 100%; height: 100%; object-fit: cover;">
       </div>
 
-      <!-- Informations de l'étudiant -->
-      <div style="display: flex; flex-direction: column; justify-content: center; flex-grow: 1; overflow: hidden;">
-        <h3 id="badgeNom" style="margin: 0 0 4px 0; color: #1B365D; font-size: 12px; font-weight: 700; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Nom Prénom</h3>
+      <!-- Informations de l'étudiant (Nom parfaitement centré au-dessus) -->
+      <div style="display: flex; flex-direction: column; justify-content: center; flex-grow: 1; overflow: hidden; text-align: center;">
+        <!-- Nom parfaitement centré avec une police élégante (Montserrat) -->
+        <h3 id="badgeNom" style="margin: 0 auto 6px auto; color: #1B365D; font-size: 13px; font-weight: 700; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Montserrat', sans-serif; border-bottom: 2px solid #ffc107; padding-bottom: 2px; width: 100%;">Nom Prénom</h3>
         
-        <div style="font-size: 10px; font-weight: 700; color: #004080; margin-bottom: 4px; background: #eef2f7; padding: 2px 6px; border-radius: 4px; display: inline-block; width: fit-content;">
-          Matricule : <span id="badgeMatricule">HEPP-000</span>
-        </div>
-
-        <div id="badgeFiliere" style="font-size: 9.5px; font-weight: 600; color: #444; background: #fdf8e2; padding: 2px 6px; border-radius: 4px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border: 1px solid #f9ecb2;">Filière</div>
-
-        <div style="font-size: 9px; color: #333; font-weight: 500;">
-          <strong>NIF/CIN :</strong> <span id="badgeNifCin">000-000-000-0</span>
+        <div style="text-align: left; display: flex; flex-direction: column; gap: 3px; font-size: 9px; color: #333;">
+          <div style="font-weight: 700; color: #004080; background: #eef2f7; padding: 2px 6px; border-radius: 4px; display: inline-block;">
+            Matricule : <span id="badgeMatricule">HEPP-000</span>
+          </div>
+          <div id="badgeFiliere" style="font-weight: 600; color: #444; background: #fdf8e2; padding: 2px 6px; border-radius: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border: 1px solid #f9ecb2;">Filière</div>
+          <div><strong>NIF/CIN :</strong> <span id="badgeNifCin">000-000-000-0</span></div>
+          <div><strong>Tél :</strong> <span id="badgeTel">+509 0000-0000</span></div>
+          <div><strong>E-mail :</strong> <span id="badgeEmail" style="word-break: break-all;">etudiant@hepp.edu</span></div>
         </div>
       </div>
 
       <!-- QR Code à droite -->
       <div style="text-align: center; flex-shrink: 0; border-left: 1px dashed #ddd; padding-left: 10px;">
-        <img crossorigin="anonymous" src="https://api.qrserver.com/v1/create-qr-code/?size=50x50&data=HEPP-VERIFIED" alt="QR Code" style="display: block; width: 45px; height: 45px; border-radius: 3px; margin: 0 auto;">
-        <span style="color: #28a745; font-weight: bold; font-size: 7.5px; display: block; margin-top: 2px;">● Vérifié</span>
+        <img crossorigin="anonymous" src="https://api.qrserver.com/v1/create-qr-code/?size=55x55&data=HEPP-VERIFIED" alt="QR Code" style="display: block; width: 48px; height: 48px; border-radius: 3px; margin: 0 auto;">
+        <span style="color: #28a745; font-weight: bold; font-size: 7.5px; display: block; margin-top: 3px;">● Vérifié</span>
       </div>
     </div>
 
@@ -587,11 +589,12 @@
     </div>
   </div>
 
-  <!-- Bouton de téléchargement direct en image PNG Haute Résolution -->
-  <div style="text-align: center; margin-top: 15px;">
-    <button onclick="telechargerBadgePNG()" style="padding: 12px 28px; background: #1B365D; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; box-shadow: 0 4px 12px rgba(27,54,93,0.3); transition: 0.2s;">📥 Télécharger la Carte HD (Format Paysage)</button>
-    <p style="font-size: 12px; color: #666; margin-top: 8px;">Le fichier se télécharge instantanément sous forme d'image PNG horizontale nette, prête pour l'impression physique.</p>
+  <!-- Boutons de téléchargement direct en PNG et PDF -->
+  <div style="text-align: center; margin-top: 15px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+    <button onclick="telechargerBadgePNG()" style="padding: 12px 24px; background: #1B365D; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; box-shadow: 0 4px 12px rgba(27,54,93,0.3); transition: 0.2s;">📥 Télécharger en PNG (HD)</button>
+    <button onclick="telechargerBadgePDF()" style="padding: 12px 24px; background: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; box-shadow: 0 4px 12px rgba(40,167,69,0.3); transition: 0.2s;">📄 Télécharger en PDF (PVC)</button>
   </div>
+  <p style="font-size: 12px; color: #666; margin-top: 10px; text-align: center;">Le fichier se télécharge instantanément aux mesures exactes pour l'impression physique.</p>
 </div>
               
               <!-- ONGLET COURS -->
@@ -801,7 +804,7 @@
 
     <!-- Pied de page -->
     <footer>
-        <p><strong>Hautes Études des Pédagogiques (HEPP)</strong> — Fondée en Mars 2010</p>
+        <p><strong>Hautes Études des Pratiques Pédagogiques (HEPP)</strong> — Fondée en Mars 2010</p>
         <p>Port-au-Prince, Haïti | Contact: secrétariat.hepp@gmail.com | (+509) 4647-5772</p>
         <p>© 2026 HEPP. Tous droits réservés.</p>
     </footer>
@@ -811,7 +814,7 @@
         const MOT_DE_PASSE_ADMIN = "HeppAdmin#2026$Secure!";
         let etudiantConnecte = null;
 
-        // --- TÉLÉCHARGEMENT DIRECT DE LA CARTE EN HAUTE DÉFINITION (PAYSAGE) ---
+        // --- TÉLÉCHARGEMENT EN PNG ---
         function telechargerBadgePNG() {
             const badgeElement = document.getElementById("badgeImprimable");
             
@@ -821,7 +824,7 @@
             }
 
             html2canvas(badgeElement, {
-                scale: 4, // Haute résolution (4x) pour une netteté parfaite à l'impression physique
+                scale: 4, // Haute résolution (4x)
                 useCORS: true,
                 allowTaint: true,
                 backgroundColor: "#ffffff"
@@ -834,8 +837,41 @@
                 link.click();
                 document.body.removeChild(link);
             }).catch(err => {
-                console.error("Erreur de téléchargement :", err);
-                alert("Erreur lors de la génération de l'image. Veuillez réessayer.");
+                console.error("Erreur de téléchargement PNG :", err);
+                alert("Erreur lors de la génération de l'image.");
+            });
+        }
+
+        // --- TÉLÉCHARGEMENT EN PDF (FORMAT PVC PAYSAGE) ---
+        function telechargerBadgePDF() {
+            const badgeElement = document.getElementById("badgeImprimable");
+            
+            if (typeof html2canvas === 'undefined' || typeof jspdf === 'undefined') {
+                alert("Erreur : Les bibliothèques de génération PDF ne sont pas chargées.");
+                return;
+            }
+
+            html2canvas(badgeElement, {
+                scale: 4,
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: "#ffffff"
+            }).then(canvas => {
+                const imgData = canvas.toDataURL("image/png");
+                const { jsPDF } = window.jspdf;
+                
+                // Format PVC Paysage standard (90mm x 80mm)
+                const pdf = new jsPDF({
+                    orientation: 'landscape',
+                    unit: 'mm',
+                    format: [90, 80]
+                });
+                
+                pdf.addImage(imgData, 'PNG', 0, 0, 90, 80);
+                pdf.save(`Carte_Etudiant_HEPP_${etudiantConnecte ? etudiantConnecte.code : 'Officiel'}.pdf`);
+            }).catch(err => {
+                console.error("Erreur de téléchargement PDF :", err);
+                alert("Erreur lors de la génération du PDF.");
             });
         }
 
@@ -890,6 +926,8 @@
             document.getElementById("badgeMatricule").innerText = etudiantConnecte.code || "HEPP-000";
             document.getElementById("badgeFiliere").innerText = etudiantConnecte.filiere || "Filière Générale";
             document.getElementById("badgeNifCin").innerText = etudiantConnecte.nifCin || "N/A";
+            document.getElementById("badgeTel").innerText = etudiantConnecte.tel || "+509 0000-0000";
+            document.getElementById("badgeEmail").innerText = etudiantConnecte.email || "etudiant@hepp.edu";
             
             const badgePhoto = document.getElementById("badgePhoto");
             if (etudiantConnecte.photoUrl) {
