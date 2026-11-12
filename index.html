@@ -714,16 +714,30 @@
     </footer>
 
     <!-- Scripts JavaScript avec Connexion Cloud (Firebase) -->
-    // CONFIGURATION FIREBASE CLOUD (Gratuit et universel)
-const firebaseConfig = {
-    databaseURL: "https://hepp-campus-default-rtdb.firebaseio.com/"
-};
-    
-        firebase.initializeApp(firebaseConfig);
+   // CONFIGURATION FIREBASE CLOUD
+        const firebaseConfig = {
+            databaseURL: "https://hepp-campus-default-rtdb.firebaseio.com/"
+        };
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
         const db = firebase.database();
 
         const MOT_DE_PASSE_ADMIN = "HeppAdmin#2026$Secure!";
-        let etudiantConnecte = null;
+
+        // --- CONNEXION ADMINISTRATEUR ---
+        function verifierAdmin() {
+            const saisie = document.getElementById("adminPasswordInput").value.trim();
+            if (saisie === MOT_DE_PASSE_ADMIN) {
+                document.getElementById("adminLoginBox").style.display = "none";
+                document.getElementById("adminDashboard").style.display = "block";
+                document.getElementById("erreurLogin").style.display = "none";
+                chargerEtudiantsComplet();
+                chargerAdminDossiersCours();
+            } else {
+                document.getElementById("erreurLogin").style.display = "block";
+            }
+        }
 
         // --- TÉLÉCHARGEMENT DIRECT EN PNG ---
         function telechargerBadgePNG() {
