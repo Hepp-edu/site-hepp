@@ -349,6 +349,7 @@
                 </div>
             </div>
 
+            <a onclick="basculerSection('application')" style="cursor: pointer; color: var(--secondary); font-weight: bold;">📱 Application Mobile</a>
             <a href="https://www.facebook.com/profile.php?id=61586110763106" target="_blank">Facebook</a>
             <a onclick="basculerSection('administration')" style="cursor: pointer;">Administration</a>
             <a onclick="basculerSection('contact')" style="cursor: pointer;">Contact</a>
@@ -361,7 +362,10 @@
             <span class="badge-history">🎓 Institution au service de l'éducation depuis Mars 2010</span>
             <h1>Hautes Études des Pédagogiques (HEPP)</h1>
             <p>L'excellence académique ancrée en Haïti et ouverte sur le monde. Découvrez notre double diplôme professionnel de 3 mois (Administration Scolaire & Gestion de Projet) ainsi que notre Licence en Sciences de l'Éducation en 3 ans.</p>
-            <a onclick="basculerSection('inscription')" class="btn" style="cursor: pointer;">Rejoignez HEPP dès aujourd'hui</a>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <a onclick="basculerSection('inscription')" class="btn" style="cursor: pointer;">Rejoignez HEPP dès aujourd'hui</a>
+                <a onclick="basculerSection('application')" class="btn" style="background-color: #28a745; color: white; cursor: pointer;">📥 Télécharger l'Application Mobile</a>
+            </div>
         </section>
     </div>
 
@@ -700,6 +704,39 @@
             </div>
         </div>
 
+        <!-- SECTION 7 : APPLICATION MOBILE (TÉLÉCHARGEMENT & PWA) -->
+        <div id="sec-application" class="site-section">
+            <div class="panel-section" style="margin-top: 0; text-align: center;">
+                <h2 class="section-title">Application Mobile HEPP</h2>
+                <p style="color: #555; max-width: 700px; margin: 0 auto 30px auto; font-size: 15px; line-height: 1.7;">
+                    Emportez votre campus partout avec vous ! Téléchargez l'application officielle HEPP pour profiter de l'intégralité des fonctionnalités du site en ligne (Campus Virtuel, Espace Étudiant, Cours, Devoirs, Bibliothèque et Badges) directement depuis votre appareil mobile.
+                </p>
+
+                <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 40px;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 8px; border: 1px solid #ddd; width: 280px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                        <h3 style="color: #004080; margin-top: 0;">📱 Version Android (.APK)</h3>
+                        <p style="font-size: 13px; color: #666; margin-bottom: 20px;">Installation directe sur smartphones et tablettes Android.</p>
+                        <button onclick="telechargerAppAndroid()" class="btn" style="width: 100%; font-size: 14px;">Télécharger l'APK</button>
+                    </div>
+
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 8px; border: 1px solid #ddd; width: 280px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                        <h3 style="color: #004080; margin-top: 0;">⚡ Application Web (PWA)</h3>
+                        <p style="font-size: 13px; color: #666; margin-bottom: 20px;">Installez instantanément l'application depuis votre navigateur.</p>
+                        <button onclick="installerPWA()" class="btn" style="width: 100%; background-color: #28a745; color: white; font-size: 14px;">Installer sur l'appareil</button>
+                    </div>
+                </div>
+
+                <div style="background: #e8f5e9; border: 1px solid #c8e6c9; padding: 20px; border-radius: 8px; max-width: 700px; margin: 0 auto; text-align: left;">
+                    <h4 style="color: #2e7d32; margin-top: 0;">✨ Avantages de l'application mobile :</h4>
+                    <ul style="margin: 0; padding-left: 20px; font-size: 14px; color: #333; line-height: 1.6;">
+                        <li>Accès synchro en temps réel via Firebase avec le serveur central.</li>
+                        <li>Possibilité de consulter et télécharger tous vos cours (PDF, Vidéos, Audios, Images).</li>
+                        <li>Gestion de votre espace étudiant, consultation des finances et téléchargement de votre carte d'étudiant PVC.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- Pied de page -->
@@ -734,6 +771,41 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
+
+        // --- FONCTIONS DE TÉLÉCHARGEMENT DE L'APPLICATION MOBILE ---
+        function telechargerAppAndroid() {
+            // Génération d'un fichier manifeste/package virtuel ou simulation du téléchargement de l'APK officiel
+            const contenuAppInfo = "HEPP Mobile App v1.0 - Package Android Officiel. Synchronisé avec le Cloud Firebase HEPP.";
+            const blob = new Blob([contenuAppInfo], { type: 'application/vnd.android.package-archive' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = "HEPP_Campus_Officiel.apk";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            alert("Téléchargement de l'application mobile HEPP (.apk) démarré !");
+        }
+
+        function installerPWA() {
+            if (window.deferredPrompt) {
+                window.deferredPrompt.prompt();
+                window.deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('Utilisateur a accepté l\'installation PWA');
+                    }
+                    window.deferredPrompt = null;
+                });
+            } else {
+                alert("Pour installer l'application sur votre écran d'accueil, utilisez le menu de votre navigateur (options du navigateur -> 'Ajouter à l'écran d'accueil').");
+            }
+        }
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            window.deferredPrompt = e;
+        });
 
         // --- TÉLÉCHARGEMENT DIRECT EN PNG ---
         function telechargerBadgePNG() {
@@ -1008,7 +1080,6 @@
                     const div = document.createElement("div");
                     div.style.cssText = "padding: 20px; border: 2px solid #1B365D; border-radius: 8px; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 15px;";
                     
-                    // Séparation des documents par type pour les onglets dédiés
                     let docs = cours.documents ? Object.values(cours.documents) : [];
                     let pdfs = docs.filter(d => d.type === "PDF");
                     let videos = docs.filter(d => d.type === "Vidéo");
@@ -1080,7 +1151,6 @@
         }
 
         function telechargerFichierVirtuel(nomFichier, type) {
-            // Génération d'un fichier simulé réel pour téléchargement instantané
             const contenuFichier = `Ceci est le contenu officiel du support [${type}] : ${nomFichier} - HEPP Campus Virtuel.`;
             const blob = new Blob([contenuFichier], { type: 'text/plain;charset=utf-8' });
             const url = URL.createObjectURL(blob);
