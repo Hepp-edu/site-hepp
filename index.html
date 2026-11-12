@@ -813,27 +813,32 @@
         const MOT_DE_PASSE_ADMIN = "HeppAdmin#2026$Secure!";
         let etudiantConnecte = null;
 
-     // --- TÉLÉCHARGEMENT DIRECT DE L'IMAGE DU BADGE PVC ---
+     // --- TÉLÉCHARGEMENT DIRECT ET SÉCURISÉ DU BADGE PVC ---
         function telechargerBadgePNG() {
             const badgeElement = document.getElementById("badgeImprimable");
             
-            html2canvas(badgeElement, { 
-                scale: 4, // Haute résolution pour une netteté parfaite sur carte PVC
-                useCORS: true, 
-                allowTaint: true,
+            // Utilisation de html2canvas avec des paramètres stricts pour éviter les fichiers vides
+            html2canvas(badgeElement, {
+                scale: 3,
+                useCORS: true,
+                allowTaint: false,
                 backgroundColor: "#ffffff"
             }).then(canvas => {
-                const link = document.createElement('a');
+                const imageURL = canvas.toDataURL("image/png");
+                const link = document.createElement("a");
+                link.href = imageURL;
                 link.download = `Badge_PVC_${etudiantConnecte ? etudiantConnecte.code : 'HEPP'}.png`;
-                link.href = canvas.toDataURL('image/png');
+                document.body.appendChild(link);
                 link.click();
-            }).catch(err => {
-                alert("Erreur lors de la génération du badge : " + err);
+                document.body.removeChild(link);
+            }).catch(error => {
+                console.error("Erreur de téléchargement :", error);
+                alert("Erreur lors de la génération du badge. Assurez-vous d'utiliser une photo locale valide.");
             });
         }
 
         function telechargerBadgePDF() {
-            // Utilise le même rendu image haute définition idéal pour l'impression physique
+            // Le PNG haute résolution généré est immédiatement disponible et parfait pour l'impression PVC
             telechargerBadgePNG();
         }
 
