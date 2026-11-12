@@ -535,8 +535,8 @@
     <input type="file" id="inputPhotoEtudiant" accept="image/*" onchange="chargerPhotoEtudiant(event)" style="font-size: 12px; width: 100%;">
   </div>
 
-  <!-- DESIGN DE LA CARTE RICHE ET STRUCTURÉE (Zéro vide, design haut de gamme) -->
- <!-- DESIGN DE LA CARTE LARGE ET AÉRÉE (Zéro superposition) -->
+  
+ <!-- DESIGN DE LA CARTE OPTIMISÉ (Textes parfaitement proportionnés et lisibles) -->
   <div id="badgeImprimable" style="width: 480px; height: 260px; margin: 0 auto 20px auto; background: linear-gradient(145deg, #ffffff, #f8f9fa); border: 3px solid #1B365D; border-radius: 12px; box-shadow: 0 10px 30px rgba(27,54,93,0.25); overflow: hidden; font-family: 'Poppins', Arial, sans-serif; position: relative; display: flex; flex-direction: column; justify-content: space-between;">
     
     <!-- En-tête institutionnel haut de gamme -->
@@ -551,52 +551,52 @@
       <div style="font-size: 8.5px; color: #1B365D; font-weight: 800; background: #ffc107; padding: 2px 8px; border-radius: 4px;">2026-2027</div>
     </div>
 
-    <!-- Corps de la carte : Large et parfaitement espacé -->
-    <div style="padding: 10px 16px; display: flex; gap: 16px; align-items: center; flex-grow: 1;">
+    <!-- Corps de la carte -->
+    <div style="padding: 10px 16px; display: flex; gap: 14px; align-items: center; flex-grow: 1;">
       
       <!-- Photo d'Identité -->
       <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0;">
-        <div style="width: 78px; height: 98px; border-radius: 6px; border: 2.5px solid #1B365D; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.15); background: #eee;">
+        <div style="width: 75px; height: 95px; border-radius: 6px; border: 2.5px solid #1B365D; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.15); background: #eee;">
           <img id="badgePhoto" crossorigin="anonymous" src="https://via.placeholder.com/110" alt="Photo Étudiant" style="width: 100%; height: 100%; object-fit: cover;">
         </div>
         <span style="font-size: 6.5px; color: #28a745; font-weight: 800; background: #e8f5e9; padding: 1px 5px; border-radius: 3px; border: 1px solid #c8e6c9;">● ADMIS(E)</span>
       </div>
 
-      <!-- Informations de l'étudiant (Nom centré et lignes aérées) -->
+      <!-- Informations de l'étudiant -->
       <div style="display: flex; flex-direction: column; justify-content: center; flex-grow: 1; overflow: hidden;">
         <!-- Nom parfaitement centré -->
-        <h3 id="badgeNom" style="margin: 0 0 6px 0; color: #1B365D; font-size: 12.5px; font-weight: 700; text-transform: uppercase; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Montserrat', sans-serif; background: rgba(27,54,93,0.06); padding: 3px 6px; border-radius: 4px; border-bottom: 2px solid #ffc107;">Nom Prénom</h3>
+        <h3 id="badgeNom" style="margin: 0 0 5px 0; color: #1B365D; font-size: 12px; font-weight: 700; text-transform: uppercase; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Montserrat', sans-serif; background: rgba(27,54,93,0.06); padding: 3px 6px; border-radius: 4px; border-bottom: 2px solid #ffc107;">Nom Prénom</h3>
         
-        <!-- Bloc des détails bien espacés -->
-        <div style="display: flex; flex-direction: column; gap: 2.5px; font-size: 8.5px; color: #2c3e50; background: white; padding: 5px 8px; border-radius: 6px; border: 1px solid #e1e4e8;">
+        <!-- Bloc des détails avec police ajustée pour éviter les coupures -->
+        <div style="display: flex; flex-direction: column; gap: 2px; font-size: 8px; color: #2c3e50; background: white; padding: 5px 8px; border-radius: 6px; border: 1px solid #e1e4e8;">
           <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
-            <strong style="color: #555;">Matricule :</strong> <span id="badgeMatricule" style="color: #004080; font-weight: 700;">HEPP-000</span>
+            <strong style="color: #555; width: 35%;">Matricule :</strong> <span id="badgeMatricule" style="color: #004080; font-weight: 700; width: 65%; text-align: right;">HEPP-000</span>
           </div>
           <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
-            <strong style="color: #555;">Filière :</strong> <span id="badgeFiliere" style="font-weight: 600; max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Filière Générale</span>
+            <strong style="color: #555; width: 30%;">Filière :</strong> <span id="badgeFiliere" style="font-weight: 600; width: 70%; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Filière Générale</span>
           </div>
           <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
-            <strong style="color: #555;">NIF / CIN :</strong> <span id="badgeNifCin" style="font-weight: 500;">000-000-000-0</span>
+            <strong style="color: #555; width: 35%;">NIF / CIN :</strong> <span id="badgeNifCin" style="font-weight: 500; width: 65%; text-align: right;">000-000-000-0</span>
           </div>
           <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
-            <strong style="color: #555;">Tél :</strong> <span id="badgeTel" style="font-weight: 500;">+509 0000-0000</span>
+            <strong style="color: #555; width: 30%;">Tél :</strong> <span id="badgeTel" style="font-weight: 500; width: 70%; text-align: right;">+509 0000-0000</span>
           </div>
           <div style="display: flex; justify-content: space-between;">
-            <strong style="color: #555;">E-mail :</strong> <span id="badgeEmail" style="font-weight: 500; max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">etudiant@hepp.edu</span>
+            <strong style="color: #555; width: 25%;">E-mail :</strong> <span id="badgeEmail" style="font-weight: 500; width: 75%; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">etudiant@hepp.edu</span>
           </div>
         </div>
       </div>
 
       <!-- Bloc QR Code à droite -->
-      <div style="text-align: center; flex-shrink: 0; border-left: 2px dashed #dcdcdc; padding-left: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=50x50&data=HEPP-VERIFIED-STUDENT" crossorigin="anonymous" alt="QR Code" style="display: block; width: 45px; height: 45px; border-radius: 4px; background: white; padding: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+      <div style="text-align: center; flex-shrink: 0; border-left: 2px dashed #dcdcdc; padding-left: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=50x50&data=HEPP-VERIFIED-STUDENT" crossorigin="anonymous" alt="QR Code" style="display: block; width: 44px; height: 44px; border-radius: 4px; background: white; padding: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
         <span style="color: #1B365D; font-weight: 700; font-size: 6.5px; display: block; margin-top: 2px; letter-spacing: 0.5px;">SÉCURISÉ</span>
       </div>
     </div>
 
-    <!-- Bande finale institutionnelle -->
-    <div style="background: #1B365D; color: #ffc107; padding: 4px 12px; display: flex; justify-content: space-between; align-items: center; font-size: 7px; font-weight: 700; letter-spacing: 0.8px; border-top: 1px solid #ffc107;">
-      <span>PROPRIÉTÉ DE HAUTES ÉTUDES DES PÉDAGOGIQUES</span>
+    <!-- Bande finale institutionnelle harmonisée -->
+    <div style="background: #1B365D; color: #ffc107; padding: 4px 12px; display: flex; justify-content: space-between; align-items: center; font-size: 6.5px; font-weight: 700; letter-spacing: 0.5px; border-top: 1px solid #ffc107;">
+      <span>PROPRIÉTÉ DES HAUTES ÉTUDES DES PÉDAGOGIQUES</span>
       <span>PORT-AU-PRINCE, HAÏTI</span>
     </div>
   </div>
