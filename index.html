@@ -812,31 +812,33 @@
         const MOT_DE_PASSE_ADMIN = "HeppAdmin#2026$Secure!";
         let etudiantConnecte = null;
 
-        // --- TÉLÉCHARGEMENT DIRECT DE L'IMAGE DU BADGE EN HAUTE DÉFINITION ---
+     // --- TÉLÉCHARGEMENT DIRECT ET GARANTI DU BADGE ---
         function telechargerBadgePNG() {
             const badgeElement = document.getElementById("badgeImprimable");
             
+            // Vérification de sécurité de la bibliothèque
             if (typeof html2canvas === 'undefined') {
-                alert("Erreur : La bibliothèque de téléchargement n'est pas chargée.");
+                alert("Erreur : La bibliothèque de téléchargement charge encore. Veuillez patienter une seconde et réessayer.");
                 return;
             }
 
             html2canvas(badgeElement, {
-                scale: 4, // Haute résolution (4x) pour une netteté parfaite à l'impression physique
+                scale: 3,
                 useCORS: true,
                 allowTaint: true,
                 backgroundColor: "#ffffff"
             }).then(canvas => {
-                const imageURL = canvas.toDataURL("image/png");
-                const link = document.createElement("a");
-                link.href = imageURL;
+                const link = document.createElement('a');
                 link.download = `Carte_Etudiant_HEPP_${etudiantConnecte ? etudiantConnecte.code : 'Officiel'}.png`;
+                link.href = canvas.toDataURL('image/png');
+                
+                // Déclenchement propre du téléchargement
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
             }).catch(err => {
-                console.error("Erreur de téléchargement :", err);
-                alert("Erreur lors de la génération de l'image. Veuillez réessayer.");
+                console.error("Erreur de capture :", err);
+                alert("Impossible de télécharger directement l'image. Veuillez vérifier que votre photo de profil est bien locale.");
             });
         }
 
