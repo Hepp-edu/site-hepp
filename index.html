@@ -13,9 +13,6 @@
     <!-- Police Poppins & Montserrat -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Bibliothèque html2canvas pour le PNG -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
     <style>
         :root {
             --primary: #1B365D;
@@ -386,7 +383,6 @@
             <a href="#administration">Administration</a>
             <a href="#contact">Contact</a>
 
-            <!-- Bouton Téléchargement / Installation PWA -->
             <button id="btn-installer" class="btn-install">📲 Installer App</button>
         </nav>
     </header>
@@ -495,7 +491,6 @@
         <div class="panel-section" id="espace-etudiant" style="display: none;">
           <h2 class="section-title">Espace Étudiant Sécurisé</h2>
           
-          <!-- Boîte de connexion -->
           <div id="etudiantLoginBox" style="max-width: 450px; margin: 20px auto; padding: 30px; background: white; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
             <h3 style="color: #004080; margin-top: 0;">Connexion à votre Campus Virtuel</h3>
             <p style="color: #666; font-size: 14px;">Entrez votre adresse e-mail ou votre matricule officiel :</p>
@@ -504,10 +499,8 @@
             <p id="erreurLoginEtudiant" style="color: red; margin-top: 12px; display: none; font-size: 14px;">Identifiant introuvable dans le registre des étudiants admis.</p>
           </div>
 
-          <!-- Tableau de bord de l'étudiant -->
           <div id="etudiantDashboard" style="display: none; display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap; flex-direction: column;">
             
-            <!-- MENU ÉTUDIANT -->
             <div style="background: white; padding: 15px 25px; border-radius: 8px; border: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
               <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                 <button onclick="afficherOngletEtudiant('badge')" style="padding: 8px 14px; background: #004080; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500;">📂 Ma Carte d'Étudiant</button>
@@ -521,10 +514,9 @@
               <button onclick="deconnexionEtudiant()" style="padding: 8px 14px; background: #dc3545; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500;">Se déconnecter</button>
             </div>
               
-            <!-- CONTENU DES ONGLETS ÉTUDIANT -->
             <div style="flex: 1; min-width: 280px; background: white; padding: 25px; border-radius: 8px; border: 1px solid #ddd;">
               
-             <!-- ONGLET 1 : CARTE D'ÉTUDIANT PROFESSIONNELLE HORIZONTALE -->
+             <!-- ONGLET 1 : CARTE D'ÉTUDIANT -->
              <div id="onglet-badge" class="etudiant-onglet">
                <h3 style="color: #1B365D; margin-top: 0; text-align: center; font-weight: 700;">Carte d'Étudiant Officielle (Format Paysage)</h3>
                <p style="color: #555; font-size: 14px; text-align: center; margin-bottom: 25px;">Format standard PVC horizontal professionnel (9 cm × 8 cm). Téléchargez votre carte en haute définition (PNG ou PDF).</p>
@@ -534,85 +526,74 @@
                  <input type="file" id="inputPhotoEtudiant" accept="image/*" onchange="chargerPhotoEtudiant(event)" style="font-size: 12px; width: 100%;">
                </div>
 
-               
-               <!-- DESIGN DE LA CARTE MIS À JOUR (Nom complet & Pied de page avec e-mail) -->
-  <div id="badgeImprimable" style="width: 480px; height: 260px; margin: 0 auto 20px auto; background: linear-gradient(145deg, #ffffff, #f8f9fa); border: 3px solid #1B365D; border-radius: 12px; box-shadow: 0 10px 30px rgba(27,54,93,0.25); overflow: hidden; font-family: 'Poppins', Arial, sans-serif; position: relative; display: flex; flex-direction: column; justify-content: space-between;">
-    
-    <!-- En-tête institutionnel avec le nom complet exact -->
-    <div style="background: linear-gradient(135deg, #1B365D, #0f223f); color: white; padding: 8px 14px; display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid #ffc107;">
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <img src="logo.jpeg" alt="Logo HEPP" crossorigin="anonymous" style="height: 28px; width: auto; border-radius: 3px; background: white; padding: 2px;">
-        <div>
-          <div style="font-size: 6.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #ffc107; font-family: 'Montserrat', sans-serif;">HAUTES ÉTUDES DES PRATIQUES PÉDAGOGIQUES</div>
-          <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: #ffffff; font-family: 'Montserrat', sans-serif;">CARTE D'ÉTUDIANT OFFICIELLE</div>
-        </div>
-      </div>
-      <div style="font-size: 8.5px; color: #1B365D; font-weight: 800; background: #ffc107; padding: 2px 8px; border-radius: 4px;">2026-2027</div>
-    </div>
+               <!-- DESIGN DE LA CARTE MIS À JOUR -->
+               <div id="badgeImprimable" style="width: 480px; height: 260px; margin: 0 auto 20px auto; background: linear-gradient(145deg, #ffffff, #f8f9fa); border: 3px solid #1B365D; border-radius: 12px; box-shadow: 0 10px 30px rgba(27,54,93,0.25); overflow: hidden; font-family: 'Poppins', Arial, sans-serif; position: relative; display: flex; flex-direction: column; justify-content: space-between;">
+                 
+                 <div style="background: linear-gradient(135deg, #1B365D, #0f223f); color: white; padding: 8px 14px; display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid #ffc107;">
+                   <div style="display: flex; align-items: center; gap: 10px;">
+                     <img src="logo.jpeg" alt="Logo HEPP" crossorigin="anonymous" style="height: 28px; width: auto; border-radius: 3px; background: white; padding: 2px;">
+                     <div>
+                       <div style="font-size: 6.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #ffc107; font-family: 'Montserrat', sans-serif;">HAUTES ÉTUDES DES PRATIQUES PÉDAGOGIQUES</div>
+                       <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: #ffffff; font-family: 'Montserrat', sans-serif;">CARTE D'ÉTUDIANT OFFICIELLE</div>
+                     </div>
+                   </div>
+                   <div style="font-size: 8.5px; color: #1B365D; font-weight: 800; background: #ffc107; padding: 2px 8px; border-radius: 4px;">2026-2027</div>
+                 </div>
 
-    <!-- Corps de la carte -->
-    <div style="padding: 10px 14px; display: flex; gap: 12px; align-items: center; flex-grow: 1;">
-      
-      <!-- Photo d'Identité à gauche -->
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0;">
-        <div style="width: 72px; height: 92px; border-radius: 6px; border: 2.5px solid #1B365D; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.15); background: #eee;">
-          <img id="badgePhoto" crossorigin="anonymous" src="https://via.placeholder.com/110" alt="Photo Étudiant" style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-        <span style="font-size: 6px; color: #28a745; font-weight: 800; background: #e8f5e9; padding: 1px 4px; border-radius: 3px; border: 1px solid #c8e6c9;">● ADMIS(E)</span>
-      </div>
+                 <div style="padding: 10px 14px; display: flex; gap: 12px; align-items: center; flex-grow: 1;">
+                   <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0;">
+                     <div style="width: 72px; height: 92px; border-radius: 6px; border: 2.5px solid #1B365D; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.15); background: #eee;">
+                       <img id="badgePhoto" crossorigin="anonymous" src="https://via.placeholder.com/110" alt="Photo Étudiant" style="width: 100%; height: 100%; object-fit: cover;">
+                     </div>
+                     <span style="font-size: 6px; color: #28a745; font-weight: 800; background: #e8f5e9; padding: 1px 4px; border-radius: 3px; border: 1px solid #c8e6c9;">● ADMIS(E)</span>
+                   </div>
 
-      <!-- Informations de l'étudiant -->
-      <div style="display: flex; flex-direction: column; justify-content: center; flex-grow: 1; overflow: hidden;">
-        <!-- Nom complet -->
-        <h3 id="badgeNom" style="margin: 0 0 5px 0; color: #1B365D; font-size: 11px; font-weight: 700; text-transform: uppercase; text-align: center; overflow: hidden; word-break: break-word; font-family: 'Montserrat', sans-serif; background: rgba(27,54,93,0.06); padding: 3px 6px; border-radius: 4px; border-bottom: 2px solid #ffc107; line-height: 1.2;">Nom Prénom</h3>
-        
-        <!-- Bloc des détails -->
-        <div style="display: flex; flex-direction: column; gap: 2px; font-size: 7.5px; color: #2c3e50; background: white; padding: 4px 8px; border-radius: 6px; border: 1px solid #e1e4e8;">
-          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
-            <strong style="color: #555; width: 32%;">Matricule :</strong> <span id="badgeMatricule" style="color: #004080; font-weight: 700; width: 68%; text-align: right;">HEPP-000</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
-            <strong style="color: #555; width: 28%;">Filière :</strong> <span id="badgeFiliere" style="font-weight: 600; width: 72%; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Filière Générale</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
-            <strong style="color: #555; width: 32%;">NIF / CIN :</strong> <span id="badgeNifCin" style="font-weight: 500; width: 68%; text-align: right;">000-000-000-0</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
-            <strong style="color: #555; width: 28%;">Tél :</strong> <span id="badgeTel" style="font-weight: 500; width: 72%; text-align: right;">+509 0000-0000</span>
-          </div>
-          <div style="display: flex; justify-content: space-between;">
-            <strong style="color: #555; width: 25%;">E-mail :</strong> <span id="badgeEmail" style="font-weight: 500; width: 75%; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">etudiant@hepp.edu</span>
-          </div>
-        </div>
-      </div>
+                   <div style="display: flex; flex-direction: column; justify-content: center; flex-grow: 1; overflow: hidden;">
+                     <h3 id="badgeNom" style="margin: 0 0 5px 0; color: #1B365D; font-size: 11px; font-weight: 700; text-transform: uppercase; text-align: center; overflow: hidden; word-break: break-word; font-family: 'Montserrat', sans-serif; background: rgba(27,54,93,0.06); padding: 3px 6px; border-radius: 4px; border-bottom: 2px solid #ffc107; line-height: 1.2;">Nom Prénom</h3>
+                     
+                     <div style="display: flex; flex-direction: column; gap: 2px; font-size: 7.5px; color: #2c3e50; background: white; padding: 4px 8px; border-radius: 6px; border: 1px solid #e1e4e8;">
+                       <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
+                         <strong style="color: #555; width: 32%;">Matricule :</strong> <span id="badgeMatricule" style="color: #004080; font-weight: 700; width: 68%; text-align: right;">HEPP-000</span>
+                       </div>
+                       <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
+                         <strong style="color: #555; width: 28%;">Filière :</strong> <span id="badgeFiliere" style="font-weight: 600; width: 72%; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Filière Générale</span>
+                       </div>
+                       <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
+                         <strong style="color: #555; width: 32%;">NIF / CIN :</strong> <span id="badgeNifCin" style="font-weight: 500; width: 68%; text-align: right;">000-000-000-0</span>
+                       </div>
+                       <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
+                         <strong style="color: #555; width: 28%;">Tél :</strong> <span id="badgeTel" style="font-weight: 500; width: 72%; text-align: right;">+509 0000-0000</span>
+                       </div>
+                       <div style="display: flex; justify-content: space-between;">
+                         <strong style="color: #555; width: 25%;">E-mail :</strong> <span id="badgeEmail" style="font-weight: 500; width: 75%; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">etudiant@hepp.edu</span>
+                       </div>
+                     </div>
+                   </div>
 
-      <!-- QR Code compact à droite -->
-      <div style="text-align: center; flex-shrink: 0; border-left: 2px dashed #dcdcdc; padding-left: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=40x40&data=HEPP-VERIFIED-STUDENT" crossorigin="anonymous" alt="QR Code" style="display: block; width: 38px; height: 38px; border-radius: 4px; background: white; padding: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-        <span style="color: #1B365D; font-weight: 700; font-size: 6px; display: block; margin-top: 2px; letter-spacing: 0.5px;">SÉCURISÉ</span>
-      </div>
-    </div>
+                   <div style="text-align: center; flex-shrink: 0; border-left: 2px dashed #dcdcdc; padding-left: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                     <img src="https://api.qrserver.com/v1/create-qr-code/?size=40x40&data=HEPP-VERIFIED-STUDENT" crossorigin="anonymous" alt="QR Code" style="display: block; width: 38px; height: 38px; border-radius: 4px; background: white; padding: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                     <span style="color: #1B365D; font-weight: 700; font-size: 6px; display: block; margin-top: 2px; letter-spacing: 0.5px;">SÉCURISÉ</span>
+                   </div>
+                 </div>
 
-    <!-- Pied de page mis à jour : Propriété, E-mail et Adresse locale -->
-    <div style="background: #1B365D; color: #ffc107; padding: 4px 10px; display: flex; justify-content: space-between; align-items: center; font-size: 5.5px; font-weight: 700; letter-spacing: 0.3px; border-top: 1px solid #ffc107;">
-      <span>Propriété de HEPP</span>
-      <span>secrétariat.hepp@gmail.com</span>
-      <span>Port-au-Prince, HAÏTI</span>
-    </div>
-  </div>
+                 <div style="background: #1B365D; color: #ffc107; padding: 4px 10px; display: flex; justify-content: space-between; align-items: center; font-size: 5.5px; font-weight: 700; letter-spacing: 0.3px; border-top: 1px solid #ffc107;">
+                   <span>Propriété de HEPP</span>
+                   <span>secrétariat.hepp@gmail.com</span>
+                   <span>Port-au-Prince, HAÏTI</span>
+                 </div>
+               </div>
 
                <div style="text-align: center; margin-top: 15px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
                  <button onclick="telechargerBadgePNG()" style="padding: 12px 24px; background: #1B365D; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; box-shadow: 0 4px 12px rgba(27,54,93,0.3); transition: 0.2s;">📥 Télécharger en PNG (HD)</button>
                  <button onclick="telechargerBadgePDF()" style="padding: 12px 24px; background: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; box-shadow: 0 4px 12px rgba(40,167,69,0.3); transition: 0.2s;">📄 Télécharger en PDF (PVC)</button>
                </div>
-               <p style="font-size: 12px; color: #666; margin-top: 10px; text-align: center;">Le fichier se télécharge instantanément aux mesures exactes pour l'impression physique.</p>
              </div>
               
-              <!-- ONGLET COURS MULTIMÉDIA -->
+              <!-- ONGLET COURS EN DOSSIERS -->
               <div id="onglet-cours" class="etudiant-onglet" style="display: none;">
-                <h3 style="color: #004080; margin-top: 0;">Mes Cours & Contenus Pédagogiques (Double Diplôme)</h3>
-                <p style="color: #666; font-size: 14px; margin-bottom: 20px;">Retrouvez ci-dessous tous les cours mis à disposition par l'administration (Vidéos, Audios, Documents PDF et Images).</p>
-                <div id="listeCoursEtudiantMultimedia" style="display: flex; flex-direction: column; gap: 20px;"></div>
+                <h3 style="color: #004080; margin-top: 0;">📚 Mes Dossiers de Cours & Devoirs</h3>
+                <p style="color: #666; font-size: 14px; margin-bottom: 20px;">Accédez aux supports pédagogiques de chaque cours et téléverser vos devoirs dans le sous-dossier dédié.</p>
+                <div id="listeCoursDossiersEtudiant" style="display: flex; flex-direction: column; gap: 20px;"></div>
               </div>
 
               <!-- ONGLET FINANCES -->
@@ -625,8 +606,8 @@
               </div>
 
               <div id="onglet-devoirs" class="etudiant-onglet" style="display: none;">
-                <h3 style="color: #004080; margin-top: 0;">Devoirs & Évaluations</h3>
-                <p>Aucun devoir en attente pour le moment.</p>
+                <h3 style="color: #004080; margin-top: 0;">Mes Devoirs Soumis</h3>
+                <div id="listeMesDevoirsSoumis"></div>
               </div>
 
               <div id="onglet-notes" class="etudiant-onglet" style="display: none;">
@@ -639,7 +620,6 @@
                 <p>Fichiers enregistrés dans votre dossier : <span id="resDocs" style="font-weight: bold; color: #333;">Aucun</span></p>
               </div>
 
-              <!-- ONGLET BIBLIOTHÈQUE RESTREINT -->
               <div id="onglet-bibliotheque" class="etudiant-onglet" style="display: none;">
                 <h3 style="color: #004080; margin-top: 0;">Bibliothèque Numérique & Documents</h3>
                 <div id="listeDocumentsBibliotheque" style="display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 15px;"></div>
@@ -678,7 +658,7 @@
             </div>
         </div>
 
-        <!-- SECTION ADMINISTRATION SÉCURISÉE (NOUVEAU : GESTION DES COURS & CONTENUS) -->
+        <!-- SECTION ADMINISTRATION SÉCURISÉE (GESTION DES DOSSIERS DE COURS & DEVOIRS) -->
         <div class="panel-section" id="administration">
           <h2 class="section-title">Portail Administratif Sécurisé</h2>
 
@@ -738,10 +718,10 @@
               </table>
             </div>
 
-            <!-- GESTION DES COURS & CONTENUS MULTIMÉDIAS POUR DOUBLE DIPLÔME -->
+            <!-- CRÉATION ET GESTION DES DOSSIERS DE COURS -->
             <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 20px;">
-              <h4 style="color: #004080;">📖 Gestion des Cours & Contenus (Double Diplôme / Licence)</h4>
-              <p style="font-size: 13px; color: #666;">Créez un module de cours et ajoutez-y des supports (Vidéos, PDFs, Images, Audios).</p>
+              <h4 style="color: #004080;">📂 Création d'un Dossier de Cours</h4>
+              <p style="font-size: 13px; color: #666;">Chaque titre de cours créé constituera un dossier indépendant avec ses documents et son sous-dossier de devoirs étudiants.</p>
               
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
                 <input type="text" id="adminTitreCours" placeholder="Titre du cours (ex: Administration Scolaire - Module 1)" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
@@ -751,37 +731,17 @@
                 </select>
               </div>
 
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
-                <select id="adminTypeMedia" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-                  <option value="Document PDF">Document PDF</option>
-                  <option value="Vidéo du Cours">Vidéo (Lien ou Fichier)</option>
-                  <option value="Audio / Podcast">Audio / Podcast</option>
-                  <option value="Image / Schéma">Image / Schéma</option>
-                </select>
-                <input type="file" id="adminFichierMedia" style="padding: 6px; border: 1px solid #ccc; border-radius: 4px; background: #f9f9f9;">
+              <div style="margin-bottom: 10px;">
+                <textarea id="adminDescriptionCours" placeholder="Description générale du cours..." style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; height: 60px; font-family: 'Poppins', sans-serif;"></textarea>
               </div>
 
-              <div style="margin-bottom: 15px;">
-                <textarea id="adminDescriptionCours" placeholder="Description ou instructions du contenu du cours..." style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; height: 70px; font-family: 'Poppins', sans-serif;"></textarea>
-              </div>
-
-              <button onclick="ajouterCoursAdmin()" style="padding: 10px 20px; background: #004080; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Publier le cours et son contenu</button>
+              <button onclick="creerDossierCours()" style="padding: 10px 20px; background: #004080; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Créer le dossier de cours</button>
             </div>
 
-            <!-- Liste des cours publiés -->
-            <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 20px; overflow-x: auto;">
-              <h4>Cours & Contenus Publiés (<span id="totalCoursCount">0</span>)</h4>
-              <table style="width: 100%; margin-top: 10px; border-collapse: collapse; font-size: 14px;">
-                <thead>
-                  <tr style="background: #f1f1f1; text-align: left;">
-                    <th style="padding: 8px; border: 1px solid #ddd;">Titre & Programme</th>
-                    <th style="padding: 8px; border: 1px solid #ddd;">Type de Média</th>
-                    <th style="padding: 8px; border: 1px solid #ddd;">Fichier / Description</th>
-                    <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Action</th>
-                  </tr>
-                </thead>
-                <tbody id="adminTableCours"></tbody>
-              </table>
+            <!-- LISTE DES DOSSIERS DE COURS & AJOUT DE CONTENUS -->
+            <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 20px;">
+              <h4 style="color: #004080;">📚 Gestion des Documents & Devoirs par Cours</h4>
+              <div id="adminListeDossiersCours" style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px;"></div>
             </div>
 
             <!-- Gestion Bibliothèque -->
@@ -856,7 +816,7 @@
 
     <!-- Pied de page -->
     <footer>
-        <p><strong>Hautes Études des Pratiques Pédagogiques (HEPP)</strong> — Fondée en Mars 2010</p>
+        <p><strong>Hautes Études des Pédagogiques (HEPP)</strong> — Fondée en Mars 2010</p>
         <p>Port-au-Prince, Haïti | Contact: secrétariat.hepp@gmail.com | (+509) 4647-5772</p>
         <p>© 2026 HEPP. Tous droits réservés.</p>
     </footer>
@@ -866,10 +826,8 @@
         const MOT_DE_PASSE_ADMIN = "HeppAdmin#2026$Secure!";
         let etudiantConnecte = null;
 
-      
-    // --- TÉLÉCHARGEMENT DIRECT EN PNG (SANS ERREUR 0 OCTET) ---
+        // --- TÉLÉCHARGEMENT DIRECT EN PNG ---
         function telechargerBadgePNG() {
-            // Récupération des données actuelles de l'étudiant
             const nom = document.getElementById("badgeNom").innerText || "Etudiant";
             const matricule = document.getElementById("badgeMatricule").innerText || "HEPP";
             const filiere = document.getElementById("badgeFiliere").innerText || "";
@@ -878,71 +836,59 @@
             const email = document.getElementById("badgeEmail").innerText || "";
             const photoSrc = document.getElementById("badgePhoto").src || "https://via.placeholder.com/110";
 
-            // Création d'un canvas invisible aux dimensions exactes de la carte (480x260 pixels)
             const canvas = document.createElement("canvas");
-            canvas.width = 960;  // Double de résolution pour une qualité HD nette
+            canvas.width = 960;
             canvas.height = 520;
             const ctx = canvas.getContext("2d");
 
-            // Fond blanc de la carte
             ctx.fillStyle = "#ffffff";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Bordure extérieure bleue
             ctx.strokeStyle = "#1B365D";
             ctx.lineWidth = 8;
             ctx.strokeRect(4, 4, canvas.width - 8, canvas.height - 8);
 
-            // En-tête bleu institutionnel
             ctx.fillStyle = "#1B365D";
             ctx.fillRect(8, 8, canvas.width - 16, 90);
 
-            // Liseré jaune doré sous l'en-tête
             ctx.fillStyle = "#ffc107";
             ctx.fillRect(8, 94, canvas.width - 16, 8);
 
-            // Texte de l'en-tête
             ctx.fillStyle = "#ffc107";
-            ctx.font = "bold 16px Montserrat, Arial, sans-serif";
+            ctx.font = "bold 15px Montserrat, Arial, sans-serif";
             ctx.fillText("HAUTES ÉTUDES DES PRATIQUES PÉDAGOGIQUES", 30, 40);
 
             ctx.fillStyle = "#ffffff";
             ctx.font = "bold 26px Montserrat, Arial, sans-serif";
             ctx.fillText("CARTE D'ÉTUDIANT OFFICIELLE", 30, 75);
 
-            // Badge Année académique à droite
             ctx.fillStyle = "#ffc107";
             ctx.fillRect(790, 30, 135, 45);
             ctx.fillStyle = "#1B365D";
             ctx.font = "bold 20px Poppins, Arial, sans-serif";
             ctx.fillText("2026-2027", 805, 60);
 
-            // Chargement de la photo de profil pour l'intégrer proprement
             const imgPhoto = new Image();
             imgPhoto.crossOrigin = "anonymous";
             imgPhoto.src = photoSrc;
             imgPhoto.onload = function() {
-                // Cadre de la photo
                 ctx.strokeStyle = "#1B365D";
                 ctx.lineWidth = 6;
                 ctx.strokeRect(30, 130, 160, 200);
                 ctx.drawImage(imgPhoto, 33, 133, 154, 194);
 
-                // Badge Admis(e) sous la photo
                 ctx.fillStyle = "#e8f5e9";
                 ctx.fillRect(55, 345, 110, 30);
                 ctx.fillStyle = "#28a745";
                 ctx.font = "bold 14px Poppins, Arial, sans-serif";
                 ctx.fillText("● ADMIS(E)", 68, 366);
 
-                // Nom de l'étudiant centré
                 ctx.fillStyle = "#1B365D";
-                ctx.font = "bold 24px Montserrat, Arial, sans-serif";
+                ctx.font = "bold 22px Montserrat, Arial, sans-serif";
                 ctx.textAlign = "center";
                 ctx.fillText(nom.toUpperCase(), 530, 150);
-                ctx.textAlign = "left"; // Réinitialisation
+                ctx.textAlign = "left";
 
-                // Bloc des informations textuelles
                 ctx.fillStyle = "#f8f9fa";
                 ctx.fillRect(220, 175, 480, 180);
                 ctx.strokeStyle = "#e1e4e8";
@@ -967,7 +913,6 @@
                     yPos += 30;
                 });
 
-                // QR Code statique ou sécurisé à droite
                 const imgQR = new Image();
                 imgQR.crossOrigin = "anonymous";
                 imgQR.src = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=HEPP-" + encodeURIComponent(matricule);
@@ -979,16 +924,14 @@
                     ctx.fillText("SÉCURISÉ", 790, 345);
                     ctx.textAlign = "left";
 
-                    // Pied de page institutionnel
                     ctx.fillStyle = "#1B365D";
                     ctx.fillRect(8, 455, canvas.width - 16, 55);
                     ctx.fillStyle = "#ffc107";
-                    ctx.font = "bold 13px Poppins, Arial, sans-serif";
+                    ctx.font = "bold 12px Poppins, Arial, sans-serif";
                     ctx.fillText("Propriété de HEPP", 30, 490);
                     ctx.fillText("secrétariat.hepp@gmail.com", 360, 490);
                     ctx.fillText("Port-au-Prince, HAÏTI", 730, 490);
 
-                    // Déclenchement du téléchargement direct du fichier PNG
                     const imageURL = canvas.toDataURL("image/png");
                     const link = document.createElement("a");
                     link.href = imageURL;
@@ -1122,51 +1065,87 @@
             document.getElementById("etudiantIdInput").value = "";
         }
 
-        // --- CHARGEMENT DES COURS MULTIMÉDIAS POUR L'ÉTUDIANT ---
+        // --- CHARGEMENT DES DOSSIERS DE COURS CÔTÉ ÉTUDIANT ---
         function chargerCoursEtudiant() {
             afficherOngletEtudiant('cours');
-            const conteneur = document.getElementById("listeCoursEtudiantMultimedia");
+            const conteneur = document.getElementById("listeCoursDossiersEtudiant");
             if (!conteneur) return;
-            
             conteneur.innerHTML = "";
 
             if (!etudiantConnecte) {
-                conteneur.innerHTML = `<p style="color: #dc3545; font-weight: bold; text-align: center;">Accès restreint : Veuillez vous connecter pour consulter vos cours.</p>`;
+                conteneur.innerHTML = `<p style="color: #dc3545; font-weight: bold; text-align: center;">Accès restreint : Veuillez vous connecter.</p>`;
                 return;
             }
 
-            let coursList = JSON.parse(localStorage.getItem("hepp_cours_multimedia")) || [];
-            
-            // Filtrer par filière de l'étudiant ou afficher tout le contenu pertinent
-            let coursFiltres = coursList.filter(c => c.programme === etudiantConnecte.filiere || c.programme === "Double Diplôme Admin & Gestion");
+            let dossiersCours = JSON.parse(localStorage.getItem("hepp_dossiers_cours")) || [];
+            let coursFiltres = dossiersCours.filter(c => c.programme === etudiantConnecte.filiere || c.programme === "Double Diplôme Admin & Gestion");
 
             if (coursFiltres.length === 0) {
-                conteneur.innerHTML = `<p style="color: #666; font-style: italic; text-align: center;">Aucun cours ou contenu multimédia n'a encore été publié par l'administration pour votre filière.</p>`;
+                conteneur.innerHTML = `<p style="color: #666; font-style: italic; text-align: center;">Aucun dossier de cours disponible pour votre filière.</p>`;
                 return;
             }
 
             coursFiltres.forEach(cours => {
                 const div = document.createElement("div");
-                div.style.cssText = "padding: 20px; border: 1px solid #ddd; border-radius: 8px; background: #fafafa; box-shadow: 0 2px 5px rgba(0,0,0,0.02);";
+                div.style.cssText = "padding: 20px; border: 2px solid #1B365D; border-radius: 8px; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 15px;";
                 
+                let documentsHtml = cours.documents && cours.documents.length > 0 ? 
+                    cours.documents.map(d => `<div style="display:flex; justify-content:space-between; align-items:center; padding: 6px 10px; background:#f8f9fa; margin: 4px 0; border-radius:4px;"><span style="font-size:13px;">📄 <strong>[${d.type}]</strong> ${d.nomFichier}</span> <button onclick="alert('Ouverture de ${d.nomFichier}')" class="btn-sm" style="padding:4px 10px;">Ouvrir</button></div>`).join('') :
+                    `<p style="font-size: 13px; color: #777; font-style: italic;">Aucun document dans ce dossier pour le moment.</p>`;
+
+                let devoirsHtml = cours.devoirs && cours.devoirs.length > 0 ?
+                    cours.devoirs.filter(d => d.etudiantCode === etudiantConnecte.code).map(d => `<div style="padding:6px; background:#e8f5e9; margin:4px 0; border-radius:4px; font-size:12px; color:#2e7d32;">✅ Devoir soumis : <strong>${d.nomFichier}</strong></div>`).join('') : '';
+
                 div.innerHTML = `
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <span style="font-size: 11px; background: #1B365D; color: white; padding: 3px 8px; border-radius: 4px; font-weight: 600;">${cours.programme}</span>
-                    <span style="font-size: 11px; background: #28a745; color: white; padding: 3px 8px; border-radius: 4px; font-weight: 600;">📁 ${cours.typeMedia}</span>
+                  <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ffc107; padding-bottom: 8px; margin-bottom: 12px;">
+                    <h4 style="margin: 0; color: #1B365D; font-size: 18px;">📁 ${cours.titre}</h4>
+                    <span style="font-size: 11px; background: #1B365D; color: white; padding: 3px 8px; border-radius: 4px;">${cours.programme}</span>
                   </div>
-                  <h4 style="margin: 0 0 8px 0; color: #1B365D; font-size: 16px;">${cours.titre}</h4>
-                  <p style="margin: 0 0 15px 0; color: #555; font-size: 13.5px; line-height: 1.5;">${cours.description}</p>
-                  <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 10px;">
-                    <small style="color: #666;">Fichier joint : <strong>${cours.nomFichier}</strong></small>
-                    <button onclick="alerteTelechargementCours('${cours.nomFichier}')" style="padding: 8px 16px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px;">📥 Télécharger / Ouvrir le contenu</button>
+                  <p style="margin: 0 0 12px 0; color: #555; font-size: 13.5px;">${cours.description}</p>
+                  
+                  <div style="background: #f1f5f9; padding: 12px; border-radius: 6px; margin-bottom: 12px;">
+                    <h5 style="margin: 0 0 8px 0; color: #004080; font-size: 14px;">📖 Documents du cours :</h5>
+                    ${documentsHtml}
+                  </div>
+
+                  <div style="background: #eef2f7; padding: 12px; border-radius: 6px; border: 1px dashed #004080;">
+                    <h5 style="margin: 0 0 6px 0; color: #004080; font-size: 14px;">✍️ Sous-dossier Devoirs :</h5>
+                    ${devoirsHtml}
+                    <div style="display: flex; gap: 10px; align-items: center; margin-top: 8px;">
+                      <input type="file" id="inputDevoir_${cours.id}" style="font-size: 12px; flex: 1;">
+                      <button onclick="soumettreDevoir(${cours.id})" class="btn-sm" style="background: #28a745;">📤 Soumettre mon devoir</button>
+                    </div>
                   </div>
                 `;
                 conteneur.appendChild(div);
             });
         }
 
-        function alerteTelechargementCours(nomFichier) {
-            alert("Ouverture et téléchargement du contenu multimédia : " + nomFichier);
+        function soumettreDevoir(coursId) {
+            const fileInput = document.getElementById(`inputDevoir_${coursId}`);
+            if (!fileInput || fileInput.files.length === 0) {
+                alert("Veuillez sélectionner un fichier de devoir à soumettre.");
+                return;
+            }
+            const nomFichier = fileInput.files[0].name;
+            let dossiersCours = JSON.parse(localStorage.getItem("hepp_dossiers_cours")) || [];
+            
+            dossiersCours = dossiersCours.map(c => {
+                if (c.id === coursId) {
+                    if (!c.devoirs) c.devoirs = [];
+                    c.devoirs.push({
+                        etudiantCode: etudiantConnecte.code,
+                        etudiantNom: etudiantConnecte.nom,
+                        nomFichier: nomFichier,
+                        date: new Date().toLocaleDateString()
+                    });
+                }
+                return c;
+            });
+
+            localStorage.setItem("hepp_dossiers_cours", JSON.stringify(dossiersCours));
+            alert("Devoir soumis avec succès dans le sous-dossier du cours !");
+            chargerCoursEtudiant();
         }
 
         function chargerBibliothequeEtudiant() {
@@ -1176,13 +1155,13 @@
             conteneur.innerHTML = "";
 
             if (!etudiantConnecte) {
-                conteneur.innerHTML = `<p style="color: #dc3545; font-weight: bold; text-align: center;">Accès restreint : Vous devez être connecté pour consulter la bibliothèque.</p>`;
+                conteneur.innerHTML = `<p style="color: #dc3545; font-weight: bold; text-align: center;">Accès restreint.</p>`;
                 return;
             }
 
             let documents = JSON.parse(localStorage.getItem("hepp_bibliotheque")) || [];
             if (documents.length === 0) {
-                conteneur.innerHTML = `<p style="color: #666; font-style: italic;">Aucun document disponible dans la bibliothèque pour le moment.</p>`;
+                conteneur.innerHTML = `<p style="color: #666; font-style: italic;">Aucun document disponible.</p>`;
                 return;
             }
 
@@ -1195,7 +1174,7 @@
                     <h4 style="margin: 8px 0 3px 0; color: #004080;">${doc.titre}</h4>
                     <small style="color: #666;">Fichier : ${doc.nomFichier}</small>
                   </div>
-                  <button onclick="alert('Téléchargement en cours : ${doc.nomFichier}')" style="padding: 8px 15px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px;">Télécharger / Visualiser</button>
+                  <button onclick="alert('Téléchargement : ${doc.nomFichier}')" style="padding: 8px 15px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px;">Télécharger / Visualiser</button>
                 `;
                 conteneur.appendChild(div);
             });
@@ -1207,7 +1186,7 @@
                 document.getElementById("adminLoginBox").style.display = "none";
                 document.getElementById("adminDashboard").style.display = "block";
                 chargerEtudiantsComplet();
-                chargerAdminCours();
+                chargerAdminDossiersCours();
                 chargerAdminDocuments();
             } else {
                 document.getElementById("erreurLogin").style.display = "block";
@@ -1249,7 +1228,7 @@
             document.getElementById("adminBalance").value = "";
 
             chargerEtudiantsComplet();
-            alert("Étudiant enregistré avec succès dans le registre officiel !");
+            alert("Étudiant enregistré avec succès !");
         }
 
         function chargerEtudiantsComplet() {
@@ -1281,82 +1260,129 @@
         }
 
         function supprimerEtudiant(code) {
-            if (confirm("Voulez-vous vraiment retirer cet étudiant du registre ?")) {
+            if (confirm("Voulez-vous retirer cet étudiant ?")) {
                 let etudiants = JSON.parse(localStorage.getItem("hepp_etudiants_admis")) || [];
                 etudiants = etudiants.filter(e => e.code !== code);
                 localStorage.setItem("hepp_etudiants_admis", JSON.stringify(etudiants));
                 chargerEtudiantsComplet();
-                alert("Étudiant retiré du registre.");
             }
         }
 
-        // --- GESTION ADMINISTRATIVE DES COURS MULTIMÉDIAS ---
-        function ajouterCoursAdmin() {
+        // --- GESTION ADMINISTRATIVE DES DOSSIERS DE COURS & DEVOIRS ---
+        function creerDossierCours() {
             const titre = document.getElementById("adminTitreCours").value.trim();
             const programme = document.getElementById("adminProgrammeCours").value;
-            const typeMedia = document.getElementById("adminTypeMedia").value;
             const description = document.getElementById("adminDescriptionCours").value.trim();
-            const fichierInput = document.getElementById("adminFichierMedia");
 
-            if (!titre || !description) {
-                alert("Veuillez remplir le titre et la description du cours.");
+            if (!titre) {
+                alert("Veuillez entrer un titre pour le dossier de cours.");
                 return;
             }
-
-            const nomFichier = fichierInput.files.length > 0 ? fichierInput.files[0].name : "Aucun fichier joint";
 
             const nouveauCours = {
                 id: Date.now(),
                 titre,
                 programme,
-                typeMedia,
                 description,
-                nomFichier
+                documents: [],
+                devoirs: []
             };
 
-            let coursList = JSON.parse(localStorage.getItem("hepp_cours_multimedia")) || [];
-            coursList.push(nouveauCours);
-            localStorage.setItem("hepp_cours_multimedia", JSON.stringify(coursList));
+            let dossiersCours = JSON.parse(localStorage.getItem("hepp_dossiers_cours")) || [];
+            dossiersCours.push(nouveauCours);
+            localStorage.setItem("hepp_dossiers_cours", JSON.stringify(dossiersCours));
 
             document.getElementById("adminTitreCours").value = "";
             document.getElementById("adminDescriptionCours").value = "";
-            document.getElementById("adminFichierMedia").value = "";
-
-            chargerAdminCours();
-            alert("Cours et contenu multimédia publiés avec succès !");
+            chargerAdminDossiersCours();
+            alert("Dossier de cours créé avec succès !");
         }
 
-        function chargerAdminCours() {
-            const tbody = document.getElementById("adminTableCours");
-            const countEl = document.getElementById("totalCoursCount");
-            if (!tbody) return;
-            tbody.innerHTML = "";
-            let coursList = JSON.parse(localStorage.getItem("hepp_cours_multimedia")) || [];
-            if (countEl) countEl.innerText = coursList.length;
+        function chargerAdminDossiersCours() {
+            const conteneur = document.getElementById("adminListeDossiersCours");
+            if (!conteneur) return;
+            conteneur.innerHTML = "";
 
-            if (coursList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" style="padding: 10px; text-align: center; color: #666;">Aucun cours publié.</td></tr>`;
+            let dossiersCours = JSON.parse(localStorage.getItem("hepp_dossiers_cours")) || [];
+            if (dossiersCours.length === 0) {
+                conteneur.innerHTML = `<p style="color: #666; font-style: italic;">Aucun dossier de cours créé pour le moment.</p>`;
                 return;
             }
 
-            coursList.forEach(c => {
-                const tr = document.createElement("tr");
-                tr.innerHTML = `
-                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>${c.titre}</strong><br><small style="color:#004080;">${c.programme}</small></td>
-                    <td style="padding: 8px; border: 1px solid #ddd;"><span style="background: #eef2f7; padding: 2px 6px; border-radius: 3px; font-weight:600;">${c.typeMedia}</span></td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">📎 ${c.nomFichier}<br><small style="color:#666;">${c.description.substring(0, 50)}...</small></td>
-                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;"><button onclick="supprimerCoursAdmin(${c.id})" style="padding: 4px 8px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Supprimer</button></td>
+            dossiersCours.forEach(cours => {
+                const div = document.createElement("div");
+                div.style.cssText = "padding: 15px; border: 1px solid #ccc; border-radius: 6px; background: #fafafa;";
+                
+                let docsAdminHtml = cours.documents && cours.documents.length > 0 ? 
+                    cours.documents.map(d => `<div style="font-size:12px; color:#333;">- [${d.type}] ${d.nomFichier}</div>`).join('') : 
+                    `<em style="font-size:12px; color:#777;">Aucun document téléversé.</em>`;
+
+                let devoirsAdminHtml = cours.devoirs && cours.devoirs.length > 0 ?
+                    cours.devoirs.map(d => `<div style="font-size:12px; background:#e8f5e9; padding:4px; margin:2px 0; border-radius:3px;">👤 <strong>${d.etudiantNom}</strong> (${d.etudiantCode}) a soumis : <strong>${d.nomFichier}</strong> (${d.date})</div>`).join('') :
+                    `<em style="font-size:12px; color:#777;">Aucun devoir soumis par les étudiants pour l'instant.</em>`;
+
+                div.innerHTML = `
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <h5 style="margin:0; color:#004080; font-size:16px;">📁 ${cours.titre} <span style="font-size:11px; font-weight:normal; background:#1B365D; color:white; padding:2px 6px; border-radius:3px;">${cours.programme}</span></h5>
+                    <button onclick="supprimerDossierCours(${cours.id})" style="padding:4px 8px; background:#dc3545; color:white; border:none; border-radius:4px; cursor:pointer; font-size:11px;">Supprimer le dossier</button>
+                  </div>
+                  <p style="font-size:13px; color:#555; margin:0 0 10px 0;">${cours.description}</p>
+                  
+                  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;">
+                    <div style="background:#fff; padding:10px; border:1px solid #ddd; border-radius:4px;">
+                      <strong style="font-size:13px; color:#004080;">📄 Documents du cours :</strong>
+                      <div style="margin:6px 0;">${docsAdminHtml}</div>
+                      <div style="display:flex; gap:5px; margin-top:8px; flex-wrap:wrap;">
+                        <select id="typeDoc_${cours.id}" style="font-size:11px; padding:4px;">
+                          <option value="PDF">PDF</option>
+                          <option value="Vidéo">Vidéo</option>
+                          <option value="Audio">Audio</option>
+                          <option value="Image">Image</option>
+                        </select>
+                        <input type="file" id="fileDoc_${cours.id}" style="font-size:11px; flex:1;">
+                        <button onclick="ajouterDocAuCours(${cours.id})" class="btn-sm" style="padding:4px 8px; font-size:11px;">Ajouter</button>
+                      </div>
+                    </div>
+
+                    <div style="background:#fff; padding:10px; border:1px solid #ddd; border-radius:4px;">
+                      <strong style="font-size:13px; color:#28a745;">📥 Sous-dossier Devoirs (Étudiants) :</strong>
+                      <div style="margin:6px 0; max-height:100px; overflow-y:auto;">${devoirsAdminHtml}</div>
+                    </div>
+                  </div>
                 `;
-                tbody.appendChild(tr);
+                conteneur.appendChild(div);
             });
         }
 
-        function supprimerCoursAdmin(id) {
-            if (confirm("Voulez-vous supprimer ce cours ?")) {
-                let coursList = JSON.parse(localStorage.getItem("hepp_cours_multimedia")) || [];
-                coursList = coursList.filter(c => c.id !== id);
-                localStorage.setItem("hepp_cours_multimedia", JSON.stringify(coursList));
-                chargerAdminCours();
+        function ajouterDocAuCours(coursId) {
+            const typeDoc = document.getElementById(`typeDoc_${coursId}`).value;
+            const fileInput = document.getElementById(`fileDoc_${coursId}`);
+            if (!fileInput || fileInput.files.length === 0) {
+                alert("Veuillez sélectionner un fichier à ajouter.");
+                return;
+            }
+            const nomFichier = fileInput.files[0].name;
+
+            let dossiersCours = JSON.parse(localStorage.getItem("hepp_dossiers_cours")) || [];
+            dossiersCours = dossiersCours.map(c => {
+                if (c.id === coursId) {
+                    if (!c.documents) c.documents = [];
+                    c.documents.push({ type: typeDoc, nomFichier: nomFichier });
+                }
+                return c;
+            });
+
+            localStorage.setItem("hepp_dossiers_cours", JSON.stringify(dossiersCours));
+            chargerAdminDossiersCours();
+            alert("Document ajouté au dossier de cours avec succès !");
+        }
+
+        function supprimerDossierCours(coursId) {
+            if (confirm("Voulez-vous supprimer ce dossier de cours et tout son contenu ?")) {
+                let dossiersCours = JSON.parse(localStorage.getItem("hepp_dossiers_cours")) || [];
+                dossiersCours = dossiersCours.filter(c => c.id !== coursId);
+                localStorage.setItem("hepp_dossiers_cours", JSON.stringify(dossiersCours));
+                chargerAdminDossiersCours();
             }
         }
 
@@ -1413,7 +1439,7 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             chargerEtudiantsComplet();
-            chargerAdminCours();
+            chargerAdminDossiersCours();
             chargerAdminDocuments();
         });
     </script>
