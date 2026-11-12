@@ -813,37 +813,13 @@
         const MOT_DE_PASSE_ADMIN = "HeppAdmin#2026$Secure!";
         let etudiantConnecte = null;
 
-     // --- TÉLÉCHARGEMENT DIRECT ET ROBUSTE DU BADGE ---
+     // --- TÉLÉCHARGEMENT / IMPRESSION SÉCURISÉE DU BADGE PVC ---
         function telechargerBadgePNG() {
-            const badgeElement = document.getElementById("badgeImprimable");
-            
-            // On vérifie que la bibliothèque est bien chargée, sinon on bascule sur l'impression native propre
-            if (typeof html2canvas === 'undefined') {
-                imprimerBadgePVC();
-                return;
-            }
-
-            html2canvas(badgeElement, {
-                scale: 3,
-                useCORS: true,
-                allowTaint: true,
-                backgroundColor: "#ffffff"
-            }).then(canvas => {
-                const dataURL = canvas.toDataURL("image/png");
-                const link = document.createElement("a");
-                link.href = dataURL;
-                link.download = `Badge_PVC_${etudiantConnecte ? etudiantConnecte.code : 'HEPP'}.png`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }).catch(err => {
-                console.warn("Basculement vers l'impression native :", err);
-                imprimerBadgePVC();
-            });
+            imprimerBadgePVC();
         }
 
         function telechargerBadgePDF() {
-            telechargerBadgePNG();
+            imprimerBadgePVC();
         }
 
         function imprimerBadgePVC() {
@@ -868,7 +844,7 @@
                 fenetreImpression.close();
             }, 600);
         }
-
+        
         // Service Worker PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
