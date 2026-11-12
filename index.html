@@ -524,97 +524,84 @@
             <!-- CONTENU DES ONGLETS ÉTUDIANT -->
             <div style="flex: 1; min-width: 280px; background: white; padding: 25px; border-radius: 8px; border: 1px solid #ddd;">
               
-             <!-- ONGLET 1 : CARTE D'ÉTUDIANT PROFESSIONNELLE HORIZONTALE (Design riche & structuré) -->
-<div id="onglet-badge" class="etudiant-onglet">
-  <h3 style="color: #1B365D; margin-top: 0; text-align: center; font-weight: 700;">Carte d'Étudiant Officielle (Format Paysage)</h3>
-  <p style="color: #555; font-size: 14px; text-align: center; margin-bottom: 25px;">Format standard PVC horizontal professionnel (9 cm × 8 cm). Téléchargez votre carte en haute définition (PNG ou PDF).</p>
+             <!-- ONGLET 1 : CARTE D'ÉTUDIANT PROFESSIONNELLE HORIZONTALE -->
+             <div id="onglet-badge" class="etudiant-onglet">
+               <h3 style="color: #1B365D; margin-top: 0; text-align: center; font-weight: 700;">Carte d'Étudiant Officielle (Format Paysage)</h3>
+               <p style="color: #555; font-size: 14px; text-align: center; margin-bottom: 25px;">Format standard PVC horizontal professionnel (9 cm × 8 cm). Téléchargez votre carte en haute définition (PNG ou PDF).</p>
 
-  <!-- Input Photo centré -->
-  <div style="max-width: 400px; margin: 0 auto 20px auto; background: #f8f9fa; padding: 12px; border-radius: 8px; text-align: center; border: 1px dashed #1B365D;">
-    <label style="font-size: 13px; font-weight: bold; color: #1B365D; display: block; margin-bottom: 5px;">📷 Importer ou modifier ma photo d'identité :</label>
-    <input type="file" id="inputPhotoEtudiant" accept="image/*" onchange="chargerPhotoEtudiant(event)" style="font-size: 12px; width: 100%;">
-  </div>
+               <div style="max-width: 400px; margin: 0 auto 20px auto; background: #f8f9fa; padding: 12px; border-radius: 8px; text-align: center; border: 1px dashed #1B365D;">
+                 <label style="font-size: 13px; font-weight: bold; color: #1B365D; display: block; margin-bottom: 5px;">📷 Importer ou modifier ma photo d'identité :</label>
+                 <input type="file" id="inputPhotoEtudiant" accept="image/*" onchange="chargerPhotoEtudiant(event)" style="font-size: 12px; width: 100%;">
+               </div>
 
-  
- 
-  
-  <!-- DESIGN DE LA CARTE CORRIGÉ (Nom complet garanti sans coupure) -->
-  <div id="badgeImprimable" style="width: 480px; height: 260px; margin: 0 auto 20px auto; background: linear-gradient(145deg, #ffffff, #f8f9fa); border: 3px solid #1B365D; border-radius: 12px; box-shadow: 0 10px 30px rgba(27,54,93,0.25); overflow: hidden; font-family: 'Poppins', Arial, sans-serif; position: relative; display: flex; flex-direction: column; justify-content: space-between;">
-    
-    <!-- En-tête institutionnel haut de gamme -->
-    <div style="background: linear-gradient(135deg, #1B365D, #0f223f); color: white; padding: 8px 14px; display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid #ffc107;">
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <img src="logo.jpeg" alt="Logo HEPP" crossorigin="anonymous" style="height: 28px; width: auto; border-radius: 3px; background: white; padding: 2px;">
-        <div>
-          <div style="font-size: 7.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #ffc107; font-family: 'Montserrat', sans-serif;">Hautes Études des Pédagogiques</div>
-          <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: #ffffff; font-family: 'Montserrat', sans-serif;">CARTE D'ÉTUDIANT OFFICIELLE</div>
-        </div>
-      </div>
-      <div style="font-size: 8.5px; color: #1B365D; font-weight: 800; background: #ffc107; padding: 2px 8px; border-radius: 4px;">2026-2027</div>
-    </div>
+               <!-- DESIGN DE LA CARTE -->
+               <div id="badgeImprimable" style="width: 480px; height: 260px; margin: 0 auto 20px auto; background: linear-gradient(145deg, #ffffff, #f8f9fa); border: 3px solid #1B365D; border-radius: 12px; box-shadow: 0 10px 30px rgba(27,54,93,0.25); overflow: hidden; font-family: 'Poppins', Arial, sans-serif; position: relative; display: flex; flex-direction: column; justify-content: space-between;">
+                 
+                 <div style="background: linear-gradient(135deg, #1B365D, #0f223f); color: white; padding: 8px 14px; display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid #ffc107;">
+                   <div style="display: flex; align-items: center; gap: 10px;">
+                     <img src="logo.jpeg" alt="Logo HEPP" crossorigin="anonymous" style="height: 28px; width: auto; border-radius: 3px; background: white; padding: 2px;">
+                     <div>
+                       <div style="font-size: 7.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #ffc107; font-family: 'Montserrat', sans-serif;">Hautes Études des Pédagogiques</div>
+                       <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: #ffffff; font-family: 'Montserrat', sans-serif;">CARTE D'ÉTUDIANT OFFICIELLE</div>
+                     </div>
+                   </div>
+                   <div style="font-size: 8.5px; color: #1B365D; font-weight: 800; background: #ffc107; padding: 2px 8px; border-radius: 4px;">2026-2027</div>
+                 </div>
 
-    <!-- Corps de la carte -->
-    <div style="padding: 10px 14px; display: flex; gap: 12px; align-items: center; flex-grow: 1;">
-      
-      <!-- Photo d'Identité à gauche -->
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0;">
-        <div style="width: 72px; height: 92px; border-radius: 6px; border: 2.5px solid #1B365D; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.15); background: #eee;">
-          <img id="badgePhoto" crossorigin="anonymous" src="https://via.placeholder.com/110" alt="Photo Étudiant" style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-        <span style="font-size: 6px; color: #28a745; font-weight: 800; background: #e8f5e9; padding: 1px 4px; border-radius: 3px; border: 1px solid #c8e6c9;">● ADMIS(E)</span>
-      </div>
+                 <div style="padding: 10px 14px; display: flex; gap: 12px; align-items: center; flex-grow: 1;">
+                   <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0;">
+                     <div style="width: 72px; height: 92px; border-radius: 6px; border: 2.5px solid #1B365D; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.15); background: #eee;">
+                       <img id="badgePhoto" crossorigin="anonymous" src="https://via.placeholder.com/110" alt="Photo Étudiant" style="width: 100%; height: 100%; object-fit: cover;">
+                     </div>
+                     <span style="font-size: 6px; color: #28a745; font-weight: 800; background: #e8f5e9; padding: 1px 4px; border-radius: 3px; border: 1px solid #c8e6c9;">● ADMIS(E)</span>
+                   </div>
 
-      <!-- Informations de l'étudiant (Nom entièrement visible) -->
-      <div style="display: flex; flex-direction: column; justify-content: center; flex-grow: 1; overflow: hidden;">
-        <!-- Nom ajusté pour s'adapter et s'afficher en entier sans troncature -->
-        <h3 id="badgeNom" style="margin: 0 0 5px 0; color: #1B365D; font-size: 11px; font-weight: 700; text-transform: uppercase; text-align: center; overflow: hidden; word-break: break-word; font-family: 'Montserrat', sans-serif; background: rgba(27,54,93,0.06); padding: 3px 6px; border-radius: 4px; border-bottom: 2px solid #ffc107; line-height: 1.2;">Nom Prénom</h3>
-        
-        <!-- Bloc des détails -->
-        <div style="display: flex; flex-direction: column; gap: 2px; font-size: 7.5px; color: #2c3e50; background: white; padding: 4px 8px; border-radius: 6px; border: 1px solid #e1e4e8;">
-          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
-            <strong style="color: #555; width: 32%;">Matricule :</strong> <span id="badgeMatricule" style="color: #004080; font-weight: 700; width: 68%; text-align: right;">HEPP-000</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
-            <strong style="color: #555; width: 28%;">Filière :</strong> <span id="badgeFiliere" style="font-weight: 600; width: 72%; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Filière Générale</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
-            <strong style="color: #555; width: 32%;">NIF / CIN :</strong> <span id="badgeNifCin" style="font-weight: 500; width: 68%; text-align: right;">000-000-000-0</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
-            <strong style="color: #555; width: 28%;">Tél :</strong> <span id="badgeTel" style="font-weight: 500; width: 72%; text-align: right;">+509 0000-0000</span>
-          </div>
-          <div style="display: flex; justify-content: space-between;">
-            <strong style="color: #555; width: 25%;">E-mail :</strong> <span id="badgeEmail" style="font-weight: 500; width: 75%; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">etudiant@hepp.edu</span>
-          </div>
-        </div>
-      </div>
+                   <div style="display: flex; flex-direction: column; justify-content: center; flex-grow: 1; overflow: hidden;">
+                     <h3 id="badgeNom" style="margin: 0 0 5px 0; color: #1B365D; font-size: 11px; font-weight: 700; text-transform: uppercase; text-align: center; overflow: hidden; word-break: break-word; font-family: 'Montserrat', sans-serif; background: rgba(27,54,93,0.06); padding: 3px 6px; border-radius: 4px; border-bottom: 2px solid #ffc107; line-height: 1.2;">Nom Prénom</h3>
+                     
+                     <div style="display: flex; flex-direction: column; gap: 2px; font-size: 7.5px; color: #2c3e50; background: white; padding: 4px 8px; border-radius: 6px; border: 1px solid #e1e4e8;">
+                       <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
+                         <strong style="color: #555; width: 32%;">Matricule :</strong> <span id="badgeMatricule" style="color: #004080; font-weight: 700; width: 68%; text-align: right;">HEPP-000</span>
+                       </div>
+                       <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
+                         <strong style="color: #555; width: 28%;">Filière :</strong> <span id="badgeFiliere" style="font-weight: 600; width: 72%; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Filière Générale</span>
+                       </div>
+                       <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
+                         <strong style="color: #555; width: 32%;">NIF / CIN :</strong> <span id="badgeNifCin" style="font-weight: 500; width: 68%; text-align: right;">000-000-000-0</span>
+                       </div>
+                       <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f2f2f2; padding-bottom: 1px;">
+                         <strong style="color: #555; width: 28%;">Tél :</strong> <span id="badgeTel" style="font-weight: 500; width: 72%; text-align: right;">+509 0000-0000</span>
+                       </div>
+                       <div style="display: flex; justify-content: space-between;">
+                         <strong style="color: #555; width: 25%;">E-mail :</strong> <span id="badgeEmail" style="font-weight: 500; width: 75%; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">etudiant@hepp.edu</span>
+                       </div>
+                     </div>
+                   </div>
 
-      <!-- QR Code compact à droite -->
-      <div style="text-align: center; flex-shrink: 0; border-left: 2px dashed #dcdcdc; padding-left: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=40x40&data=HEPP-VERIFIED-STUDENT" crossorigin="anonymous" alt="QR Code" style="display: block; width: 38px; height: 38px; border-radius: 4px; background: white; padding: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-        <span style="color: #1B365D; font-weight: 700; font-size: 6px; display: block; margin-top: 2px; letter-spacing: 0.5px;">SÉCURISÉ</span>
-      </div>
-    </div>
+                   <div style="text-align: center; flex-shrink: 0; border-left: 2px dashed #dcdcdc; padding-left: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                     <img src="https://api.qrserver.com/v1/create-qr-code/?size=40x40&data=HEPP-VERIFIED-STUDENT" crossorigin="anonymous" alt="QR Code" style="display: block; width: 38px; height: 38px; border-radius: 4px; background: white; padding: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                     <span style="color: #1B365D; font-weight: 700; font-size: 6px; display: block; margin-top: 2px; letter-spacing: 0.5px;">SÉCURISÉ</span>
+                   </div>
+                 </div>
 
-    <!-- Bande finale institutionnelle -->
-    <div style="background: #1B365D; color: #ffc107; padding: 4px 12px; display: flex; justify-content: space-between; align-items: center; font-size: 6.5px; font-weight: 700; letter-spacing: 0.5px; border-top: 1px solid #ffc107;">
-      <span>PROPRIÉTÉ DES HAUTES ÉTUDES DES PÉDAGOGIQUES</span>
-      <span>PORT-AU-PRINCE, HAÏTI</span>
-    </div>
-  </div>
- 
-  <!-- Boutons de téléchargement direct en PNG et PDF -->
-  <div style="text-align: center; margin-top: 15px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-    <button onclick="telechargerBadgePNG()" style="padding: 12px 24px; background: #1B365D; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; box-shadow: 0 4px 12px rgba(27,54,93,0.3); transition: 0.2s;">📥 Télécharger en PNG (HD)</button>
-    <button onclick="telechargerBadgePDF()" style="padding: 12px 24px; background: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; box-shadow: 0 4px 12px rgba(40,167,69,0.3); transition: 0.2s;">📄 Télécharger en PDF (PVC)</button>
-  </div>
-  <p style="font-size: 12px; color: #666; margin-top: 10px; text-align: center;">Le fichier se télécharge instantanément aux mesures exactes pour l'impression physique.</p>
-</div>
+                 <div style="background: #1B365D; color: #ffc107; padding: 4px 12px; display: flex; justify-content: space-between; align-items: center; font-size: 6.5px; font-weight: 700; letter-spacing: 0.5px; border-top: 1px solid #ffc107;">
+                   <span>PROPRIÉTÉ DES HAUTES ÉTUDES DES PÉDAGOGIQUES</span>
+                   <span>PORT-AU-PRINCE, HAÏTI</span>
+                 </div>
+               </div>
+
+               <div style="text-align: center; margin-top: 15px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                 <button onclick="telechargerBadgePNG()" style="padding: 12px 24px; background: #1B365D; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; box-shadow: 0 4px 12px rgba(27,54,93,0.3); transition: 0.2s;">📥 Télécharger en PNG (HD)</button>
+                 <button onclick="telechargerBadgePDF()" style="padding: 12px 24px; background: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; box-shadow: 0 4px 12px rgba(40,167,69,0.3); transition: 0.2s;">📄 Télécharger en PDF (PVC)</button>
+               </div>
+               <p style="font-size: 12px; color: #666; margin-top: 10px; text-align: center;">Le fichier se télécharge instantanément aux mesures exactes pour l'impression physique.</p>
+             </div>
               
-              <!-- ONGLET COURS -->
+              <!-- ONGLET COURS MULTIMÉDIA -->
               <div id="onglet-cours" class="etudiant-onglet" style="display: none;">
-                <h3 style="color: #004080; margin-top: 0;">Mes Cours & Supports Pédagogiques</h3>
-                <div id="listeCoursEtudiantMultimedia" style="display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 15px;"></div>
+                <h3 style="color: #004080; margin-top: 0;">Mes Cours & Contenus Pédagogiques (Double Diplôme)</h3>
+                <p style="color: #666; font-size: 14px; margin-bottom: 20px;">Retrouvez ci-dessous tous les cours mis à disposition par l'administration (Vidéos, Audios, Documents PDF et Images).</p>
+                <div id="listeCoursEtudiantMultimedia" style="display: flex; flex-direction: column; gap: 20px;"></div>
               </div>
 
               <!-- ONGLET FINANCES -->
@@ -680,7 +667,7 @@
             </div>
         </div>
 
-        <!-- SECTION ADMINISTRATION SÉCURISÉE -->
+        <!-- SECTION ADMINISTRATION SÉCURISÉE (NOUVEAU : GESTION DES COURS & CONTENUS) -->
         <div class="panel-section" id="administration">
           <h2 class="section-title">Portail Administratif Sécurisé</h2>
 
@@ -701,18 +688,14 @@
             <!-- Enregistrement Étudiant -->
             <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 20px;">
               <h4 style="color: #004080;">Registre Officiel des Étudiants Admis</h4>
-              <p>Enregistrez les étudiants pour leur accorder l'accès complet au campus et à la bibliothèque :</p>
-              
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
                 <input type="text" id="adminNom" placeholder="Nom complet" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
                 <input type="text" id="adminCode" placeholder="Matricule (ex: hepp-2026-001)" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
               </div>
-
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
                 <input type="email" id="adminEmail" placeholder="Adresse e-mail" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
                 <input type="text" id="adminTel" placeholder="Téléphone" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
               </div>
-
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
                 <input type="text" id="adminNifCin" placeholder="NIF / CIN" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
                 <select id="adminFiliere" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
@@ -720,16 +703,14 @@
                   <option value="Licence en Sciences de l'Éducation">Licence en Sciences de l'Éducation</option>
                 </select>
               </div>
-
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
                 <input type="number" id="adminVersement" placeholder="Montant versé" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
                 <input type="number" id="adminBalance" placeholder="Balance restante" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
               </div>
-
               <button onclick="ajouterEtudiantComplet()" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Enregistrer dans le registre</button>
             </div>
 
-            <!-- Tableau récapitulatif -->
+            <!-- Tableau récapitulatif étudiants -->
             <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; overflow-x: auto; margin-bottom: 20px;">
               <h4>Étudiants Admis (<span id="totalEtudiantsCount">0</span>)</h4>
               <table style="width: 100%; margin-top: 10px; border-collapse: collapse; font-size: 14px;">
@@ -743,6 +724,52 @@
                   </tr>
                 </thead>
                 <tbody id="listeEtudiantsCompletTable"></tbody>
+              </table>
+            </div>
+
+            <!-- GESTION DES COURS & CONTENUS MULTIMÉDIAS POUR DOUBLE DIPLÔME -->
+            <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 20px;">
+              <h4 style="color: #004080;">📖 Gestion des Cours & Contenus (Double Diplôme / Licence)</h4>
+              <p style="font-size: 13px; color: #666;">Créez un module de cours et ajoutez-y des supports (Vidéos, PDFs, Images, Audios).</p>
+              
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                <input type="text" id="adminTitreCours" placeholder="Titre du cours (ex: Administration Scolaire - Module 1)" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                <select id="adminProgrammeCours" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                  <option value="Double Diplôme Admin & Gestion">Double Diplôme Admin & Gestion</option>
+                  <option value="Licence en Sciences de l'Éducation">Licence en Sciences de l'Éducation</option>
+                </select>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                <select id="adminTypeMedia" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                  <option value="Document PDF">Document PDF</option>
+                  <option value="Vidéo du Cours">Vidéo (Lien ou Fichier)</option>
+                  <option value="Audio / Podcast">Audio / Podcast</option>
+                  <option value="Image / Schéma">Image / Schéma</option>
+                </select>
+                <input type="file" id="adminFichierMedia" style="padding: 6px; border: 1px solid #ccc; border-radius: 4px; background: #f9f9f9;">
+              </div>
+
+              <div style="margin-bottom: 15px;">
+                <textarea id="adminDescriptionCours" placeholder="Description ou instructions du contenu du cours..." style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; height: 70px; font-family: 'Poppins', sans-serif;"></textarea>
+              </div>
+
+              <button onclick="ajouterCoursAdmin()" style="padding: 10px 20px; background: #004080; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Publier le cours et son contenu</button>
+            </div>
+
+            <!-- Liste des cours publiés -->
+            <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 20px; overflow-x: auto;">
+              <h4>Cours & Contenus Publiés (<span id="totalCoursCount">0</span>)</h4>
+              <table style="width: 100%; margin-top: 10px; border-collapse: collapse; font-size: 14px;">
+                <thead>
+                  <tr style="background: #f1f1f1; text-align: left;">
+                    <th style="padding: 8px; border: 1px solid #ddd;">Titre & Programme</th>
+                    <th style="padding: 8px; border: 1px solid #ddd;">Type de Média</th>
+                    <th style="padding: 8px; border: 1px solid #ddd;">Fichier / Description</th>
+                    <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="adminTableCours"></tbody>
               </table>
             </div>
 
@@ -828,16 +855,34 @@
         const MOT_DE_PASSE_ADMIN = "HeppAdmin#2026$Secure!";
         let etudiantConnecte = null;
 
-       // --- TÉLÉCHARGEMENT ET ENREGISTREMENT SÉCURISÉ DU BADGE ---
+        // --- TÉLÉCHARGEMENT EN PNG ---
         function telechargerBadgePNG() {
-            imprimerBadgePVC();
+            const badgeElement = document.getElementById("badgeImprimable");
+            if (typeof html2canvas === 'undefined') {
+                alert("Erreur : La bibliothèque de téléchargement n'est pas chargée.");
+                return;
+            }
+            html2canvas(badgeElement, {
+                scale: 4,
+                useCORS: true,
+                allowTaint: false,
+                backgroundColor: "#ffffff"
+            }).then(canvas => {
+                const imageURL = canvas.toDataURL("image/png");
+                const link = document.createElement("a");
+                link.href = imageURL;
+                link.download = `Carte_Etudiant_HEPP_${etudiantConnecte ? etudiantConnecte.code : 'Officiel'}.png`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }).catch(err => {
+                console.error("Erreur de téléchargement PNG :", err);
+                alert("Erreur lors de la génération de l'image.");
+            });
         }
 
+        // --- TÉLÉCHARGEMENT EN PDF (FORMAT PVC PAYSAGE) ---
         function telechargerBadgePDF() {
-            imprimerBadgePVC();
-        }
-
-        function imprimerBadgePVC() {
             const contenuBadge = document.getElementById("badgeImprimable").outerHTML;
             const fenetreImpression = window.open('', '', 'height=700,width=600');
             
@@ -859,8 +904,7 @@
                 fenetreImpression.close();
             }, 600);
         }
-           
-        
+
         // Service Worker PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -959,15 +1003,61 @@
             document.getElementById("etudiantIdInput").value = "";
         }
 
-        function chargerBibliothequeEtudiant() {
-            afficherOngletEtudiant('bibliotheque');
-            const conteneur = document.getElementById("listeDocumentsBibliotheque");
+        // --- CHARGEMENT DES COURS MULTIMÉDIAS POUR L'ÉTUDIANT ---
+        function chargerCoursEtudiant() {
+            afficherOngletEtudiant('cours');
+            const conteneur = document.getElementById("listeCoursEtudiantMultimedia");
             if (!conteneur) return;
             
             conteneur.innerHTML = "";
 
             if (!etudiantConnecte) {
-                conteneur.innerHTML = `<p style="color: #dc3545; font-weight: bold; text-align: center;">Accès restreint : Vous devez être connecté avec un compte enregistré dans le registre des étudiants admis pour consulter la bibliothèque.</p>`;
+                conteneur.innerHTML = `<p style="color: #dc3545; font-weight: bold; text-align: center;">Accès restreint : Veuillez vous connecter pour consulter vos cours.</p>`;
+                return;
+            }
+
+            let coursList = JSON.parse(localStorage.getItem("hepp_cours_multimedia")) || [];
+            
+            // Filtrer par filière de l'étudiant ou afficher tout le contenu pertinent
+            let coursFiltres = coursList.filter(c => c.programme === etudiantConnecte.filiere || c.programme === "Double Diplôme Admin & Gestion");
+
+            if (coursFiltres.length === 0) {
+                conteneur.innerHTML = `<p style="color: #666; font-style: italic; text-align: center;">Aucun cours ou contenu multimédia n'a encore été publié par l'administration pour votre filière.</p>`;
+                return;
+            }
+
+            coursFiltres.forEach(cours => {
+                const div = document.createElement("div");
+                div.style.cssText = "padding: 20px; border: 1px solid #ddd; border-radius: 8px; background: #fafafa; box-shadow: 0 2px 5px rgba(0,0,0,0.02);";
+                
+                div.innerHTML = `
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <span style="font-size: 11px; background: #1B365D; color: white; padding: 3px 8px; border-radius: 4px; font-weight: 600;">${cours.programme}</span>
+                    <span style="font-size: 11px; background: #28a745; color: white; padding: 3px 8px; border-radius: 4px; font-weight: 600;">📁 ${cours.typeMedia}</span>
+                  </div>
+                  <h4 style="margin: 0 0 8px 0; color: #1B365D; font-size: 16px;">${cours.titre}</h4>
+                  <p style="margin: 0 0 15px 0; color: #555; font-size: 13.5px; line-height: 1.5;">${cours.description}</p>
+                  <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 10px;">
+                    <small style="color: #666;">Fichier joint : <strong>${cours.nomFichier}</strong></small>
+                    <button onclick="alerteTelechargementCours('${cours.nomFichier}')" style="padding: 8px 16px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px;">📥 Télécharger / Ouvrir le contenu</button>
+                  </div>
+                `;
+                conteneur.appendChild(div);
+            });
+        }
+
+        function alerteTelechargementCours(nomFichier) {
+            alert("Ouverture et téléchargement du contenu multimédia : " + nomFichier);
+        }
+
+        function chargerBibliothequeEtudiant() {
+            afficherOngletEtudiant('bibliotheque');
+            const conteneur = document.getElementById("listeDocumentsBibliotheque");
+            if (!conteneur) return;
+            conteneur.innerHTML = "";
+
+            if (!etudiantConnecte) {
+                conteneur.innerHTML = `<p style="color: #dc3545; font-weight: bold; text-align: center;">Accès restreint : Vous devez être connecté pour consulter la bibliothèque.</p>`;
                 return;
             }
 
@@ -986,18 +1076,10 @@
                     <h4 style="margin: 8px 0 3px 0; color: #004080;">${doc.titre}</h4>
                     <small style="color: #666;">Fichier : ${doc.nomFichier}</small>
                   </div>
-                  <button onclick="alerteTelechargement('${doc.nomFichier}')" style="padding: 8px 15px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px;">Télécharger / Visualiser</button>
+                  <button onclick="alert('Téléchargement en cours : ${doc.nomFichier}')" style="padding: 8px 15px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px;">Télécharger / Visualiser</button>
                 `;
                 conteneur.appendChild(div);
             });
-        }
-
-        function alerteTelechargement(nomFichier) {
-            if (!etudiantConnecte) {
-                alert("Accès refusé : Seuls les étudiants enregistrés dans le registre officiel peuvent télécharger ces documents.");
-                return;
-            }
-            alert("Téléchargement autorisé et en cours pour : " + nomFichier);
         }
 
         // --- ADMINISTRATION ---
@@ -1006,6 +1088,7 @@
                 document.getElementById("adminLoginBox").style.display = "none";
                 document.getElementById("adminDashboard").style.display = "block";
                 chargerEtudiantsComplet();
+                chargerAdminCours();
                 chargerAdminDocuments();
             } else {
                 document.getElementById("erreurLogin").style.display = "block";
@@ -1088,6 +1171,76 @@
             }
         }
 
+        // --- GESTION ADMINISTRATIVE DES COURS MULTIMÉDIAS ---
+        function ajouterCoursAdmin() {
+            const titre = document.getElementById("adminTitreCours").value.trim();
+            const programme = document.getElementById("adminProgrammeCours").value;
+            const typeMedia = document.getElementById("adminTypeMedia").value;
+            const description = document.getElementById("adminDescriptionCours").value.trim();
+            const fichierInput = document.getElementById("adminFichierMedia");
+
+            if (!titre || !description) {
+                alert("Veuillez remplir le titre et la description du cours.");
+                return;
+            }
+
+            const nomFichier = fichierInput.files.length > 0 ? fichierInput.files[0].name : "Aucun fichier joint";
+
+            const nouveauCours = {
+                id: Date.now(),
+                titre,
+                programme,
+                typeMedia,
+                description,
+                nomFichier
+            };
+
+            let coursList = JSON.parse(localStorage.getItem("hepp_cours_multimedia")) || [];
+            coursList.push(nouveauCours);
+            localStorage.setItem("hepp_cours_multimedia", JSON.stringify(coursList));
+
+            document.getElementById("adminTitreCours").value = "";
+            document.getElementById("adminDescriptionCours").value = "";
+            document.getElementById("adminFichierMedia").value = "";
+
+            chargerAdminCours();
+            alert("Cours et contenu multimédia publiés avec succès !");
+        }
+
+        function chargerAdminCours() {
+            const tbody = document.getElementById("adminTableCours");
+            const countEl = document.getElementById("totalCoursCount");
+            if (!tbody) return;
+            tbody.innerHTML = "";
+            let coursList = JSON.parse(localStorage.getItem("hepp_cours_multimedia")) || [];
+            if (countEl) countEl.innerText = coursList.length;
+
+            if (coursList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" style="padding: 10px; text-align: center; color: #666;">Aucun cours publié.</td></tr>`;
+                return;
+            }
+
+            coursList.forEach(c => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>${c.titre}</strong><br><small style="color:#004080;">${c.programme}</small></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;"><span style="background: #eef2f7; padding: 2px 6px; border-radius: 3px; font-weight:600;">${c.typeMedia}</span></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">📎 ${c.nomFichier}<br><small style="color:#666;">${c.description.substring(0, 50)}...</small></td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;"><button onclick="supprimerCoursAdmin(${c.id})" style="padding: 4px 8px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Supprimer</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function supprimerCoursAdmin(id) {
+            if (confirm("Voulez-vous supprimer ce cours ?")) {
+                let coursList = JSON.parse(localStorage.getItem("hepp_cours_multimedia")) || [];
+                coursList = coursList.filter(c => c.id !== id);
+                localStorage.setItem("hepp_cours_multimedia", JSON.stringify(coursList));
+                chargerAdminCours();
+            }
+        }
+
         function ajouterDocumentBibliotheque() {
             const titre = document.getElementById("adminTitreDoc").value.trim();
             const categorie = document.getElementById("adminCategorieDoc").value;
@@ -1141,6 +1294,7 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             chargerEtudiantsComplet();
+            chargerAdminCours();
             chargerAdminDocuments();
         });
     </script>
