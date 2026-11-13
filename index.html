@@ -947,20 +947,7 @@
         const MOT_DE_PASSE_ADMIN = "HeppAdmin#2026$Secure!";
         let etudiantConnecte = null;
 
-        // --- GESTION DE LA NAVIGATION PAR SECTION ISOLÉE ---
-        function basculerSection(nomSection) {
-            const sections = document.querySelectorAll(".site-section");
-            sections.forEach(sec => sec.classList.remove("active-section"));
-            
-            const cible = document.getElementById("sec-" + nomSection);
-            if (cible) {
-                cible.classList.add("active-section");
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-            if (nomSection === 'apropos') {
-                chargerSeminairesPublic();
-            }
-        }
+        
 
         // --- CHARGEMENT DES SÉMINAIRES CÔTÉ PUBLIC ---
         function chargerSeminairesPublic() {
@@ -973,6 +960,35 @@
                 let seminaires = Object.values(data);
                 conteneur.innerHTML = "";
 
+          // --- GESTION DE LA NAVIGATION CORRIGÉE ---
+        function basculerSection(nomSection) {
+            // 1. Essayer de trouver la section avec le préfixe "sec-" ou directement par son nom
+            let cible = document.getElementById("sec-" + nomSection);
+            if (!cible) {
+                cible = document.getElementById(nomSection);
+            }
+
+            if (cible) {
+                // Masquer toutes les sections principales si elles possèdent une classe ou un style global
+                document.querySelectorAll('section, .site-section, main > div').forEach(sec => {
+                    sec.style.display = 'none';
+                    sec.classList.remove("active-section");
+                });
+
+                // Afficher la section cible
+                cible.style.display = 'block';
+                cible.classList.add("active-section");
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                console.warn("Section introuvable pour : " + nomSection);
+            }
+
+            // Charger les séminaires si on va sur la page appropriée
+            if (nomSection === 'apropos' && typeof chargerSeminairesPublic === 'function') {
+                chargerSeminairesPublic();
+            }
+        }
+        
                 if (seminaires.length === 0) {
                     conteneur.innerHTML = `<p style="color: #666; font-style: italic; text-align: center; width: 100%;">Aucun séminaire ou formation ponctuelle pour le moment.</p>`;
                     return;
