@@ -947,35 +947,50 @@
         const MOT_DE_PASSE_ADMIN = "HeppAdmin#2026$Secure!";
         let etudiantConnecte = null;
 
-        
 
         // --- CHARGEMENT DES SÉMINAIRES CÔTÉ PUBLIC ---
         function chargerSeminairesPublic() {
-            const conteneur = document.getElementById("listeSeminairesPublic");
-            if (!conteneur) return;
-            conteneur.innerHTML = "<p style='color: #666; font-style: italic; text-align: center; width: 100%;'>Chargement des séminaires...</p>";
-
             db.ref("hepp_seminaires").once('value', (snapshot) => {
                 const data = snapshot.val() || {};
-                let seminaires = Object.values(data);
+                const conteneur = document.getElementById("listeSeminairesPublic");
+                if (!conteneur) return;
+                
                 conteneur.innerHTML = "";
+                let seminaires = Object.values(data);
+                
+                if (seminaires.length === 0) {
+                    conteneur.innerHTML = `<p style="color: #666; font-style: italic;">Aucun séminaire disponible pour le moment.</p>`;
+                    return;
+                }
+                
+                seminaires.forEach(sem => {
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.style.borderTop = "4px solid #e67e22";
+                    card.innerHTML = `
+                        <h3 style="color: #e67e22;">⭐ ${sem.titre}</h3>
+                        <p style="font-weight: bold; color: #333; font-size: 13px;">📅 ${sem.date} | 📍 ${sem.lieu}</p>
+                        <p>${sem.description}</p>
+                        <a onclick="basculerSection('inscription')" class="btn" style="background-color: #e67e22; color: white; margin-top: 10px; cursor: pointer;">S'inscrire au séminaire</a>
+                    `;
+                    conteneur.appendChild(card);
+                });
+            });
+        }
 
-          // --- GESTION DE LA NAVIGATION CORRIGÉE ---
+        // --- GESTION DE LA NAVIGATION CORRIGÉE (EXTÉRIEURE) ---
         function basculerSection(nomSection) {
-            // 1. Essayer de trouver la section avec le préfixe "sec-" ou directement par son nom
             let cible = document.getElementById("sec-" + nomSection);
             if (!cible) {
                 cible = document.getElementById(nomSection);
             }
 
             if (cible) {
-                // Masquer toutes les sections principales si elles possèdent une classe ou un style global
                 document.querySelectorAll('section, .site-section, main > div').forEach(sec => {
                     sec.style.display = 'none';
                     sec.classList.remove("active-section");
                 });
 
-                // Afficher la section cible
                 cible.style.display = 'block';
                 cible.classList.add("active-section");
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -983,29 +998,9 @@
                 console.warn("Section introuvable pour : " + nomSection);
             }
 
-            // Charger les séminaires si on va sur la page appropriée
             if (nomSection === 'apropos' && typeof chargerSeminairesPublic === 'function') {
                 chargerSeminairesPublic();
             }
-        }
-        
-                if (seminaires.length === 0) {
-                    conteneur.innerHTML = `<p style="color: #666; font-style: italic; text-align: center; width: 100%;">Aucun séminaire ou formation ponctuelle pour le moment.</p>`;
-                    return;
-                }
-                seminaires.forEach(sem => {
-                    const card = document.createElement("div");
-                    card.className = "card";
-                    card.style.borderTop = "4px solid #e67e22";
-                    card.innerHTML = `
-                        <h3 style="color: #e67e22;">🌟 ${sem.titre}</h3>
-                        <p style="font-weight: bold; color: #333; font-size: 13px;">📅 Date / Durée : ${sem.date}</p>
-                        <p>${sem.description}</p>
-                        <a onclick="basculerSection('inscription')" class="btn" style="background-color: #e67e22; color: white; margin-top: 10px; cursor: pointer;">S'inscrire au séminaire</a>
-                    `;
-                    conteneur.appendChild(card);
-                });
-            });
         }
 
         // --- TÉLÉCHARGEMENT DIRECT EN PNG ---
@@ -2007,8 +2002,7 @@
 
                 reader.readAsDataURL(file);
             }
-        }
-
+        
         function supprismerDossierCours(key) {
             if (confirm("Supprimer ce dossier de cours du Cloud ?")) {
                 db.ref("hepp_dossiers_cours/" + key).remove(() => {
