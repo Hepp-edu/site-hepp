@@ -584,11 +584,10 @@
                        </div>
                      </div>
 
-                     <div style="text-align: center; flex-shrink: 0; border-left: 2px dashed #dcdcdc; padding-left: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                       <img id="badgeQrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=40x40&data=https://hepp-edu.github.io/site-hepp/" crossorigin="anonymous" alt="QR Code">                 
-                       <span style="color: #1B365D; font-weight: 700; font-size: 6px; display: block; margin-top: 2px; letter-spacing: 0.5px;">SÉCURISÉ</span>
-                     </div>
-                   </div>
+                    <div style="text-align: center; flex-shrink: 0; border-left: 2px dashed #dcdcdc; padding-left: 12px; padding-right: 4px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <img id="badgeQrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://hepp-edu.github.io/site-hepp/" crossorigin="anonymous" alt="QR Code" style="display: block; width: 46px; height: 46px; border-radius: 4px; background: white; padding: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">                       
+                        <span style="color: #1B365D; font-weight: 700; font-size: 6px; display: block; margin-top: 3px; letter-spacing: 0.5px;">SÉCURISÉ</span>
+                    </div>
 
                    <div style="background: #1B365D; color: #ffc107; padding: 4px 10px; display: flex; justify-content: space-between; align-items: center; font-size: 5.5px; font-weight: 700; letter-spacing: 0.3px; border-top: 1px solid #ffc107;">
                      <span>Propriété de HEPP</span>
@@ -948,8 +947,7 @@
             const email = document.getElementById("badgeEmail").innerText || "";
             const photoSrc = document.getElementById("badgePhoto").src || "https://via.placeholder.com/110";
             const logoSrc = "logo.jpeg";
-            const qrSrc = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://hepp-edu.github.io/site-hepp/#espace-etudiant";
-
+            const qrSrc = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=" + encodeURIComponent("https://hepp-edu.github.io/site-hepp/#verifier?matricule=" + matricule);
             const canvas = document.createElement("canvas");
             canvas.width = 960;
             canvas.height = 520;
@@ -1072,13 +1070,14 @@
             const matricule = document.getElementById("badgeMatricule").innerText || "HEPP";
             const qrImgElement = document.getElementById("badgeQrImage");
             if (qrImgElement) {
-                qrImgElement.src = "https://api.qrserver.com/v1/create-qr-code/?size=40x40&data=https://hepp-edu.github.io/site-hepp/#espace-etudiant";
+                qrImgElement.src = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=" + encodeURIComponent("https://hepp-edu.github.io/site-hepp/#verifier?matricule=" + matricule);
             }
 
             setTimeout(() => {
                 const contenuBadge = document.getElementById("badgeImprimable").outerHTML;
                 const fenetreImpression = window.open('', '', 'height=700,width=600');
-                
+                // ... le reste de votre code existant ...
+
                 fenetreImpression.document.write('<html><head><title>Carte_Etudiant_HEPP_' + matricule + '</title>');
                 fenetreImpression.document.write('<style>');
                 fenetreImpression.document.write('@page { size: 90mm 80mm; margin: 0; }');
@@ -1166,12 +1165,12 @@
             badgePhoto.src = etudiantConnecte.photoUrl || "https://via.placeholder.com/110";
             document.getElementById("resVersement").innerText = (etudiantConnecte.versement || "0") + " HTG / $";
             document.getElementById("resBalance").innerText = (etudiantConnecte.balance || "0") + " HTG / $";
-        
+
+            // ---> C'ICI QUE LE QR CODE PREND LE MATRICULE INDIVIDUEL :
             const qrImg = document.getElementById("badgeQrImage");
             if (qrImg && etudiantConnecte) {
-                qrImg.src = "https://api.qrserver.com/v1/create-qr-code/?size=40x40&data=" + encodeURIComponent("https://hepp-edu.github.io/site-hepp/#verifier?matricule=" + etudiantConnecte.code);
+                qrImg.src = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=" + encodeURIComponent("https://hepp-edu.github.io/site-hepp/#verifier?matricule=" + etudiantConnecte.code);
             }
-
         }
 
         function chargerPhotoEtudiant(event) {
