@@ -1019,7 +1019,7 @@
             });
         }
 
-        // --- GÉNÉRATION COMMUNE DU CANVAS (Haut corrigé & QR Code Vérificateur Officiel) ---
+        // --- FONCTION DE GÉNÉRATION DU CANVAS (Corrigée : Taille titre, Année visible, QR Code URL Vérificateur) ---
         function genererCanvasBadge(callback) {
             const nom = document.getElementById("badgeNom")?.innerText || "Etudiant";
             const matriculeEl = document.getElementById("badgeMatricule");
@@ -1031,9 +1031,9 @@
             const photoSrc = document.getElementById("badgePhoto")?.src || "https://via.placeholder.com/120";
             const logoSrc = "logo.jpeg";
             
-            // QR Code officiel contenant les informations clés de vérification de l'étudiant
-            const donneesVerification = `HEPP - VERIFICATION OFFICIELLE\nInstitution: Hautes Etudes des Pratiques Pedagogiques\nStatut: Etudiant en regle\nEtat des etudes: En cours (2026-2027)\nMatricule: ${matricule}\nNom: ${nom.toUpperCase()}\nFiliere: ${filiere}`;
-            const qrSrc = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(donneesVerification);
+            // ---> QR CODE LIEN WEB DIRECT : Redirige vers le site pour afficher la vérification de l'étudiant
+            const urlVerification = `https://hepp-edu.github.io/site-hepp/#verifier?matricule=${encodeURIComponent(matricule)}`;
+            const qrSrc = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(urlVerification);
 
             const canvas = document.createElement("canvas");
             canvas.width = 960;
@@ -1065,7 +1065,7 @@
                 ctx.lineWidth = 8;
                 ctx.strokeRect(4, 4, canvas.width - 8, canvas.height - 8);
 
-                // Bandeau supérieur (Ajusté pour éviter toute coupure)
+                // Bandeau supérieur
                 ctx.fillStyle = "#1B365D";
                 ctx.fillRect(8, 8, canvas.width - 16, 95);
                 ctx.fillStyle = "#ffc107";
@@ -1076,22 +1076,23 @@
                 ctx.fillRect(18, 18, 80, 80);
                 ctx.drawImage(imgLogo, 20, 20, 76, 76);
 
-                // Textes d'en-tête (Espacement vertical corrigé)
+                // Textes d'en-tête (Taille du titre réduite pour ne plus être trop gros)
                 ctx.fillStyle = "#ffc107";
-                ctx.font = "bold 13px Montserrat, Arial, sans-serif";
-                ctx.fillText("HAUTES ÉTUDES DES PRATIQUES PÉDAGOGIQUES", 115, 40);
+                ctx.font = "bold 12px Montserrat, Arial, sans-serif";
+                ctx.fillText("HAUTES ÉTUDES DES PRATIQUES PÉDAGOGIQUES", 115, 38);
 
                 ctx.fillStyle = "#ffffff";
-                ctx.font = "bold 23px Montserrat, Arial, sans-serif";
-                ctx.fillText("CARTE D'ÉTUDIANT OFFICIELLE", 115, 75);
+                ctx.font = "bold 20px Montserrat, Arial, sans-serif"; // Réduit de 24px à 20px
+                ctx.fillText("CARTE D'ÉTUDIANT OFFICIELLE", 115, 72);
 
-                // Année académique et cadre photo
+                // Année académique (Repositionnée proprement à droite dans le bandeau bleu pour être bien visible)
                 ctx.fillStyle = "#ffc107";
-                ctx.fillRect(28, 30, 135, 45);
-                ctx.fillStyle = "#1B365D";
-                ctx.font = "bold 20px Poppins, Arial, sans-serif";
-                ctx.fillText("2026-2027", 305, 60);
+                ctx.font = "bold 16px Poppins, Arial, sans-serif";
+                ctx.textAlign = "right";
+                ctx.fillText("2026-2027", canvas.width - 30, 58);
+                ctx.textAlign = "left";
 
+                // Cadre photo étudiant
                 ctx.strokeStyle = "#1B365D";
                 ctx.lineWidth = 6;
                 ctx.strokeRect(30, 130, 160, 200);
