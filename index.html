@@ -1003,8 +1003,51 @@
             }
         }
 
+        // --- 1. TÉLÉCHARGEMENT DU BADGE AU FORMAT JPEG (Haute Qualité Impression) ---
         function telechargerBadgeJPEG() {
-            // Récupération des données textuelles et sources actuelles
+            genererCanvasBadge((canvas) => {
+                const matriculeEl = document.getElementById("badgeMatricule");
+                const matricule = matriculeEl ? matriculeEl.innerText.trim() : "HEPP";
+                
+                const imageURL = canvas.toDataURL("image/jpeg", 0.95); 
+                const link = document.createElement("a");
+                link.href = imageURL;
+                link.download = `Badge_Etudiant_${matricule}.jpg`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+        }
+
+        // --- 2. TÉLÉCHARGEMENT DU BADGE AU FORMAT PDF (Format Carte Standard) ---
+        function telechargerBadgePDF() {
+            genererCanvasBadge((canvas) => {
+                const matriculeEl = document.getElementById("badgeMatricule");
+                const matricule = matriculeEl ? matriculeEl.innerText.trim() : "HEPP";
+
+                // Vérification de la bibliothèque jsPDF
+                if (typeof window.jspdf === 'undefined' && typeof jsPDF === 'undefined') {
+                    alert("La bibliothèque jsPDF n'est pas chargée.");
+                    return;
+                }
+
+                const { jsPDF } = window.jspdf || window;
+                // Format carte de crédit / badge standard (86mm x 54mm en mode paysage)
+                const pdf = new jsPDF({
+                    orientation: 'landscape',
+                    unit: 'mm',
+                    format: [86, 54]
+                });
+
+                const imgData = canvas.toDataURL("image/jpeg", 0.95);
+                // Ajustement parfait aux dimensions exactes du badge sur le PDF (86x54 mm)
+                pdf.addImage(imgData, 'JPEG', 0, 0, 86, 54);
+                pdf.save(`Badge_Etudiant_${matricule}.pdf`);
+            });
+        }
+
+        // --- 3. FONCTION COMMUNE DE GÉNÉRATION DU CANVAS (Proportions Badge Parfaites) ---
+        function genererCanvasBadge(callback) {
             const nom = document.getElementById("badgeNom")?.innerText || "Etudiant";
             const matriculeEl = document.getElementById("badgeMatricule");
             const matricule = matriculeEl ? matriculeEl.innerText.trim() : "HEPP";
@@ -1015,7 +1058,7 @@
             const photoSrc = document.getElementById("badgePhoto")?.src || "https://via.placeholder.com/120";
             const logoSrc = "logo.jpeg";
             
-            // Conserve exactement votre configuration de QR Code existante
+            // QR Code inchangé et sécurisé
             const qrSrc = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=" + encodeURIComponent("Matricule: " + matricule + " - Nom: " + nom);
 
             const canvas = document.createElement("canvas");
@@ -1037,17 +1080,18 @@
                 });
             }
 
-            // Chargement simultané de toutes vos images (Logo, Photo, QR Code inchangé)
             Promise.all([chargerImage(logoSrc), chargerImage(photoSrc), chargerImage(qrSrc)]).then(([imgLogo, imgPhoto, imgQR]) => {
                 
-                // Fond de la carte
+                // Fond blanc de la carte
                 ctx.fillStyle = "#ffffff";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+                // Bordure externe
                 ctx.strokeStyle = "#1B365D";
                 ctx.lineWidth = 8;
                 ctx.strokeRect(4, 4, canvas.width - 8, canvas.height - 8);
 
+                // Bandeau supérieur
                 ctx.fillStyle = "#1B365D";
                 ctx.fillRect(8, 8, canvas.width - 16, 90);
                 ctx.fillStyle = "#ffc107";
@@ -1058,16 +1102,16 @@
                 ctx.fillRect(20, 20, 75, 75);
                 ctx.drawImage(imgLogo, 22, 22, 71, 71);
 
-                // En-têtes
+                // En-têtes ajustés
                 ctx.fillStyle = "#ffc107";
-                ctx.font = "bold 15px Montserrat, Arial, sans-serif";
-                ctx.fillText("HAUTES ÉTUDES DES PRATIQUES PÉDAGOGIQUES", 115, 40);
+                ctx.font = "bold 14px Montserrat, Arial, sans-serif";
+                ctx.fillText("HAUTES ÉTUDES DES PRATIQUES PÉDAGOGIQUES", 115, 38);
 
                 ctx.fillStyle = "#ffffff";
-                ctx.font = "bold 26px Montserrat, Arial, sans-serif";
-                ctx.fillText("CARTE D'ÉTUDIANT OFFICIELLE", 115, 75);
+                ctx.font = "bold 24px Montserrat, Arial, sans-serif";
+                ctx.fillText("CARTE D'ÉTUDIANT OFFICIELLE", 115, 70);
 
-                // Cadre photo étudiant
+                // Année académique et cadre photo
                 ctx.fillStyle = "#ffc107";
                 ctx.fillRect(28, 30, 135, 45);
                 ctx.fillStyle = "#1B365D";
@@ -1079,21 +1123,21 @@
                 ctx.strokeRect(30, 130, 160, 200);
                 ctx.drawImage(imgPhoto, 33, 133, 154, 194);
 
-                // Badge statut
+                // Badge statut "Admis(e)"
                 ctx.fillStyle = "#e8f5e9";
                 ctx.fillRect(55, 345, 110, 30);
                 ctx.fillStyle = "#28a745";
                 ctx.font = "bold 14px Poppins, Arial, sans-serif";
                 ctx.fillText("• ADMIS(E)", 68, 366);
 
-                // Nom de l'étudiant centré
+                // Nom de l'étudiant
                 ctx.fillStyle = "#1B365D";
                 ctx.font = "bold 22px Montserrat, Arial, sans-serif";
                 ctx.textAlign = "center";
                 ctx.fillText(nom.toUpperCase(), 530, 150);
                 ctx.textAlign = "left";
 
-                // Bloc informations
+                // Bloc informations administratives
                 ctx.fillStyle = "#f8f9fa";
                 ctx.fillRect(220, 175, 480, 180);
                 ctx.strokeStyle = "#e1e4e8";
@@ -1118,7 +1162,7 @@
                     yPos += 30;
                 });
 
-                // QR Code (Intact selon votre logique)
+                // QR Code et sécurité
                 ctx.drawImage(imgQR, 730, 205, 120, 120);
                 ctx.fillStyle = "#1B365D";
                 ctx.font = "bold 14px Poppins, Arial, sans-serif";
@@ -1126,7 +1170,7 @@
                 ctx.fillText("Sécurisé", 790, 345);
                 ctx.textAlign = "left";
 
-                // Pied de page
+                // Pied de page institutionnel
                 ctx.fillStyle = "#1B365D";
                 ctx.fillRect(8, 455, canvas.width - 16, 55);
                 ctx.fillStyle = "#ffc107";
@@ -1135,47 +1179,9 @@
                 ctx.fillText("secrétariat.hepp@gmail.com", 360, 490);
                 ctx.fillText("Port-au-Prince, HAÏTI", 730, 490);
 
-                // --- EXPORT UNIQUE EN FORMAT JPEG HAUTE QUALITÉ POUR IMPRESSION ---
-                const imageURL = canvas.toDataURL("image/jpeg", 0.95); 
-                const link = document.createElement("a");
-                link.href = imageURL;
-                link.download = `Badge_Etudiant_${matricule}.jpg`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+                // Renvoie le canvas généré à la fonction de téléchargement choisie
+                callback(canvas);
             });
-        }
-
-        // --- TÉLÉCHARGEMENT EN PDF ---
-        function telechargerBadgePDF() {
-            const matricule = document.getElementById("badgeMatricule").innerText || "HEPP";
-            const qrImgElement = document.getElementById("badgeQrImage");
-            if (qrImgElement) {
-                qrImgElement.src = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=" + encodeURIComponent("https://hepp-edu.github.io/site-hepp/#verifier?matricule=" + matricule);
-            }
-
-            setTimeout(() => {
-                const contenuBadge = document.getElementById("badgeImprimable").outerHTML;
-                const fenetreImpression = window.open('', '', 'height=700,width=600');
-                
-                fenetreImpression.document.write('<html><head><title>Carte_Etudiant_HEPP_' + matricule + '</title>');
-                fenetreImpression.document.write('<style>');
-                fenetreImpression.document.write('@page { size: 90mm 80mm; margin: 0; }');
-                fenetreImpression.document.write('body { font-family: Poppins, Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; overflow: hidden; }');
-                fenetreImpression.document.write('#badgeImprimable { box-shadow: none !important; border: 3px solid #1B365D !important; width: 480px !important; height: 260px !important; page-break-inside: avoid; }');
-                fenetreImpression.document.write('</style>');
-                fenetreImpression.document.write('</head><body>');
-                fenetreImpression.document.write(contenuBadge);
-                fenetreImpression.document.write('</body></html>');
-                
-                fenetreImpression.document.close();
-                fenetreImpression.focus();
-                
-                setTimeout(() => {
-                    fenetreImpression.print();
-                    fenetreImpression.close();
-                }, 600);
-            }, 400);
         }
 
         // --- CONNEXION ADMINISTRATEUR ---
