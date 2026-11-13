@@ -350,11 +350,11 @@
         </section>
 
         <div class="container">
+
             <!-- Aperçu des programmes -->
             <div style="margin-bottom: 40px;">
                 <h2 class="section-title">Nos Offres de Formation</h2>
                 <div id="listeProgrammesDynamiques" class="grid">
-                    <!-- Les programmes par défaut et dynamiques s'afficheront ici -->
                     <div class="card">
                         <h3>🏆 Double Diplôme Professionnel (3 mois)</h3>
                         <p>Programme intensif combinant Administration Scolaire et Gestion de Projet pour dirigeants et cadres éducatifs.</p>
@@ -649,6 +649,32 @@
                 <button onclick="deconnexionAdmin()" style="padding: 5px 10px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Se déconnecter</button>
               </div>
 
+              <!-- GESTION ET AJOUT DE NOUVEAUX PROGRAMMES OFFERTS (Visible uniquement dans l'Admin) -->
+              <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 20px;">
+                <h4 style="color: #2980b9;">📚 Ajout d'un Nouveau Programme Offert</h4>
+                <p style="font-size: 13px; color: #666;">Publiez un nouveau programme ou une nouvelle filière qui s'affichera automatiquement sur la page publique.</p>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 10px;">
+                  <input type="text" id="adminTitreProgramme" placeholder="Intitulé du programme (ex: Master en Éducation - 2 ans)" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                  <textarea id="adminDescProgramme" placeholder="Description détaillée du programme..." style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; height: 60px; font-family: 'Poppins', sans-serif; box-sizing: border-box;"></textarea>
+                </div>
+                <button onclick="creerProgramme()" style="padding: 10px 20px; background: #2980b9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Publier le programme</button>
+
+                <div style="margin-top: 15px; overflow-x: auto;">
+                  <table style="width: 100%; border-collapse: collapse; font-size: 13.5px;">
+                    <thead>
+                      <tr style="background: #f1f1f1; text-align: left;">
+                        <th style="padding: 8px; border: 1px solid #ddd;">Intitulé</th>
+                        <th style="padding: 8px; border: 1px solid #ddd;">Description</th>
+                        <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="adminTableProgrammes"></tbody>
+                  </table>
+                </div>
+              </div>
+
               <!-- Enregistrement Étudiant -->
               <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 20px;">
                 <h4 style="color: #004080;">Registre Officiel des Étudiants Admis</h4>
@@ -813,6 +839,31 @@
                 <h4 style="color: #004080;">📚 Gestion des Documents & Devoirs par Cours</h4>
                 <div id="adminListeDossiersCours" style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px;"></div>
               </div>
+<!-- GESTION ET AJOUT DE NOUVEAUX PROGRAMMES OFFERTS -->
+              <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 20px;">
+                <h4 style="color: #2980b9;">📚 Ajout d'un Nouveau Programme Offert</h4>
+                <p style="font-size: 13px; color: #666;">Publiez un nouveau programme ou une nouvelle filière qui s'affichera automatiquement sur la page publique.</p>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 10px;">
+                  <input type="text" id="adminTitreProgramme" placeholder="Intitulé du programme (ex: Master en Éducation - 2 ans)" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                  <textarea id="adminDescProgramme" placeholder="Description détaillée du programme..." style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; height: 60px; font-family: 'Poppins', sans-serif; box-sizing: border-box;"></textarea>
+                </div>
+                <button onclick="creerProgramme()" style="padding: 10px 20px; background: #2980b9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Publier le programme</button>
+
+                <div style="margin-top: 15px; overflow-x: auto;">
+                  <table style="width: 100%; border-collapse: collapse; font-size: 13.5px;">
+                    <thead>
+                      <tr style="background: #f1f1f1; text-align: left;">
+                        <th style="padding: 8px; border: 1px solid #ddd;">Intitulé</th>
+                        <th style="padding: 8px; border: 1px solid #ddd;">Description</th>
+                        <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="adminTableProgrammes"></tbody>
+                  </table>
+                </div>
+              </div>
 
               <!-- GESTION DE LA BIBLIOTHÈQUE NUMÉRIQUE (CLOUD) -->
               <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 20px;">
@@ -850,33 +901,6 @@
           </div>
         </div>
             
-        
-        <!-- GESTION ET AJOUT DE NOUVEAUX PROGRAMMES OFFERTS -->
-              <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 20px;">
-                <h4 style="color: #2980b9;">📚 Ajout d'un Nouveau Programme Offert</h4>
-                <p style="font-size: 13px; color: #666;">Publiez un nouveau programme ou une nouvelle filière qui s'affichera automatiquement sur la page publique.</p>
-                <div style="display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 10px;">
-                  <input type="text" id="adminTitreProgramme" placeholder="Intitulé du programme (ex: Master en Éducation - 2 ans)" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-                </div>
-                <div style="margin-bottom: 10px;">
-                  <textarea id="adminDescProgramme" placeholder="Description détaillée du programme..." style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; height: 60px; font-family: 'Poppins', sans-serif; box-sizing: border-box;"></textarea>
-                </div>
-                <button onclick="creerProgramme()" style="padding: 10px 20px; background: #2980b9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Publier le programme</button>
-
-                <div style="margin-top: 15px; overflow-x: auto;">
-                  <table style="width: 100%; border-collapse: collapse; font-size: 13.5px;">
-                    <thead>
-                      <tr style="background: #f1f1f1; text-align: left;">
-                        <th style="padding: 8px; border: 1px solid #ddd;">Intitulé</th>
-                        <th style="padding: 8px; border: 1px solid #ddd;">Description</th>
-                        <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody id="adminTableProgrammes"></tbody>
-                  </table>
-                </div>
-              </div>
-
         <!-- ================= SECTION 6 : VÉRIFICATEUR OFFICIEL (QR CODE) ================= -->
         <div id="sec-verifier" class="site-section">
             <div class="panel-section" style="max-width: 600px; margin: 40px auto; text-align: center;">
