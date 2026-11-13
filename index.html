@@ -306,7 +306,16 @@
         .site-section.active-section {
             display: block;
         }
-    </style>
+   <!-- ================= SECTION : VÉRIFICATEUR OFFICIEL (QR CODE) ================= -->
+   <div id="sec-verifier" class="site-section">
+        <div class="panel-section" style="max-width: 600px; margin: 40px auto; text-align: center;">
+            <h2 class="section-title">Vérification Officielle du Statut Étudiant</h2>
+            <div id="resultatVerification" style="padding: 20px; border-radius: 8px; background: #f8f9fa; border: 2px solid #1B365D; text-align: left;">
+                <p style="text-align: center; color: #666; font-style: italic;">Recherche des informations de l'étudiant dans le registre sécurisé...</p>
+            </div>
+        </div>
+    </div>
+   </style>
 </head>
 <body>
 
@@ -576,7 +585,7 @@
                      </div>
 
                      <div style="text-align: center; flex-shrink: 0; border-left: 2px dashed #dcdcdc; padding-left: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                       <img id="badgeQrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=40x40&data=https://hepp-edu.github.io/site-hepp/#espace-etudiant" crossorigin="anonymous" alt="QR Code" style="display: block; width: 38px; height: 38px; border-radius: 4px; background: white; padding: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">                       
+                       <img id="badgeQrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=40x40&data=https://hepp-edu.github.io/site-hepp/" crossorigin="anonymous" alt="QR Code">                 
                        <span style="color: #1B365D; font-weight: 700; font-size: 6px; display: block; margin-top: 2px; letter-spacing: 0.5px;">SÉCURISÉ</span>
                      </div>
                    </div>
@@ -672,6 +681,10 @@
                 </div>
                 <button onclick="ajouterEtudiantComplet()" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Enregistrer dans le Cloud</button>
               </div>
+                <select id="adminEtatEtude" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; background: white; box-sizing: border-box;">
+                    <option value="En cours">Études En cours</option>
+                    <option value="Achevé">Études Achevé(es)</option>
+                </select>
 
               <!-- Tableau récapitulatif étudiants & Ajustement Financier -->
               <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; overflow-x: auto; margin-bottom: 20px;">
@@ -1153,6 +1166,12 @@
             badgePhoto.src = etudiantConnecte.photoUrl || "https://via.placeholder.com/110";
             document.getElementById("resVersement").innerText = (etudiantConnecte.versement || "0") + " HTG / $";
             document.getElementById("resBalance").innerText = (etudiantConnecte.balance || "0") + " HTG / $";
+        
+            const qrImg = document.getElementById("badgeQrImage");
+            if (qrImg && etudiantConnecte) {
+                qrImg.src = "https://api.qrserver.com/v1/create-qr-code/?size=40x40&data=" + encodeURIComponent("https://hepp-edu.github.io/site-hepp/#verifier?matricule=" + etudiantConnecte.code);
+            }
+
         }
 
         function chargerPhotoEtudiant(event) {
@@ -1397,6 +1416,7 @@
             const filiere = document.getElementById("adminFiliere").value;
             const versement = document.getElementById("adminVersement").value;
             const balance = document.getElementById("adminBalance").value;
+            const etatEtude = document.getElementById("adminEtatEtude").value; // <--- Récupération de l'état
 
             if (!nom || !email || !code) {
                 alert("Veuillez remplir au moins le nom, le code et l'e-mail.");
@@ -1404,9 +1424,17 @@
             }
 
             if (etiquetteCleModificationCourante) {
+                // Mode Mise à jour
                 db.ref("hepp_etudiants_admis/" + etiquetteCleModificationCourante).once('value', (snapshot) => {
                     let anciennePhoto = snapshot.val() ? snapshot.val().photoUrl || "" : "";
-                    const etudiantModifie = { nom, code, email, tel, nifCin, filiere, versement: versement || "0", balance: balance || "0", photoUrl: anciennePhoto };
+                    
+                    const etudiantModifie = { 
+                        nom, code, email, tel, nifCin, filiere, 
+                        versement: versement || "0", 
+                        balance: balance || "0", 
+                        etatEtude: etatEtude || "En cours", 
+                        photoUrl: anciennePhoto 
+                    };
                     
                     db.ref("hepp_etudiants_admis/" + etiquetteCleModificationCourante).set(etudiantModifie, () => {
                         nettoyerFormulaireEtudiant();
@@ -1415,7 +1443,15 @@
                     });
                 });
             } else {
-                const nouvelEtudiant = { nom, code, email, tel, nifCin, filiere, versement: versement || "0", balance: balance || "0", photoUrl: "" };
+                // Mode Nouvel Enregistrement
+                const nouvelEtudiant = { 
+                    nom, code, email, tel, nifCin, filiere, 
+                    versement: versement || "0", 
+                    balance: balance || "0", 
+                    etatEtude: etatEtude || "En cours", 
+                    photoUrl: "" 
+                };
+
                 db.ref("hepp_etudiants_admis").push(nouvelEtudiant, () => {
                     nettoyerFormulaireEtudiant();
                     chargerEtudiantsComplet();
@@ -1886,6 +1922,55 @@
                 });
             }
         }
+
+        // --- VÉRIFICATEUR PAR QR CODE ---
+        function verifierEtudiantParUrl() {
+            const hash = window.location.hash; // Ex: #verifier?matricule=HEPP-2026-001
+            if (hash.includes("verifier")) {
+                basculerSection("verifier");
+                const urlParams = new URLSearchParams(hash.split('?')[1]);
+                const matricule = urlParams.get("matricule");
+
+                const conteneur = document.getElementById("resultatVerification");
+                if (!matricule) {
+                    conteneur.innerHTML = `<p style="color: red; text-align: center; font-weight: bold;">Matricule manquant dans le lien de vérification.</p>`;
+                    return;
+                }
+
+                db.ref("hepp_etudiants_admis").once('value', (snapshot) => {
+                    const data = snapshot.val() || {};
+                    let etudiants = Object.values(data);
+                    let etudiantTrouve = etudiants.find(e => e.code && e.code.toLowerCase() === matricule.toLowerCase());
+
+                    if (etudiantTrouve) {
+                        let balanceRestante = parseFloat(etudiantTrouve.balance) || 0;
+                        let enRegle = balanceRestante <= 0;
+                        let etatEtude = etudiantTrouve.etatEtude || "En cours";
+
+                        conteneur.innerHTML = `
+                            <div style="text-align: center; margin-bottom: 15px;">
+                                <img src="${etudiantTrouve.photoUrl || 'https://via.placeholder.com/110'}" style="width: 90px; height: 110px; object-fit: cover; border-radius: 6px; border: 3px solid #1B365D;" alt="Photo">
+                                <h3 style="color: #1B365D; margin: 10px 0 5px 0; text-transform: uppercase;">${etudiantTrouve.nom}</h3>
+                                <p style="color: #004080; font-weight: bold; margin: 0;">Matricule : ${etudiantTrouve.code}</p>
+                            </div> 
+                            <hr style="border: 0; border-top: 1px solid #ddd; margin: 15px 0;">
+                            <p style="font-size: 14px; margin: 8px 0;"><strong>📚 Filière :</strong> ${etudiantTrouve.filiere}</p>
+                            <p style="font-size: 14px; margin: 8px 0;"><strong>🏛️ Statut dans l'établissement :</strong> <span style="color: #28a745; font-weight: bold;">● Étudiant(e) Officiel(le) Admis(e)</span></p>
+                            <p style="font-size: 14px; margin: 8px 0;"><strong>💰 Situation financière :</strong> <span style="color: ${enRegle ? '#28a745' : '#dc3545'}; font-weight: bold;">${enRegle ? 'En règle (Solde soldé)' : 'Solde en cours (Reste à payer)'}</span></p>
+                            <p style="font-size: 14px; margin: 8px 0;"><strong>🎓 État des études :</strong> <span style="color: #1B365D; font-weight: bold;">${etatEtude}</span></p>
+                            <div style="margin-top: 20px; background: #e8f5e9; padding: 10px; border-radius: 6px; text-align: center; border: 1px solid #c8e6c9;">
+                                <span style="color: #2e7d32; font-size: 13px; font-weight: bold;">✔ Certifié authentique par le Secrétariat des HEPP</span>
+                            </div>
+                        `;
+                    } else {
+                        conteneur.innerHTML = `<p style="color: red; text-align: center; font-weight: bold;">Aucun dossier actif trouvé pour le matricule : ${matricule}</p>`;
+                    }
+                 });
+             }
+        }
+
+        window.addEventListener('load', verifierEtudiantParUrl);
+        window.addEventListener('hashchange', verifierEtudiantParUrl);
     </script>
 </body>
 </html>
