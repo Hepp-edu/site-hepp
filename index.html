@@ -1302,14 +1302,22 @@
                     let images = docs.filter(d => d.type === "Image");
 
                     function renderListeFichiers(fichiers) {
-                        if (fichiers.length === 0) return `<p style="font-size: 13.5px; color: #777; font-style: italic;">Aucun document dans cet onglet.</p>`;
-                        return fichiers.map(d => `
-                            <div style="display:flex; justify-content:space-between; align-items:center; padding: 8px 12px; background:#f8f9fa; margin: 6px 0; border-radius:6px; border: 1px solid #e1e4e8;">
-                                <span style="font-size:13.5px;">📄 <strong>[${d.type}]</strong> ${d.nomFichier}</span> 
-                                <button onclick="telechargerFichierVirtuel('${d.nomFichier}', '${d.type}', '${d.fileData || ''}')" class="btn-sm" style="padding:6px 12px; background:#28a745; color:white; border:none; border-radius:4px; cursor:pointer;">Télécharger</button>
-                            </div>
-                        `).join('');
-                    }
+            if (fichiers.length === 0) return `<p style="font-size: 13.5px; color: #777; font-style: italic;">Aucun document dans cet onglet.</p>`;
+            return fichiers.map(d => {
+                let actionBtn = '';
+                if (d.isLink) {
+                    actionBtn = `<a href="${d.fileData}" target="_blank" class="btn-sm" style="padding:6px 12px; background:#e74c3c; color:white; text-decoration:none; border-radius:4px; font-size:12px; display:inline-block;">▶️ Regarder / Ouvrir</a>`;
+                } else {
+                    actionBtn = `<button onclick="telechargerFichierVirtuel('${d.nomFichier}', '${d.type}', '${d.fileData || ''}')" class="btn-sm" style="padding:6px 12px; background:#28a745; color:white; border:none; border-radius:4px; cursor:pointer; font-size:12px;">📥 Télécharger</button>`;
+                }
+                return `
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding: 8px 12px; background:#f8f9fa; margin: 6px 0; border-radius:6px; border: 1px solid #e1e4e8; flex-wrap:wrap; gap:8px;">
+                        <span style="font-size:13.5px; word-break:break-all;">📄 <strong>[${d.type}]</strong> ${d.nomFichier}</span> 
+                        ${actionBtn}
+                    </div>
+                `;
+            }).join('');
+        }
 
                     let devoirsHtml = cours.devoirs ?
                         Object.values(cours.devoirs).filter(d => d.etudiantCode === etudiantConnecte.code).map(d => `<div style="padding:6px; background:#e8f5e9; margin:4px 0; border-radius:4px; font-size:12px; color:#2e7d32;">✅ Devoir soumis : <strong>${d.nomFichier}</strong></div>`).join('') : '';
@@ -1856,7 +1864,13 @@
                     div.style.cssText = "padding: 15px; border: 1px solid #ccc; border-radius: 6px; background: #fafafa; margin-bottom: 10px;";
                     
                     let docsAdminHtml = cours.documents ? 
-                        Object.values(cours.documents).map(d => `<div style="font-size:12px; color:#333;">- [${d.type}] ${d.nomFichier}</div>`).join('') : 
+                        Object.keys(cours.documents).map(docKey => {
+                            let d = cours.documents[docKey];
+                            return `<div style="display:flex; justify-content:space-between; align-items:center; font-size:12px; color:#333; background:#fff; padding:4px 8px; margin:3px 0; border:1px solid #eee; border-radius:3px;">
+                                <span>- [${d.type}] ${d.nomFichier}</span>
+                                <button onclick="supprimerDocDuCours('${key}', '${docKey}')" style="padding:2px 6px; background:#dc3545; color:white; border:none; border-radius:3px; cursor:pointer; font-size:10px;">Supprimer</button>
+                            </div>`;
+                        }).join('') : 
                         `<em style="font-size:12px; color:#777;">Aucun document.</em>`;
 
                     let devoirsAdminHtml = cours.devoirs ?
@@ -1896,18 +1910,58 @@
                 });
             });
         }
-
+        
         function ajouterDocAuCours(key) {
             const typeDoc = document.getElementById(`typeDoc_${key}`).value;
+            const urlInput = document.getElementById(`urlDoc_${key}`).value.trim();
             const fileInput = document.getElementById(`fileDoc_${key}`);
-            
-            if (!fileInput || fileInput.files.length === 0) {
-                alert("Veuillez sélectionner au moins un fichier.");
-                return;
-            }
 
-            const fichiers = fileInput.files;
-            let fichiersTraites = 0;
+            if (urlInput) {
+                // Si l'administrateur a collé un lien (ex: YouTube, Google Drive pour une vidéo)
+                db.ref(`hepp_dossiers_cours/${key}/documents`).push({ 
+                    type: typeDoc, 
+                    nomFichier: urlInput,
+                    fileData: urlInput,
+                    isLink: true
+                }, () => {
+                    alert("Lien vidéo/ressource ajouté avec succès !");
+                    document.getElementById(`urlDoc_${key}`).value = "";
+                });
+            } else if (fileInput && fileInput.files.length > 0) {
+                // Si l'administrateur a sélectionné un ou plusieurs fichiers (Image, PDF, Audio...)
+                const fichiers = fileInput.files;
+                let fichiersTraites = 0;
+
+                for (let i = 0; i < fichiers.length; i++) {
+                    const file = fichiers[i];
+                    const nomFichier = file.name;
+
+                    const reader = new FileReader();
+                    reader.onload = (function(fName) {
+                        return function(e) {
+                            const fileBase64 = e.target.result;
+                            
+                            db.ref(`hepp_dossiers_cours/${key}/documents`).push({ 
+                                type: typeDoc, 
+                                nomFichier: fName,
+                                fileData: fileBase64,
+                                isLink: false
+                            }, () => {
+                                fichiersTraites++;
+                                if (fichiersTraites === fichiers.length) {
+                                    alert("Tous les fichiers ont été ajoutés et synchronisés avec succès !");
+                                    fileInput.value = "";
+                                }
+                            });
+                        };
+                    })(nomFichier);
+
+                    reader.readAsDataURL(file);
+                }
+            } else {
+                alert("Veuillez soit coller un lien, soit sélectionner un ou plusieurs fichiers.");
+            }
+        }
 
             // Parcourir chaque fichier sélectionné
             for (let i = 0; i < fichiers.length; i++) {
@@ -2054,6 +2108,14 @@
                     tbody.appendChild(tr);
                 });
             });
+        }
+
+        function supprimerDocDuCours(coursKey, docKey) {
+            if (confirm("Voulez-vous vraiment supprimer ce document du cours ?")) {
+                db.ref(`hepp_dossiers_cours/${coursKey}/documents/${docKey}`).remove(() => {
+                    alert("Document supprimé avec succès du Cloud !");
+                });
+            }
         }
 
         function supprimerProgramme(key) {
