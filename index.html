@@ -447,7 +447,7 @@
             <div class="panel-section" style="margin-top: 0;">
                 <h2 class="section-title">Formulaire d'Inscription</h2>
                 <p style="text-align: center; color: #666; font-size: 14px; max-width: 700px; margin: 0 auto 25px auto;">
-                    Veuillez remplir soigneusement tous les champs requis ci-dessous pour soumettre votre dossier de candidature aux Hautes Études des Pédagogiques (HEPP).
+                    Veuillez remplir soigneusement tous les champs requis ci-dessous pour soumettre votre dossier de candidature aux Hautes Études des Pratiques Pédagogiques (HEPP).
                 </p>
 
                 <form action="https://formspree.io/f/xbgorobg" method="POST" enctype="multipart/form-data" style="max-width: 800px; margin: 0 auto;">
@@ -928,7 +928,7 @@
 
     <!-- Pied de page -->
     <footer>
-        <p><strong>Hautes Études des Pédagogiques (HEPP)</strong> — Fondée en Mars 2010</p>
+        <p><strong>Hautes Études des Pratiques Pédagogiques (HEPP)</strong> — Fondée en Mars 2010</p>
         <p>Port-au-Prince, Haïti | Contact: secrétariat.hepp@gmail.com | (+509) 4647-5772</p>
         <p>© 2026 HEPP. Tous droits réservés.</p>
     </footer>
@@ -1040,7 +1040,7 @@
                 ctx.fillRect(20, 20, 75, 75);
                 ctx.drawImage(imgLogo, 22, 22, 71, 71);
 
-                ctx.fillStyle = "#ffc107";
+                ctx.fillStyle = "#ffc107";sss
                 ctx.font = "bold 15px Montserrat, Arial, sans-serif";
                 ctx.fillText("HAUTES ÉTUDES DES PRATIQUES PÉDAGOGIQUES", 115, 40);
 
@@ -1993,7 +1993,7 @@
             }
         }
 
-        function supprimerDossierCours(key) {
+        function supprismerDossierCours(key) {
             if (confirm("Supprimer ce dossier de cours du Cloud ?")) {
                 db.ref("hepp_dossiers_cours/" + key).remove(() => {
                     alert("Dossier supprimé.");
