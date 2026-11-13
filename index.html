@@ -591,8 +591,8 @@
                  </div>
 
                  <div style="text-align: center; margin-top: 15px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-                   <button onclick="telechargerBadgePNG()" style="padding: 12px 24px; background: #1B365D; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; box-shadow: 0 4px 12px rgba(27,54,93,0.3); transition: 0.2s;">📥 Télécharger en PNG (HD)</button>
-                   <button onclick="telechargerBadgePDF()" style="padding: 12px 24px; background: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; box-shadow: 0 4px 12px rgba(40,167,69,0.3); transition: 0.2s;">📄 Télécharger en PDF (PVC)</button>
+                    <button onclick="telechargerBadgeJPEG()">Télécharger le Badge (JPEG)</button>
+                    <button onclick="telechargerBadgePDF()" style="padding: 12px 24px; background: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; box-shadow: 0 4px 12px rgba(40,167,69,0.3); transition: 0.2s;">📄 Télécharger en PDF (PVC)</button>
                  </div>
                </div>
                 
@@ -1003,41 +1003,146 @@
             }
         }
 
-        function telechargerBadgePNG() {
-            // Cible directement le conteneur visuel de la carte d'étudiant sur la page
-            const carteElement = document.getElementById("carteEtudiant") || document.querySelector(".card-container") || document.querySelector("div[style*='background']");
-            
-            if (!carteElement) {
-                alert("Erreur : Impossible de trouver la carte d'étudiant sur la page.");
-                return;
-            }
-
-            // Vérification de la présence de la bibliothèque html2canvas
-            if (typeof html2canvas === 'undefined') {
-                alert("La bibliothèque html2canvas n'est pas chargée dans le fichier index.html.");
-                return;
-            }
-
-            // Récupération du matricule pour nommer le fichier proprement
+        function telechargerBadgeJPEG() {
+            // Récupération des données textuelles et sources actuelles
+            const nom = document.getElementById("badgeNom")?.innerText || "Etudiant";
             const matriculeEl = document.getElementById("badgeMatricule");
-            const nomMatricule = matriculeEl ? matriculeEl.innerText.trim() : "Etudiant";
+            const matricule = matriculeEl ? matriculeEl.innerText.trim() : "HEPP";
+            const filiere = document.getElementById("badgeFiliere")?.innerText || "";
+            const nifCin = document.getElementById("badgeNifCin")?.innerText || "";
+            const tel = document.getElementById("badgeTel")?.innerText || "";
+            const email = document.getElementById("badgeEmail")?.innerText || "";
+            const photoSrc = document.getElementById("badgePhoto")?.src || "https://via.placeholder.com/120";
+            const logoSrc = "logo.jpeg";
+            
+            // Conserve exactement votre configuration de QR Code existante
+            const qrSrc = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=" + encodeURIComponent("Matricule: " + matricule + " - Nom: " + nom);
 
-            // Capture et téléchargement instantané en PNG Haute Définition
-            html2canvas(carteElement, { 
-                scale: 3, 
-                useCORS: true, 
-                allowTaint: true,
-                backgroundColor: null 
-            }).then(canvas => {
-                const lien = document.createElement('a');
-                lien.download = `Carte_Etudiant_${nomMatricule}.png`;
-                lien.href = canvas.toDataURL('image/png');
-                document.body.appendChild(lien);
-                lien.click();
-                document.body.removeChild(lien);
-            }).catch(error => {
-                console.error("Erreur de génération PNG :", error);
-                alert("Une erreur est survenue lors de la création de l'image.");
+            const canvas = document.createElement("canvas");
+            canvas.width = 960;
+            canvas.height = 520;
+            const ctx = canvas.getContext("2d");
+
+            function chargerImage(url) {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.crossOrigin = "anonymous";
+                    img.src = url;
+                    img.onload = () => resolve(img);
+                    img.onerror = () => {
+                        const fallback = new Image();
+                        fallback.src = "https://via.placeholder.com/120";
+                        fallback.onload = () => resolve(fallback);
+                    };
+                });
+            }
+
+            // Chargement simultané de toutes vos images (Logo, Photo, QR Code inchangé)
+            Promise.all([chargerImage(logoSrc), chargerImage(photoSrc), chargerImage(qrSrc)]).then(([imgLogo, imgPhoto, imgQR]) => {
+                
+                // Fond de la carte
+                ctx.fillStyle = "#ffffff";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.strokeStyle = "#1B365D";
+                ctx.lineWidth = 8;
+                ctx.strokeRect(4, 4, canvas.width - 8, canvas.height - 8);
+
+                ctx.fillStyle = "#1B365D";
+                ctx.fillRect(8, 8, canvas.width - 16, 90);
+                ctx.fillStyle = "#ffc107";
+                ctx.fillRect(8, 94, canvas.width - 16, 8);
+
+                // Logo
+                ctx.fillStyle = "#ffffff";
+                ctx.fillRect(20, 20, 75, 75);
+                ctx.drawImage(imgLogo, 22, 22, 71, 71);
+
+                // En-têtes
+                ctx.fillStyle = "#ffc107";
+                ctx.font = "bold 15px Montserrat, Arial, sans-serif";
+                ctx.fillText("HAUTES ÉTUDES DES PRATIQUES PÉDAGOGIQUES", 115, 40);
+
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "bold 26px Montserrat, Arial, sans-serif";
+                ctx.fillText("CARTE D'ÉTUDIANT OFFICIELLE", 115, 75);
+
+                // Cadre photo étudiant
+                ctx.fillStyle = "#ffc107";
+                ctx.fillRect(28, 30, 135, 45);
+                ctx.fillStyle = "#1B365D";
+                ctx.font = "bold 20px Poppins, Arial, sans-serif";
+                ctx.fillText("2026-2027", 305, 60);
+
+                ctx.strokeStyle = "#1B365D";
+                ctx.lineWidth = 6;
+                ctx.strokeRect(30, 130, 160, 200);
+                ctx.drawImage(imgPhoto, 33, 133, 154, 194);
+
+                // Badge statut
+                ctx.fillStyle = "#e8f5e9";
+                ctx.fillRect(55, 345, 110, 30);
+                ctx.fillStyle = "#28a745";
+                ctx.font = "bold 14px Poppins, Arial, sans-serif";
+                ctx.fillText("• ADMIS(E)", 68, 366);
+
+                // Nom de l'étudiant centré
+                ctx.fillStyle = "#1B365D";
+                ctx.font = "bold 22px Montserrat, Arial, sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText(nom.toUpperCase(), 530, 150);
+                ctx.textAlign = "left";
+
+                // Bloc informations
+                ctx.fillStyle = "#f8f9fa";
+                ctx.fillRect(220, 175, 480, 180);
+                ctx.strokeStyle = "#e1e4e8";
+                ctx.lineWidth = 2;
+                ctx.strokeRect(220, 175, 480, 180);
+
+                ctx.font = "bold 16px Poppins, Arial, sans-serif";
+                let yPos = 205;
+                const lignes = [
+                    { label: "Matricule :", val: matricule },
+                    { label: "Filière :", val: filiere },
+                    { label: "NIF / CIN :", val: nifCin },
+                    { label: "Tél :", val: tel },
+                    { label: "E-mail :", val: email }
+                ];
+
+                lignes.forEach(ligne => {
+                    ctx.fillStyle = "#555555";
+                    ctx.fillText(ligne.label, 240, yPos);
+                    ctx.fillStyle = "#004080";
+                    ctx.fillText(ligne.val, 360, yPos);
+                    yPos += 30;
+                });
+
+                // QR Code (Intact selon votre logique)
+                ctx.drawImage(imgQR, 730, 205, 120, 120);
+                ctx.fillStyle = "#1B365D";
+                ctx.font = "bold 14px Poppins, Arial, sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText("Sécurisé", 790, 345);
+                ctx.textAlign = "left";
+
+                // Pied de page
+                ctx.fillStyle = "#1B365D";
+                ctx.fillRect(8, 455, canvas.width - 16, 55);
+                ctx.fillStyle = "#ffc107";
+                ctx.font = "bold 12px Poppins, Arial, sans-serif";
+                ctx.fillText("Propriété de HEPP", 30, 490);
+                ctx.fillText("secrétariat.hepp@gmail.com", 360, 490);
+                ctx.fillText("Port-au-Prince, HAÏTI", 730, 490);
+
+                // --- EXPORT UNIQUE EN FORMAT JPEG HAUTE QUALITÉ POUR IMPRESSION ---
+                const imageURL = canvas.toDataURL("image/jpeg", 0.95); 
+                const link = document.createElement("a");
+                link.href = imageURL;
+                link.download = `Badge_Etudiant_${matricule}.jpg`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
             });
         }
 
