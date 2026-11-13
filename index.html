@@ -1924,53 +1924,60 @@
         
         function ajouterDocAuCours(key) {
             const typeDoc = document.getElementById(`typeDoc_${key}`).value;
-            const urlInput = document.getElementById(`urlDoc_${key}`).value.trim();
+            const urlInput = document.getElementById(`urlDoc_${key}`) ? document.getElementById(`urlDoc_${key}`).value.trim() : "";
             const fileInput = document.getElementById(`fileDoc_${key}`);
 
             if (urlInput) {
-                // Si l'administrateur a collé un lien (ex: YouTube, Google Drive pour une vidéo)
+                // Ajout d'un lien (ex: vidéo YouTube / Drive)
                 db.ref(`hepp_dossiers_cours/${key}/documents`).push({ 
                     type: typeDoc, 
                     nomFichier: urlInput,
                     fileData: urlInput,
                     isLink: true
-                }, () => {
-                    alert("Lien vidéo/ressource ajouté avec succès !");
-                    document.getElementById(`urlDoc_${key}`).value = "";
+                }, (error) => {
+                    if (error) {
+                        alert("Erreur lors de l'enregistrement : " + error.message);
+                    } else {
+                        alert("Lien ajouté avec succès !");
+                        document.getElementById(`urlDoc_${key}`).value = "";
+                    }
                 });
-            } else if (fileInput && fileInput.files.length > 0) {
-                // Si l'administrateur a sélectionné un ou plusieurs fichiers (Image, PDF, Audio...)
+            } else if (fileInput && fileInput.files && fileInput.files.length > 0) {
+                // Ajout d'un ou plusieurs fichiers (Image, PDF, etc.)
                 const fichiers = fileInput.files;
+                let totalFichiers = fichiers.length;
                 let fichiersTraites = 0;
 
-                for (let i = 0; i < fichiers.length; i++) {
+                for (let i = 0; i < totalFichiers; i++) {
                     const file = fichiers[i];
-                    const nomFichier = file.name;
-
                     const reader = new FileReader();
-                    reader.onload = (function(fName) {
-                        return function(e) {
-                            const fileBase64 = e.target.result;
-                            
-                            db.ref(`hepp_dossiers_cours/${key}/documents`).push({ 
-                                type: typeDoc, 
-                                nomFichier: fName,
-                                fileData: fileBase64,
-                                isLink: false
-                            }, () => {
+
+                    reader.onload = function(e) {
+                        const fileBase64 = e.target.result;
+                        
+                        db.ref(`hepp_dossiers_cours/${key}/documents`).push({ 
+                            type: typeDoc, 
+                            nomFicient: file.name,
+                            nomFichier: file.name,
+                            fileData: fileBase64,
+                            isLink: false
+                        }, (error) => {
+                            if (!error) {
                                 fichiersTraites++;
-                                if (fichiersTraites === fichiers.length) {
-                                    alert("Tous les fichiers ont été ajoutés et synchronisés avec succès !");
+                                if (fichiersTraites === totalFichiers) {
+                                    alert("Fichier(s) ajouté(s) et synchronisé(s) avec succès !");
                                     fileInput.value = "";
                                 }
-                            });
-                        };
-                    })(nomFichier);
+                            } else {
+                                alert("Erreur Firebase : " + error.message);
+                            }
+                        });
+                    };
 
                     reader.readAsDataURL(file);
                 }
             } else {
-                alert("Veuillez soit coller un lien, soit sélectionner un ou plusieurs fichiers.");
+                alert("Veuillez sélectionner un fichier ou coller un lien avant de cliquer sur Ajouter.");
             }
         }
 
@@ -2170,7 +2177,6 @@
                 conteneur.innerHTML = htmlBase + htmlDyn;
             });
         }
-
 
         // --- VÉRIFICATEUR PAR QR CODE ---
         function verifierEtudiantParUrl() {
