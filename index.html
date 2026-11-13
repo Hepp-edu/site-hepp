@@ -306,16 +306,7 @@
         .site-section.active-section {
             display: block;
         }
-   <!-- ================= SECTION : VÉRIFICATEUR OFFICIEL (QR CODE) ================= -->
-   <div id="sec-verifier" class="site-section">
-        <div class="panel-section" style="max-width: 600px; margin: 40px auto; text-align: center;">
-            <h2 class="section-title">Vérification Officielle du Statut Étudiant</h2>
-            <div id="resultatVerification" style="padding: 20px; border-radius: 8px; background: #f8f9fa; border: 2px solid #1B365D; text-align: left;">
-                <p style="text-align: center; color: #666; font-style: italic;">Recherche des informations de l'étudiant dans le registre sécurisé...</p>
-            </div>
-        </div>
-    </div>
-   </style>
+    </style>
 </head>
 <body>
 
@@ -540,7 +531,7 @@
                    <input type="file" id="inputPhotoEtudiant" accept="image/*" onchange="chargerPhotoEtudiant(event)" style="font-size: 12px; width: 100%;">
                  </div>
 
-                 <!-- DESIGN DE LA CARTE -->
+                 <!-- DESIGN DE LA CARTE (ORIGINAL ET PROPRE RESTAURÉ) -->
                  <div id="badgeImprimable" style="width: 480px; height: 260px; margin: 0 auto 20px auto; background: linear-gradient(145deg, #ffffff, #f8f9fa); border: 3px solid #1B365D; border-radius: 12px; box-shadow: 0 10px 30px rgba(27,54,93,0.25); overflow: hidden; font-family: 'Poppins', Arial, sans-serif; position: relative; display: flex; flex-direction: column; justify-content: space-between;">
                    
                    <div style="background: linear-gradient(135deg, #1B365D, #0f223f); color: white; padding: 8px 14px; display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid #ffc107;">
@@ -584,10 +575,12 @@
                        </div>
                      </div>
 
-                    <div style="text-align: center; flex-shrink: 0; border-left: 2px dashed #dcdcdc; padding-left: 12px; padding-right: 4px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                        <img id="badgeQrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://hepp-edu.github.io/site-hepp/" crossorigin="anonymous" alt="QR Code" style="display: block; width: 46px; height: 46px; border-radius: 4px; background: white; padding: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">                       
-                        <span style="color: #1B365D; font-weight: 700; font-size: 6px; display: block; margin-top: 3px; letter-spacing: 0.5px;">SÉCURISÉ</span>
-                    </div>
+                     <!-- QR Code complet et parfaitement ajusté sans être coupé -->
+                     <div style="text-align: center; flex-shrink: 0; border-left: 2px dashed #dcdcdc; padding-left: 8px; padding-right: 4px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                       <img id="badgeQrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://hepp-edu.github.io/site-hepp/" crossorigin="anonymous" alt="QR Code" style="display: block; width: 50px; height: 50px; border-radius: 4px; background: white; padding: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">                       
+                       <span style="color: #1B365D; font-weight: 700; font-size: 6px; display: block; margin-top: 3px; letter-spacing: 0.5px;">SÉCURISÉ</span>
+                     </div>
+                   </div>
 
                    <div style="background: #1B365D; color: #ffc107; padding: 4px 10px; display: flex; justify-content: space-between; align-items: center; font-size: 5.5px; font-weight: 700; letter-spacing: 0.3px; border-top: 1px solid #ffc107;">
                      <span>Propriété de HEPP</span>
@@ -668,22 +661,22 @@
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
                   <input type="text" id="adminNifCin" placeholder="NIF / CIN" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-                  <select id="adminFiliere" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                  <select id="adminFiliere" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; background: white;">
                     <option value="Double Diplôme Admin & Gestion">Double Diplôme Admin & Gestion</option>
                     <option value="Licence en Sciences de l'Éducation">Licence en Sciences de l'Éducation</option>
                     <option value="Séminaire / Formation Ponctuelle">Séminaire / Formation Ponctuelle</option>
                   </select>
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px;">
                   <input type="number" id="adminVersement" placeholder="Montant versé" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
                   <input type="number" id="adminBalance" placeholder="Balance restante" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                  <select id="adminEtatEtude" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; background: white; box-sizing: border-box;">
+                    <option value="En cours">Études En cours</option>
+                    <option value="Achevé">Études Achevé(es)</option>
+                  </select>
                 </div>
                 <button onclick="ajouterEtudiantComplet()" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Enregistrer dans le Cloud</button>
               </div>
-                <select id="adminEtatEtude" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; background: white; box-sizing: border-box;">
-                    <option value="En cours">Études En cours</option>
-                    <option value="Achevé">Études Achevé(es)</option>
-                </select>
 
               <!-- Tableau récapitulatif étudiants & Ajustement Financier -->
               <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #ddd; overflow-x: auto; margin-bottom: 20px;">
@@ -692,7 +685,7 @@
                 <table style="width: 100%; margin-top: 10px; border-collapse: collapse; font-size: 13.5px;">
                   <thead>
                     <tr style="background: #f1f1f1; text-align: left;">
-                      <th style="padding: 8px; border: 1px solid #ddd;">Matricule / Nom</th>
+                      <th style="padding: 8px; border: 1px solid #ddd;">Matricule / Nom / État</th>
                       <th style="padding: 8px; border: 1px solid #ddd;">Contact</th>
                       <th style="padding: 8px; border: 1px solid #ddd;">NIF / CIN</th>
                       <th style="padding: 8px; border: 1px solid #ddd;">Finances (Versé / Reste)</th>
@@ -717,7 +710,7 @@
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
                   <input type="text" id="ancienNifCin" placeholder="NIF / CIN" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-                  <select id="ancienFiliere" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                  <select id="ancienFiliere" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; background: white;">
                     <option value="Double Diplôme Admin & Gestion">Double Diplôme Admin & Gestion</option>
                     <option value="Licence en Sciences de l'Éducation">Licence en Sciences de l'Éducation</option>
                     <option value="Séminaire / Formation Ponctuelle">Séminaire / Formation Ponctuelle</option>
@@ -802,7 +795,7 @@
                 <h4 style="color: #004080;">📂 Création d'un Dossier de Cours (Cloud)</h4>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
                   <input type="text" id="adminTitreCours" placeholder="Titre du cours (ex: Administration Scolaire - Module 1)" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-                  <select id="adminProgrammeCours" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                  <select id="adminProgrammeCours" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; background: white;">
                     <option value="Double Diplôme Admin & Gestion">Double Diplôme Admin & Gestion</option>
                     <option value="Licence en Sciences de l'Éducation">Licence en Sciences de l'Éducation</option>
                     <option value="Séminaire / Formation Ponctuelle">Séminaire / Formation Ponctuelle</option>
@@ -825,7 +818,7 @@
                 <h4 style="color: #004080;">📚 Gestion de la Bibliothèque Numérique</h4>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
                   <input type="text" id="adminTitreDoc" placeholder="Titre du livre/document" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-                  <select id="adminCategorieDoc" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                  <select id="adminCategorieDoc" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; background: white;">
                     <option value="Supports de Cours">Supports de Cours</option>
                     <option value="Manuels & Ouvrages">Manuels & Ouvrages</option>
                     <option value="Règlements & Formulaires">Règlements & Formulaires</option>
@@ -856,7 +849,17 @@
           </div>
         </div>
 
-        <!-- ================= SECTION 6 : CONTACT (Isolé) ================= -->
+        <!-- ================= SECTION 6 : VÉRIFICATEUR OFFICIEL (QR CODE) ================= -->
+        <div id="sec-verifier" class="site-section">
+            <div class="panel-section" style="max-width: 600px; margin: 40px auto; text-align: center;">
+                <h2 class="section-title">Vérification Officielle du Statut Étudiant</h2>
+                <div id="resultatVerification" style="padding: 20px; border-radius: 8px; background: #f8f9fa; border: 2px solid #1B365D; text-align: left;">
+                    <p style="text-align: center; color: #666; font-style: italic;">Recherche des informations de l'étudiant dans le registre sécurisé...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= SECTION 7 : CONTACT (Isolé) ================= -->
         <div id="sec-contact" class="site-section">
             <div class="panel-section" style="margin-top: 0;">
                 <h2 class="section-title">Secrétariat Académique</h2>
@@ -948,6 +951,7 @@
             const photoSrc = document.getElementById("badgePhoto").src || "https://via.placeholder.com/110";
             const logoSrc = "logo.jpeg";
             const qrSrc = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=" + encodeURIComponent("https://hepp-edu.github.io/site-hepp/#verifier?matricule=" + matricule);
+
             const canvas = document.createElement("canvas");
             canvas.width = 960;
             canvas.height = 520;
@@ -977,7 +981,6 @@
 
                 ctx.fillStyle = "#1B365D";
                 ctx.fillRect(8, 8, canvas.width - 16, 90);
-
                 ctx.fillStyle = "#ffc107";
                 ctx.fillRect(8, 94, canvas.width - 16, 8);
 
@@ -1076,8 +1079,7 @@
             setTimeout(() => {
                 const contenuBadge = document.getElementById("badgeImprimable").outerHTML;
                 const fenetreImpression = window.open('', '', 'height=700,width=600');
-                // ... le reste de votre code existant ...
-
+                
                 fenetreImpression.document.write('<html><head><title>Carte_Etudiant_HEPP_' + matricule + '</title>');
                 fenetreImpression.document.write('<style>');
                 fenetreImpression.document.write('@page { size: 90mm 80mm; margin: 0; }');
@@ -1166,7 +1168,7 @@
             document.getElementById("resVersement").innerText = (etudiantConnecte.versement || "0") + " HTG / $";
             document.getElementById("resBalance").innerText = (etudiantConnecte.balance || "0") + " HTG / $";
 
-            // ---> C'ICI QUE LE QR CODE PREND LE MATRICULE INDIVIDUEL :
+            // Mise à jour dynamique du QR code avec le matricule de l'étudiant
             const qrImg = document.getElementById("badgeQrImage");
             if (qrImg && etudiantConnecte) {
                 qrImg.src = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=" + encodeURIComponent("https://hepp-edu.github.io/site-hepp/#verifier?matricule=" + etudiantConnecte.code);
@@ -1496,7 +1498,7 @@
                     let et = data[key];
                     const tr = document.createElement("tr");
                     tr.innerHTML = `
-                        <td style="padding: 8px; border: 1px solid #ddd;"><strong>${et.code}</strong><br>${et.nom}</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;"><strong>${et.code}</strong><br>${et.nom}<br><small style="color:#004080; font-weight:bold;">[${et.etatEtude || 'En cours'}]</small></td>
                         <td style="padding: 8px; border: 1px solid #ddd;">${et.email}<br>${et.tel || ''}</td>
                         <td style="padding: 8px; border: 1px solid #ddd;">${et.nifCin || 'N/A'}</td>
                         <td style="padding: 8px; border: 1px solid #ddd;">
@@ -1537,6 +1539,7 @@
             document.getElementById("adminFiliere").value = et.filiere || "Double Diplôme Admin & Gestion";
             document.getElementById("adminVersement").value = et.versement || "";
             document.getElementById("adminBalance").value = et.balance || "";
+            document.getElementById("adminEtatEtude").value = et.etatEtude || "En cours";
 
             etiquetteCleModificationCourante = key;
 
