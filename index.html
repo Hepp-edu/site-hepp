@@ -1312,14 +1312,17 @@
                     let audios = docs.filter(d => d.type === "Audio");
                     let images = docs.filter(d => d.type === "Image");
 
-                    function renderListeFichiers(fichiers) {
+        function renderListeFichiers(fichiers) {
             if (fichiers.length === 0) return `<p style="font-size: 13.5px; color: #777; font-style: italic;">Aucun document dans cet onglet.</p>`;
             return fichiers.map(d => {
                 let actionBtn = '';
                 if (d.isLink) {
                     actionBtn = `<a href="${d.fileData}" target="_blank" class="btn-sm" style="padding:6px 12px; background:#e74c3c; color:white; text-decoration:none; border-radius:4px; font-size:12px; display:inline-block;">▶️ Regarder / Ouvrir</a>`;
                 } else {
-                    actionBtn = `<button onclick="telechargerFichierVirtuel('${d.nomFichier}', '${d.type}', '${d.fileData || ''}')" class="btn-sm" style="padding:6px 12px; background:#28a745; color:white; border:none; border-radius:4px; cursor:pointer; font-size:12px;">📥 Télécharger</button>`;
+                    // Compatibilité avec les nouveaux fichiers (fileId) et les anciens (fileData)
+                    const identifiant = d.fileId || '';
+                    const ancienneData = d.fileData || '';
+                    actionBtn = `<button onclick="telechargerFichierAlaDemande('${d.nomFichier}', '${identifiant}', '${ancienneData}')" class="btn-sm" style="padding:6px 12px; background:#28a745; color:white; border:none; border-radius:4px; cursor:pointer; font-size:12px;">📥 Télécharger</button>`;
                 }
                 return `
                     <div style="display:flex; justify-content:space-between; align-items:center; padding: 8px 12px; background:#f8f9fa; margin: 6px 0; border-radius:6px; border: 1px solid #e1e4e8; flex-wrap:wrap; gap:8px;">
@@ -1328,6 +1331,35 @@
                     </div>
                 `;
             }).join('');
+
+        function telechargerFichierAlaDemande(nomFichier, fileId, ancienneData) {
+            // Si c'est un ancien fichier déjà chargé en mémoire
+            if (!fileId && ancienneData) {
+                lancerTelechargementDirect(nomFichier, ancienneData);
+                return;
+            }
+
+            // Sinon, on va chercher le fichier lourd uniquement maintenant
+            alert("Préparation du téléchargement de : " + nomFichier + "...");
+            db.ref(`hepp_fichiers_contenus/${fileId}`).once('value', (snapshot) => {
+                const base64Data = snapshot.val();
+                if (base64Data) {
+                    lancerTelechargementDirect(nomFichier, base64Data);
+                } else {
+                    alert("Erreur : Le contenu de ce fichier est introuvable sur le serveur.");
+                }
+            });
+        }
+
+        function lancerTelechargementDirect(nomFichier, dataUrl) {
+            const lien = document.createElement("a");
+            lien.href = dataUrl;
+            lien.download = nomFichier;
+            document.body.appendChild(lien);
+            lien.click();
+            document.body.removeChild(lien);
+        }
+
         }
 
                     let devoirsHtml = cours.devoirs ?
@@ -1928,22 +1960,19 @@
             const fileInput = document.getElementById(`fileDoc_${key}`);
 
             if (urlInput) {
-                // Ajout d'un lien (ex: vidéo YouTube / Drive)
                 db.ref(`hepp_dossiers_cours/${key}/documents`).push({ 
                     type: typeDoc, 
                     nomFichier: urlInput,
                     fileData: urlInput,
                     isLink: true
                 }, (error) => {
-                    if (error) {
-                        alert("Erreur lors de l'enregistrement : " + error.message);
-                    } else {
+                    if (error) alert("Erreur : " + error.message);
+                    else {
                         alert("Lien ajouté avec succès !");
                         document.getElementById(`urlDoc_${key}`).value = "";
                     }
                 });
             } else if (fileInput && fileInput.files && fileInput.files.length > 0) {
-                // Ajout d'un ou plusieurs fichiers (Image, PDF, etc.)
                 const fichiers = fileInput.files;
                 let totalFichiers = fichiers.length;
                 let fichiersTraites = 0;
@@ -1954,22 +1983,28 @@
 
                     reader.onload = function(e) {
                         const fileBase64 = e.target.result;
-                        
-                        db.ref(`hepp_dossiers_cours/${key}/documents`).push({ 
-                            type: typeDoc, 
-                            nomFicient: file.name,
-                            nomFichier: file.name,
-                            fileData: fileBase64,
-                            isLink: false
-                        }, (error) => {
-                            if (!error) {
-                                fichiersTraites++;
-                                if (fichiersTraites === totalFichiers) {
-                                    alert("Fichier(s) ajouté(s) et synchronisé(s) avec succès !");
-                                    fileInput.value = "";
-                                }
+                        // 1. Créer une référence pour obtenir un identifiant unique
+                        const newDocRef = db.ref(`hepp_dossiers_cours/${key}/documents`).push();
+                        const docId = newDocRef.key;
+
+                        // 2. Sauvegarder le fichier lourd dans un dossier séparé
+                        db.ref(`hepp_fichiers_contenus/${docId}`).set(fileBase64, (err) => {
+                            if (!err) {
+                                // 3. Sauvegarder uniquement le titre léger dans le cours
+                                newDocRef.set({
+                                    type: typeDoc,
+                                    nomFichier: file.name,
+                                    fileId: docId,
+                                    isLink: false
+                                }, () => {
+                                    fichiersTraites++;
+                                    if (fichiersTraites === totalFichiers) {
+                                        alert("Fichier(s) ajouté(s) et optimisé(s) avec succès !");
+                                        fileInput.value = "";
+                                    }
+                                });
                             } else {
-                                alert("Erreur Firebase : " + error.message);
+                                alert("Erreur lors de l'envoi du fichier : " + err.message);
                             }
                         });
                     };
@@ -1977,7 +2012,7 @@
                     reader.readAsDataURL(file);
                 }
             } else {
-                alert("Veuillez sélectionner un fichier ou coller un lien avant de cliquer sur Ajouter.");
+                alert("Veuillez sélectionner un fichier ou coller un lien.");
             }
         }
 
