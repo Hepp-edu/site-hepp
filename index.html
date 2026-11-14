@@ -979,7 +979,7 @@
             }
         }
 
-        // --- TÉLÉCHARGEMENT DU BADGE EN FORMAT JPEG ---
+        // --- 1. TÉLÉCHARGEMENT DU BADGE EN FORMAT JPEG ---
         function telechargerBadgeJPEG() {
             genererCanvasBadge((canvas) => {
                 const matriculeEl = document.getElementById("badgeMatricule");
@@ -995,7 +995,7 @@
             });
         }
 
-        // --- TÉLÉCHARGEMENT DU BADGE EN FORMAT PDF (Format Badge Standard) ---
+        // --- 2. TÉLÉCHARGEMENT DU BADGE EN FORMAT PDF (Format Badge 3x2 pouces) ---
         function telechargerBadgePDF() {
             genererCanvasBadge((canvas) => {
                 const matriculeEl = document.getElementById("badgeMatricule");
@@ -1007,19 +1007,20 @@
                     return;
                 }
 
+                // Format badge 3 x 2 pouces en millimètres (3 pouces = 76.2 mm, 2 pouces = 50.8 mm)
                 const pdf = new jsPDFLib({
                     orientation: 'landscape',
                     unit: 'mm',
-                    format: [86, 54]
+                    format: [76.2, 50.8]
                 });
 
                 const imgData = canvas.toDataURL("image/jpeg", 0.95);
-                pdf.addImage(imgData, 'JPEG', 0, 0, 86, 54);
+                pdf.addImage(imgData, 'JPEG', 0, 0, 76.2, 50.8);
                 pdf.save(`Badge_Etudiant_${matricule}.pdf`);
             });
         }
 
-        // --- FONCTION DE GÉNÉRATION DU CANVAS (Corrigée : Taille titre, Année visible, QR Code URL Vérificateur) ---
+        // --- 3. GÉNÉRATION DU CANVAS (Format 3x2 proportionnel 900x600 & QR Code aux coins intacts) ---
         function genererCanvasBadge(callback) {
             const nom = document.getElementById("badgeNom")?.innerText || "Etudiant";
             const matriculeEl = document.getElementById("badgeMatricule");
@@ -1031,13 +1032,13 @@
             const photoSrc = document.getElementById("badgePhoto")?.src || "https://via.placeholder.com/120";
             const logoSrc = "logo.jpeg";
             
-            // ---> QR CODE LIEN WEB DIRECT : Redirige vers le site pour afficher la vérification de l'étudiant
+            // URL du vérificateur pour le QR Code (avec correction d'erreur 'H' pour garantir l'affichage des 4 coins)
             const urlVerification = `https://hepp-edu.github.io/site-hepp/#verifier?matricule=${encodeURIComponent(matricule)}`;
-            const qrSrc = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(urlVerification);
+            const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&ecc=H&margin=2&data=` + encodeURIComponent(urlVerification);
 
             const canvas = document.createElement("canvas");
-            canvas.width = 960;
-            canvas.height = 520;
+            canvas.width = 900;  // Proportion 3x2 (Format 3 pouces)
+            canvas.height = 600; // Proportion 3x2 (Format 2 pouces)
             const ctx = canvas.getContext("2d");
 
             function chargerImage(url) {
@@ -1067,60 +1068,60 @@
 
                 // Bandeau supérieur
                 ctx.fillStyle = "#1B365D";
-                ctx.fillRect(8, 8, canvas.width - 16, 95);
+                ctx.fillRect(8, 8, canvas.width - 16, 105);
                 ctx.fillStyle = "#ffc107";
-                ctx.fillRect(8, 103, canvas.width - 16, 6);
+                ctx.fillRect(8, 113, canvas.width - 16, 6);
 
                 // Logo dans le bandeau
                 ctx.fillStyle = "#ffffff";
-                ctx.fillRect(18, 18, 80, 80);
-                ctx.drawImage(imgLogo, 20, 20, 76, 76);
+                ctx.fillRect(18, 20, 85, 85);
+                ctx.drawImage(imgLogo, 20, 22, 81, 81);
 
-                // Textes d'en-tête (Taille du titre réduite pour ne plus être trop gros)
+                // Textes d'en-tête (Ajustés et proportionnés)
                 ctx.fillStyle = "#ffc107";
-                ctx.font = "bold 12px Montserrat, Arial, sans-serif";
-                ctx.fillText("HAUTES ÉTUDES DES PRATIQUES PÉDAGOGIQUES", 115, 38);
+                ctx.font = "bold 13px Montserrat, Arial, sans-serif";
+                ctx.fillText("HAUTES ÉTUDES DES PRATIQUES PÉDAGOGIQUES", 120, 42);
 
                 ctx.fillStyle = "#ffffff";
-                ctx.font = "bold 20px Montserrat, Arial, sans-serif"; // Réduit de 24px à 20px
-                ctx.fillText("CARTE D'ÉTUDIANT OFFICIELLE", 115, 72);
+                ctx.font = "bold 22px Montserrat, Arial, sans-serif";
+                ctx.fillText("CARTE D'ÉTUDIANT OFFICIELLE", 120, 78);
 
-                // Année académique (Repositionnée proprement à droite dans le bandeau bleu pour être bien visible)
+                // Année académique à droite dans le bandeau
                 ctx.fillStyle = "#ffc107";
-                ctx.font = "bold 16px Poppins, Arial, sans-serif";
+                ctx.font = "bold 20px Poppins, Arial, sans-serif";
                 ctx.textAlign = "right";
-                ctx.fillText("2026-2027", canvas.width - 30, 58);
+                ctx.fillText("2026-2027", canvas.width - 30, 65);
                 ctx.textAlign = "left";
 
                 // Cadre photo étudiant
                 ctx.strokeStyle = "#1B365D";
                 ctx.lineWidth = 6;
-                ctx.strokeRect(30, 130, 160, 200);
-                ctx.drawImage(imgPhoto, 33, 133, 154, 194);
+                ctx.strokeRect(30, 145, 175, 225);
+                ctx.drawImage(imgPhoto, 33, 148, 169, 219);
 
                 // Badge statut "Admis(e)"
                 ctx.fillStyle = "#e8f5e9";
-                ctx.fillRect(55, 345, 110, 30);
+                ctx.fillRect(55, 385, 125, 35);
                 ctx.fillStyle = "#28a745";
-                ctx.font = "bold 14px Poppins, Arial, sans-serif";
-                ctx.fillText("• ADMIS(E)", 68, 366);
+                ctx.font = "bold 15px Poppins, Arial, sans-serif";
+                ctx.fillText("• ADMIS(E)", 70, 410);
 
-                // Nom de l'étudiant
+                // Nom de l'étudiant centré
                 ctx.fillStyle = "#1B365D";
-                ctx.font = "bold 22px Montserrat, Arial, sans-serif";
+                ctx.font = "bold 26px Montserrat, Arial, sans-serif";
                 ctx.textAlign = "center";
-                ctx.fillText(nom.toUpperCase(), 530, 150);
+                ctx.fillText(nom.toUpperCase(), 500, 165);
                 ctx.textAlign = "left";
 
                 // Bloc informations administratives
                 ctx.fillStyle = "#f8f9fa";
-                ctx.fillRect(220, 175, 480, 180);
+                ctx.fillRect(235, 195, 430, 210);
                 ctx.strokeStyle = "#e1e4e8";
                 ctx.lineWidth = 2;
-                ctx.strokeRect(220, 175, 480, 180);
+                ctx.strokeRect(235, 195, 430, 210);
 
                 ctx.font = "bold 16px Poppins, Arial, sans-serif";
-                let yPos = 205;
+                let yPos = 230;
                 const lignes = [
                     { label: "Matricule :", val: matricule },
                     { label: "Filière :", val: filiere },
@@ -1131,28 +1132,28 @@
 
                 lignes.forEach(ligne => {
                     ctx.fillStyle = "#555555";
-                    ctx.fillText(ligne.label, 240, yPos);
+                    ctx.fillText(ligne.label, 255, yPos);
                     ctx.fillStyle = "#004080";
-                    ctx.fillText(ligne.val, 360, yPos);
-                    yPos += 30;
+                    ctx.fillText(ligne.val, 375, yPos);
+                    yPos += 35;
                 });
 
-                // QR Code Vérificateur
-                ctx.drawImage(imgQR, 730, 205, 120, 120);
+                // QR Code Vérificateur (avec marge interne pour que les coins soient entièrement visibles)
+                ctx.drawImage(imgQR, 705, 210, 145, 145);
                 ctx.fillStyle = "#1B365D";
-                ctx.font = "bold 13px Poppins, Arial, sans-serif";
+                ctx.font = "bold 14px Poppins, Arial, sans-serif";
                 ctx.textAlign = "center";
-                ctx.fillText("Vérificateur", 790, 345);
+                ctx.fillText("Vérificateur", 778, 378);
                 ctx.textAlign = "left";
 
                 // Pied de page institutionnel
                 ctx.fillStyle = "#1B365D";
-                ctx.fillRect(8, 455, canvas.width - 16, 55);
+                ctx.fillRect(8, 525, canvas.width - 16, 65);
                 ctx.fillStyle = "#ffc107";
-                ctx.font = "bold 12px Poppins, Arial, sans-serif";
-                ctx.fillText("Propriété de HEPP", 30, 490);
-                ctx.fillText("secrétariat.hepp@gmail.com", 360, 490);
-                ctx.fillText("Port-au-Prince, HAÏTI", 730, 490);
+                ctx.font = "bold 13px Poppins, Arial, sans-serif";
+                ctx.fillText("Propriété de HEPP", 35, 565);
+                ctx.fillText("secrétariat.hepp@gmail.com", 335, 565);
+                ctx.fillText("Port-au-Prince, HAÏTI", 685, 565);
 
                 callback(canvas);
             });
