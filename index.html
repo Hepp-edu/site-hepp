@@ -961,23 +961,35 @@
 
         // --- GESTION DE LA NAVIGATION ---
         function basculerSection(nomSection) {
-            let cible = document.getElementById("sec-" + nomSection);
-            if (!cible) {
-                cible = document.getElementById(nomSection);
-            }
-            if (cible) {
-                document.querySelectorAll('section, .site-section, main > div').forEach(sec => {
+            try {
+                // Ferme le menu déroulant sur mobile après un clic
+                const dropdown = document.querySelector('.dropdown-content');
+                if (dropdown) {
+                    dropdown.style.display = 'none';
+                    setTimeout(() => { dropdown.style.display = ''; }, 150);
+                }
+
+                // Masque toutes les sections du site
+                document.querySelectorAll('.site-section').forEach(sec => {
                     sec.style.display = 'none';
-                    sec.classList.remove("active-section");
+                    sec.classList.remove('active-section');
                 });
-                cible.style.display = 'block';
-                cible.classList.add("active-section");
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-                console.warn("Section introuvable pour : " + nomSection);
-            }
-            if (nomSection === 'apropos' && typeof chargerSeminairesPublic === 'function') {
-                chargerSeminairesPublic();
+
+                // Cible la section demandée
+                let cible = document.getElementById('sec-' + nomSection) || document.getElementById(nomSection);
+                if (cible) {
+                    cible.style.display = 'block';
+                    cible.classList.add('active-section');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    alert("Section introuvable : " + nomSection);
+                }
+
+                if (nomSection === 'apropos' && typeof chargerSeminairesPublic === 'function') {
+                    chargerSeminairesPublic();
+                }
+            } catch (err) {
+                console.error("Erreur navigation :", err);
             }
         }
 
