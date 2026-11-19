@@ -438,45 +438,56 @@
                 <p style="text-align: center; color: #666; font-size: 14px; max-width: 700px; margin: 0 auto 25px auto;">
                     Veuillez remplir soigneusement tous les champs requis ci-dessous pour soumettre votre dossier de candidature aux Hautes Études des Pratiques Pédagogiques (HEPP).
                 </p>
-                <form action="https://formspree.io/f/xbgorobg" method="POST" enctype="multipart/form-data" style="max-width: 800px; margin: 0 auto;">
-                  
-                  <div style="margin-bottom: 18px;">
-                    <label for="nom" style="display: block; margin-bottom: 6px; font-weight: 600; color: var(--primary); font-size: 13.5px;">Nom complet et Prénom :</label>
-                    <input type="text" id="nom" name="nom" placeholder="Entrez votre nom et prénom légal" required style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                  </div>
-                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 18px;">
-                    <div>
-                      <label for="email" style="display: block; margin-bottom: 6px; font-weight: 600; color: var(--primary); font-size: 13.5px;">Adresse e-mail active :</label>
-                      <input type="email" id="email" name="email" placeholder="votre.email@example.com" required style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                    </div>
-                    <div>
-                      <label for="telephone" style="display: block; margin-bottom: 6px; font-weight: 600; color: var(--primary); font-size: 13.5px;">Numéro de téléphone :</label>
-                      <input type="tel" id="telephone" name="telephone" placeholder="+509 ..." required style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                    </div>
-                  </div>
-                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 18px;">
-                    <div>
-                      <label for="nif_cin" style="display: block; margin-bottom: 6px; font-weight: 600; color: var(--primary); font-size: 13.5px;">NIF / CIN :</label>
-                      <input type="text" id="nif_cin" name="nif_cin" placeholder="Numéro d'identification (NIF ou CIN)" required style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                    </div>
-                    <div>
-                      <label for="filiere" style="display: block; margin-bottom: 6px; font-weight: 600; color: var(--primary); font-size: 13.5px;">Filière ou Programme choisi :</label>
-                      <select id="filiere" name="filiere" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; background: white; box-sizing: border-box;">
-                        <option value="Double Diplôme Admin & Gestion">Double Diplôme Admin & Gestion (3 mois)</option>
-                        <option value="Licence en Sciences de l'Éducation">Licence en Sciences de l'Éducation (3 ans)</option>
-                        <option value="Séminaire / Formation Ponctuelle">Séminaire / Formation Ponctuelle</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div style="margin-bottom: 25px;">
-                    <label for="documents" style="display: block; margin-bottom: 6px; font-weight: 600; color: var(--primary); font-size: 13.5px;">Pièces justificatives requises (Pièce d'identité, Diplômes, CV) :</label>
-                    <input type="file" id="documents" name="documents[]" multiple style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; background: #f9f9f9; font-size: 13.5px; box-sizing: border-box;">
-                    <small style="color: #666; display: block; margin-top: 5px;">Formats acceptés : PDF, JPG, PNG (Multisélection possible).</small>
-                  </div>
-                  <button type="submit" style="width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(27,54,93,0.2);">Soumettre mon dossier d'inscription</button>
-                </form>
-            </div>
-        </div>
+                <form action="https://formspree.io/f/xbgorobg" method="POST" style="max-width: 800px; margin: 0 auto;">
+  
+  <div style="margin-bottom: 18px;">
+    <label for="nom" style="display: block; margin-bottom: 6px; font-weight: 600; color: var(--primary); font-size: 13.5px;">Nom complet et Prénom :</label>
+    <input type="text" id="nom" name="nom" placeholder="Entrez votre nom et prénom légal" required style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
+  </div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 18px;">
+    <div>
+      <label for="email" style="display: block; margin-bottom: 6px; font-weight: 600; color: var(--primary); font-size: 13.5px;">Adresse e-mail active :</label>
+      <input type="email" id="email" name="email" placeholder="votre.email@example.com" required style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
+    </div>
+    <div>
+      <label for="telephone" style="display: block; margin-bottom: 6px; font-weight: 600; color: var(--primary); font-size: 13.5px;">Numéro de téléphone :</label>
+      <input type="tel" id="telephone" name="telephone" placeholder="+509 ..." required style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
+    </div>
+  </div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 18px;">
+    <div>
+      <label for="nif_cin" style="display: block; margin-bottom: 6px; font-weight: 600; color: var(--primary); font-size: 13.5px;">NIF / CIN :</label>
+      <input type="text" id="nif_cin" name="nif_cin" placeholder="Numéro d'identification (NIF ou CIN)" required style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
+    </div>
+    <div>
+      <label for="filiere" style="display: block; margin-bottom: 6px; font-weight: 600; color: var(--primary); font-size: 13.5px;">Filière ou Programme choisi :</label>
+      <select id="filiere" name="filiere" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; background: white; box-sizing: border-box;">
+        <option value="Double Diplôme Admin & Gestion">Double Diplôme Admin & Gestion (3 mois)</option>
+        <option value="Licence en Sciences de l'Éducation">Licence en Sciences de l'Éducation (3 ans)</option>
+        <option value="Séminaire / Formation Ponctuelle">Séminaire / Formation Ponctuelle</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Remplacement du téléversement de documents par Mode de paiement (MonCash / NatCash) + ID Paiement -->
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; background: #f8f9fa; padding: 16px; border-radius: 8px; border: 1px solid #e1e4e8;">
+    <div>
+      <label for="mode_paiement" style="display: block; margin-bottom: 6px; font-weight: 600; color: var(--primary); font-size: 13.5px;">Moyen de paiement utilisé :</label>
+      <select id="mode_paiement" name="mode_paiement" required style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; background: white; box-sizing: border-box;">
+        <option value="">-- Choisir MonCash ou NatCash --</option>
+        <option value="MonCash">MonCash</option>
+        <option value="NatCash">NatCash</option>
+      </select>
+    </div>
+    <div>
+      <label for="id_paiement" style="display: block; margin-bottom: 6px; font-weight: 600; color: var(--primary); font-size: 13.5px;">ID de paiement / Référence transaction :</label>
+      <input type="text" id="id_paiement" name="id_paiement" placeholder="Ex: MC-123456789 ou NC-987654321" required style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; background: white; box-sizing: border-box;">
+      <small style="color: #666; display: block; margin-top: 5px;">Indiquez l'ID exact reçu après votre transfert MonCash ou NatCash.</small>
+    </div>
+  </div>
+
+  <button type="submit" style="width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(27,54,93,0.2);">Soumettre mon dossier d'inscription</button>
+</form>
        
         <!-- ================= SECTION 4 : ESPACE ÉTUDIANT (Isolé) ================= -->
         <div id="sec-espace-etudiant" class="site-section">
